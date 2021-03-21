@@ -1,2 +1,2 @@
 print("DUPA")
-print("uWu")
+print("uWu oWo")
