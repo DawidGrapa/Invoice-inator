@@ -1,2 +1,5 @@
-print("DUPA")
-print("uWu")
+from tkinter import *
+
+root = Tk()
+
+root.mainloop()
