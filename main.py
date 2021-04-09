@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter.ttk import *
-from Contrahents import *
+from contractors import *
 
 #Create window object
 app = Tk()

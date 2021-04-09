@@ -1,6 +1,31 @@
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
+#
+# def save(contractor):
+#     print(contractor)
+
+def addContractor(app):
+    newWindow = Toplevel(app)
+    newWindow.title("Add new contractor")
+    newWindow.minsize(600, 600)
+
+
+    name = tk.Label(newWindow, text="Company Name:", height=4,padx=10)
+    name.grid(row=1, column=1)
+
+    nameValue = StringVar(None)
+    nameInput = tk.Entry(newWindow, textvariable=nameValue, width=50, bd=3)
+    nameInput.grid(row=1, column=2)
+    print(nameValue)
+
+
+    # #Submit
+    # submitLabel = tk.Button(newWindow,text="Submit",command = lambda: save(nameInput.get()))
+    # submitLabel.grid(row=3,column=1)
+
+
+
 
 def open_contractors_window(app):
     newWindow = Toplevel(app)
@@ -22,7 +47,7 @@ def open_contractors_window(app):
     L2 = tk.Label(fram1)
     L2.pack()
 
-    addContrahentButton = tk.Button(L1,text="Add new contractor",height=2,width = 20)
+    addContrahentButton = tk.Button(L1,text="Add new contractor",height=2,width = 20,command = lambda: addContractor(newWindow))
     addContrahentButton.pack(fill=BOTH,side=LEFT, expand=True)
     deleteContractorButton = tk.Button(L2,text="Delete contractor",height=2,width=20)
     deleteContractorButton.pack(fill=BOTH,side=LEFT, expand=True)
