@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter.ttk import *
 
 def save(contractor):
-
+    return
 
 def addContractor(app):
     newWindow = Toplevel(app)
