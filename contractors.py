@@ -10,18 +10,37 @@ def addContractor(app):
     newWindow.title("Add new contractor")
     newWindow.minsize(600, 600)
 
-
-    name = tk.Label(newWindow, text="Company Name:", height=4,padx=10)
+    #Name
+    name = tk.Label(newWindow, text="Company Name:", height=2,padx=10)
     name.grid(row=1, column=1)
 
-    nameValue = StringVar(None)
-    nameInput = tk.Entry(newWindow, textvariable=nameValue, width=50, bd=3)
+    nameInput = tk.Entry(newWindow, width=50, bd=3)
     nameInput.grid(row=1, column=2)
-    print(nameValue)
+
+    #Street
+    street = tk.Label(newWindow,text="Street:",height = 2,padx=10)
+    street.grid(row=2,column=1)
+
+    streetInput = tk.Entry(newWindow, width=50, bd=3)
+    streetInput.grid(row=2, column=2)
+
+    #ZIP-CODE
+    zip_code = tk.Label(newWindow,text="Zip-Code:",height = 2,padx=10)
+    zip_code.grid(row=3,column=1)
+
+    zipInput = tk.Entry(newWindow, width=50, bd=3)
+    zipInput.grid(row=3, column=2)
+
+    #City
+    city = tk.Label(newWindow, text="City:", height=2, padx=10)
+    city.grid(row=4, column=1)
+
+    cityInput = tk.Entry(newWindow, width=50, bd=3)
+    cityInput.grid(row=4, column=2)
 
 
     # #Submit
-    # submitLabel = tk.Button(newWindow,text="Submit",command = lambda: save(nameInput.get()))
+    # submitLabel = tk.Button(newWindow,text="Submit",command = lambda: save())
     # submitLabel.grid(row=3,column=1)
 
 
