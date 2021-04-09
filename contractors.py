@@ -8,7 +8,7 @@ def save(contractor):
 def addContractor(app):
     newWindow = Toplevel(app)
     newWindow.title("Add new contractor")
-    newWindow.minsize(600, 600)
+    newWindow.minsize(500, 260)
 
     contractorData = dict()
 
