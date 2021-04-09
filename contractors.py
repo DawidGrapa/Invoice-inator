@@ -1,14 +1,16 @@
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
-#
-# def save(contractor):
-#     print(contractor)
+
+def save(contractor):
+
 
 def addContractor(app):
     newWindow = Toplevel(app)
     newWindow.title("Add new contractor")
     newWindow.minsize(600, 600)
+
+    contractorData = dict()
 
     #Name
     name = tk.Label(newWindow, text="Company Name:", height=2,padx=10)
@@ -17,12 +19,16 @@ def addContractor(app):
     nameInput = tk.Entry(newWindow, width=50, bd=3)
     nameInput.grid(row=1, column=2)
 
+    contractorData['name'] = nameInput
+
     #Street
     street = tk.Label(newWindow,text="Street:",height = 2,padx=10)
     street.grid(row=2,column=1)
 
     streetInput = tk.Entry(newWindow, width=50, bd=3)
     streetInput.grid(row=2, column=2)
+
+    contractorData['street'] = streetInput
 
     #ZIP-CODE
     zip_code = tk.Label(newWindow,text="Zip-Code:",height = 2,padx=10)
@@ -31,6 +37,8 @@ def addContractor(app):
     zipInput = tk.Entry(newWindow, width=50, bd=3)
     zipInput.grid(row=3, column=2)
 
+    contractorData['zip'] = zipInput
+
     #City
     city = tk.Label(newWindow, text="City:", height=2, padx=10)
     city.grid(row=4, column=1)
@@ -38,10 +46,29 @@ def addContractor(app):
     cityInput = tk.Entry(newWindow, width=50, bd=3)
     cityInput.grid(row=4, column=2)
 
+    contractorData['city'] = cityInput
 
-    # #Submit
-    # submitLabel = tk.Button(newWindow,text="Submit",command = lambda: save())
-    # submitLabel.grid(row=3,column=1)
+    # NIP
+    nip = tk.Label(newWindow, text="NIP:", height=2, padx=10)
+    nip.grid(row=5, column=1)
+
+    nipInput = tk.Entry(newWindow, width=50, bd=3)
+    nipInput.grid(row=5, column=2)
+
+    contractorData['nip'] = nipInput
+
+    # Description
+    desc = tk.Label(newWindow, text="Description:", height=2, padx=10)
+    desc.grid(row=6, column=1)
+
+    descInput = tk.Entry(newWindow, width=50, bd=3)
+    descInput.grid(row=6, column=2)
+
+    contractorData['desc'] = descInput
+
+    #Submit
+    submitLabel = tk.Button(newWindow,text="Submit",command = lambda: save(contractorData))
+    submitLabel.grid(row=7,column=2)
 
 
 
