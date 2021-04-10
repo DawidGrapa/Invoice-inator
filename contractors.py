@@ -83,7 +83,7 @@ def open_contractors_window(app):
     panedwindow.pack(fill=BOTH, expand=True)
 
     # Creating Frames
-    fram1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN)
+    fram1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#f8deb4')
     fram2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#94dbd6')
     panedwindow.add(fram1, weight=1)
     panedwindow.add(fram2, weight=4)
