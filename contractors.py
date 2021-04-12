@@ -3,21 +3,26 @@ from tkinter import *
 from tkinter.ttk import *
 from db import Database
 from tkinter import messagebox, font
+from validators import *
 
 db = Database('contractors.db')
+
 
 def select_item(event):
     try:
         global selected_item
         index = contractors_list.curselection()[0]
         selected_item = contractors_list.get(index)
+        print(selected_item)
     except IndexError:
         pass
 
+
 def remove_contractor():
-    if messagebox.askyesno("Delete","Are you sure?"):
+    if messagebox.askyesno("Delete", "Are you sure?", parent=add_contractor_window()):
         db.remove_contractor(selected_item[0])
         show_contractors()
+
 
 def show_contractors():
     contractors_list.delete(0, END)
@@ -27,72 +32,76 @@ def show_contractors():
         contractors_list.insert(END, row[:6])
 
 
-
-
-def print_collected_data(data):
-    for key, el in data.items():
-        print(key, ': ', el.get())
+def add_contractor_to_base(data):
+    if add_contractor_validator(data):
+        db.insert_contractor(data['name'].get(), data['street'].get(), data['zip'].get(), data['city'].get(), data['nip'].get(), data['desc'].get())
+        messagebox.showinfo("Success", "Added successfully!", parent=contractor_add_window)
+        show_contractors()
+        contractor_add_window.destroy()
+    else:
+        messagebox.showinfo("Wrong arguments","Wrong arguments")
 
 
 def add_contractor_window(app):
-    newWindow = Toplevel(app)
-    newWindow.title("Add new contractor")
-    newWindow.minsize(500, 260)
+    global contractor_add_window
+    contractor_add_window = Toplevel(app)
+    contractor_add_window.title("Add new contractor")
+    contractor_add_window.minsize(500, 260)
 
     # Dictionary for storing collected data
     contractorData = dict()
 
     # Labels and Entries
     # Name
-    name = tk.Label(newWindow, text="Company Name:", height=2, padx=10)
+    name = tk.Label(contractor_add_window, text="Company Name:", height=2, padx=10)
     name.grid(row=1, column=1)
-    nameInput = tk.Entry(newWindow, width=50, bd=3)
+    nameInput = tk.Entry(contractor_add_window, width=50, bd=3)
     nameInput.grid(row=1, column=2)
 
     contractorData['name'] = nameInput
 
     # Street
-    street = tk.Label(newWindow, text="Street:", height=2, padx=10)
+    street = tk.Label(contractor_add_window, text="Street:", height=2, padx=10)
     street.grid(row=2, column=1)
-    streetInput = tk.Entry(newWindow, width=50, bd=3)
+    streetInput = tk.Entry(contractor_add_window, width=50, bd=3)
     streetInput.grid(row=2, column=2)
 
     contractorData['street'] = streetInput
 
     # ZIP-CODE
-    zipCode = tk.Label(newWindow, text="Zip-Code:", height=2, padx=10)
+    zipCode = tk.Label(contractor_add_window, text="Zip-Code:", height=2, padx=10)
     zipCode.grid(row=3, column=1)
-    zipInput = tk.Entry(newWindow, width=50, bd=3)
+    zipInput = tk.Entry(contractor_add_window, width=50, bd=3)
     zipInput.grid(row=3, column=2)
 
     contractorData['zip'] = zipInput
 
     # City
-    city = tk.Label(newWindow, text="City:", height=2, padx=10)
+    city = tk.Label(contractor_add_window, text="City:", height=2, padx=10)
     city.grid(row=4, column=1)
-    cityInput = tk.Entry(newWindow, width=50, bd=3)
+    cityInput = tk.Entry(contractor_add_window, width=50, bd=3)
     cityInput.grid(row=4, column=2)
 
     contractorData['city'] = cityInput
 
     # NIP
-    nip = tk.Label(newWindow, text="NIP:", height=2, padx=10)
+    nip = tk.Label(contractor_add_window, text="NIP:", height=2, padx=10)
     nip.grid(row=5, column=1)
-    nipInput = tk.Entry(newWindow, width=50, bd=3)
+    nipInput = tk.Entry(contractor_add_window, width=50, bd=3)
     nipInput.grid(row=5, column=2)
 
     contractorData['nip'] = nipInput
 
     # Description
-    desc = tk.Label(newWindow, text="Description:", height=2, padx=10)
+    desc = tk.Label(contractor_add_window, text="Description:", height=2, padx=10)
     desc.grid(row=6, column=1)
-    descInput = tk.Entry(newWindow, width=50, bd=3)
+    descInput = tk.Entry(contractor_add_window, width=50, bd=3)
     descInput.grid(row=6, column=2)
 
     contractorData['desc'] = descInput
 
     # Submit
-    submitLabel = tk.Button(newWindow, text="Submit", command=lambda: print_collected_data(contractorData))
+    submitLabel = tk.Button(contractor_add_window, text="Submit", command=lambda: add_contractor_to_base(contractorData))
     submitLabel.grid(row=7, column=2)
 
 
@@ -140,6 +149,3 @@ def open_contractors_window(app):
     contractors_list.bind('<<ListboxSelect>>', select_item)
 
     show_contractors()
-
-
-
