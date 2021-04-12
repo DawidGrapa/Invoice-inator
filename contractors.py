@@ -100,8 +100,8 @@ def open_contractors_window(app):
     # Creating new window
     newWindow = Toplevel(app)
     newWindow.title("Contractors")
-    newWindow.geometry('700x500')
-    newWindow.minsize(650, 100)
+    newWindow.geometry('900x500')
+    newWindow.minsize(900, 100)
     newWindow['bg'] = '#f8deb4'
 
     # Creating PanedWindow - for splitting frames in ratio
