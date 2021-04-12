@@ -21,3 +21,6 @@ class Database:
         self.cur.execute("DELETE FROM contractors WHERE id=?", (id,))
         self.conn.commit()
 
+    def update_contractor(self, id, name, street, zip, city, nip, description):
+        self.cur.execute("UPDATE contractors SET name = ?,street=?,zip=?,city=?,nip=?,description=? WHERE id = ?",(name,street,zip,city,nip,description,id))
+        self.conn.commit()
