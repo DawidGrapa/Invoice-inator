@@ -5,7 +5,7 @@ from about_us_window import *
 
 # Creating window app
 app = Tk()
-app.title("Lololol Manager")
+app.title("TBD Manager")
 app.state("zoomed")
 app['bg'] = '#f8deb4'
 # Change app icon
@@ -29,7 +29,6 @@ help_menu.add_separator()
 help_menu.add_command(label="About us", command=lambda: open_about_us_window(app))
 
 my_menu.add_cascade(label="MENU", menu=file_menu)
-my_menu.add_separator()
 my_menu.add_cascade(label="Settings", menu=settings_menu)
 my_menu.add_cascade(label="Help", menu=help_menu)
 

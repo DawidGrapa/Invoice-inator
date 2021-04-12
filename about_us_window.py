@@ -13,7 +13,7 @@ def open_about_us_window(app):
     frame.pack(padx=10, pady=10)
 
     x = StringVar()
-    x.set("Lolol Manager v0.1 \n\n Authors: \n Dawid Grapa & Julia Szpak \n\n April 2021")
+    x.set("TBD Manager v0.1 \n\n Authors: \n Dawid Grapa & Julia Szpak \n\n April 2021")
 
     text = Text(frame, bg="#f8deb4", font="Times 13")
     text.insert(INSERT, x.get())
