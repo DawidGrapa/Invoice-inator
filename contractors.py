@@ -42,16 +42,18 @@ def show_contractors():
 
 
 def add_contractor_to_base(data):
-    if add_contractor_validator(data):
+    res = add_contractor_validator(data)
+    if res==True:
         db.insert_contractor(data['name'].get(), data['street'].get(), data['zip'].get(), data['city'].get(), data['nip'].get(), data['desc'].get())
         messagebox.showinfo("Success", "Added successfully!", parent=contractor_add_window)
         show_contractors()
         contractor_add_window.destroy()
     else:
-        messagebox.showinfo("Wrong arguments","Wrong arguments", parent=contractor_add_window)
+        messagebox.showinfo("Wrong arguments","Wrong argument: "+str(res)+"!", parent=contractor_add_window)
 
 def update_contractor_in_base(data):
-    if add_contractor_validator(data):
+    res = add_contractor_validator(data)
+    if res==True:
         db.update_contractor(selected_item[0],data['name'].get(), data['street'].get(), data['zip'].get(), data['city'].get(), data['nip'].get(), data['desc'].get())
         messagebox.showinfo("Success", "Updated successfully!", parent=contractor_update_window)
         updateContrahentButton['state'] = DISABLED
@@ -59,7 +61,7 @@ def update_contractor_in_base(data):
         show_contractors()
         contractor_update_window.destroy()
     else:
-        messagebox.showinfo("Wrong arguments","Wrong arguments",parent = contractor_update_window)
+        messagebox.showinfo("Wrong arguments","Wrong argument: "+str(res)+"!", parent=contractor_update_window)
 
 
 def update_contractor_window(app):

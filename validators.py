@@ -5,11 +5,11 @@ def add_contractor_validator(contractor):
     zip = contractor['zip'].get()
     nip = contractor['nip'].get()
 
-    if len(name) == 0: return False
-    if len(street) == 0: return False
-    if len(city) == 0: return False
-    if len(zip) == 0: return False
+    if len(name) == 0: return "name"
+    if len(street) == 0: return "street"
+    if len(city) == 0: return "city"
+    if len(zip) == 0: return "zip-code"
     if len(nip) != 10 or not nip.isdecimal():
-        return False
+        return "NIP"
 
     return True
