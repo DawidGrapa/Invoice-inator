@@ -22,7 +22,7 @@ def remove_contractor():
 def show_contractors():
     contractors_list.delete(0, END)
     for row in db.fetch_contractors():
-        contractors_list.insert(END, row)
+        contractors_list.insert(END, row[:6])
 
 
 
