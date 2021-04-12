@@ -250,7 +250,5 @@ def open_contractors_window(app):
     # Bind select
     contractors_list.bind('<<ListboxSelect>>', select_item)
 
-
-
     show_contractors()
 

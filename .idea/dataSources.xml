@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="contractors" uuid="7f67cf8c-00bd-4415-8f67-44d684cfda56">
+    <data-source source="LOCAL" name="contractors [2]" uuid="0ea7ddb1-c4d5-40d2-bcf8-39b8a64ead50">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:C:\Users\Root\Desktop\Projekty\Apka\contractors.db</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="contractors [2]" uuid="4c324e6f-b375-4e1c-86b2-57f0c534113d">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Root\Desktop\Projekty\Apka\contractors.cb</jdbc-url>
+      <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.34.0/sqlite-jdbc-3.34.0.jar</url>
+        </library>
+      </libraries>
     </data-source>
   </component>
 </project>
