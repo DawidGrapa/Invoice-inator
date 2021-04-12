@@ -1,11 +1,11 @@
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
-from db import Database
+from Database.db import Database
 from tkinter import messagebox, font
-from validators import *
+from Validators.validators import *
 
-db = Database('contractors.db')
+db = Database('Database/contractors.db')
 
 
 def select_item(event):

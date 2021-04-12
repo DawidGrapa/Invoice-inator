@@ -1,7 +1,5 @@
-from tkinter import *
-from tkinter.ttk import *
-from contractors import *
-from about_us_window import *
+from Contractors.contractors import *
+from PopUpWindows.about_us_window import *
 
 # Creating window app
 app = Tk()
@@ -9,7 +7,7 @@ app.title("TBD Manager")
 app.state("zoomed")
 app['bg'] = '#f8deb4'
 # Change app icon
-photo = PhotoImage(file='soy.png')
+photo = PhotoImage(file='Media/soy.png')
 app.iconphoto(True, photo)
 
 # Creating menu
