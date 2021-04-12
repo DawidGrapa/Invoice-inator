@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
 from db import Database
-from tkinter import messagebox
+from tkinter import messagebox, font
 
 db = Database('contractors.db')
 
@@ -21,6 +21,8 @@ def remove_contractor():
 
 def show_contractors():
     contractors_list.delete(0, END)
+    bolded = font.Font(weight='bold')  # will use the default font
+    contractors_list.config(font=bolded)
     for row in db.fetch_contractors():
         contractors_list.insert(END, row[:6])
 
@@ -106,7 +108,7 @@ def open_contractors_window(app):
     panedwindow = Panedwindow(newWindow, orient=HORIZONTAL)
     panedwindow.pack(fill=BOTH, expand=True)
 
-    # Creating Frames
+    # Creating Left Frame
     fram1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#f8deb4')
     fram2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#94dbd6')
     panedwindow.add(fram1, weight=1)
@@ -116,6 +118,13 @@ def open_contractors_window(app):
     addContLabel.pack()
     deleteContLabel = tk.Label(fram1)
     deleteContLabel.pack()
+
+    addContrahentButton = tk.Button(addContLabel, text="Add new contractor", height=2, width=20,
+                                    command=lambda: add_contractor_window(newWindow))
+    addContrahentButton.pack(fill=BOTH, side=LEFT, expand=True)
+    deleteContractorButton = tk.Button(deleteContLabel, text="Delete contractor", height=2, width=20,
+                                       command=remove_contractor)
+    deleteContractorButton.pack(fill=BOTH, side=LEFT, expand=True)
 
     #Right side of window
     global contractors_list
@@ -132,10 +141,5 @@ def open_contractors_window(app):
 
     show_contractors()
 
-    addContrahentButton = tk.Button(addContLabel, text="Add new contractor", height=2, width=20,
-                                    command=lambda: add_contractor_window(newWindow))
-    addContrahentButton.pack(fill=BOTH, side=LEFT, expand=True)
-    deleteContractorButton = tk.Button(deleteContLabel, text="Delete contractor", height=2, width=20,
-                                       command=remove_contractor)
-    deleteContractorButton.pack(fill=BOTH, side=LEFT, expand=True)
+
 
