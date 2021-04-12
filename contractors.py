@@ -10,11 +10,12 @@ db = Database('contractors.db')
 
 def select_item(event):
     try:
-        updateContrahentButton['state'] = ACTIVE
-        deleteContractorButton['state'] = ACTIVE
-        global selected_item
-        index = contractors_list.curselection()[0]
-        selected_item = contractors_list.get(index)
+        if contractors_list.size()>0:
+            updateContrahentButton['state'] = ACTIVE
+            deleteContractorButton['state'] = ACTIVE
+            global selected_item
+            index = contractors_list.curselection()[0]
+            selected_item = contractors_list.get(index)
     except IndexError:
         pass
 
