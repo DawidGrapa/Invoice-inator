@@ -40,6 +40,7 @@ def show_contractors():
             contractors_list.insert(END, row)
 
 
+
 def add_contractor_to_base(data):
     if add_contractor_validator(data):
         db.insert_contractor(data['name'].get(), data['street'].get(), data['zip'].get(), data['city'].get(), data['nip'].get(), data['desc'].get())
@@ -118,7 +119,8 @@ def update_contractor_window(app):
     desc.grid(row=6, column=1)
     descInput = tk.Entry(contractor_update_window, width=50, bd=3)
     descInput.grid(row=6, column=2)
-    descInput.insert(0, selected_item[6])
+    if len(selected_item) > 6:
+        descInput.insert(0, selected_item[6])
     contractorData['desc'] = descInput
 
     # Submit
