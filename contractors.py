@@ -10,201 +10,200 @@ db = Database('contractors.db')
 
 def select_item(event):
     try:
-        if contractors_list.size()>0:
+        if contractorsList.size()>0:
             updateContrahentButton['state'] = ACTIVE
             deleteContractorButton['state'] = ACTIVE
-            global selected_item
-            index = contractors_list.curselection()[0]
-            selected_item = contractors_list.get(index)
+            global selectedItem
+            index = contractorsList.curselection()[0]
+            selectedItem = contractorsList.get(index)
     except IndexError:
         pass
 
 
 def remove_contractor():
-    if messagebox.askyesno("Delete", "Are you sure?",parent = contractor_window):
-        db.remove_contractor(selected_item[0])
+    if messagebox.askyesno("Delete", "Are you sure?", parent = contractorMainWindow):
+        db.remove_contractor(selectedItem[0])
         updateContrahentButton['state'] = DISABLED
         deleteContractorButton['state'] = DISABLED
         show_contractors()
 
 
-
 def show_contractors():
-    contractors_list.delete(0, END)
+    contractorsList.delete(0, END)
     bolded = font.Font(weight='bold')  # will use the default font
-    contractors_list.config(font=bolded)
+    contractorsList.config(font=bolded)
     for row in db.fetch_contractors():
-        if row[6]=="":
-            contractors_list.insert(END, row[:6])
-        else :
-            contractors_list.insert(END, row)
-
+        if row[6] == "":
+            contractorsList.insert(END, row[:6])
+        else:
+            contractorsList.insert(END, row)
 
 
 def add_contractor_to_base(data):
     res = add_contractor_validator(data)
-    if res==True:
+    if res == True:
         db.insert_contractor(data['name'].get(), data['street'].get(), data['zip'].get(), data['city'].get(), data['nip'].get(), data['desc'].get())
-        messagebox.showinfo("Success", "Added successfully!", parent=contractor_add_window)
+        messagebox.showinfo("Success", "Added successfully!", parent=contractorAddWindow)
         show_contractors()
-        contractor_add_window.destroy()
+        contractorAddWindow.destroy()
     else:
-        messagebox.showinfo("Wrong arguments","Wrong argument: "+str(res)+"!", parent=contractor_add_window)
+        messagebox.showinfo("Wrong arguments","Wrong argument: " + str(res) +"!", parent=contractorAddWindow)
+
 
 def update_contractor_in_base(data):
     res = add_contractor_validator(data)
-    if res==True:
-        db.update_contractor(selected_item[0],data['name'].get(), data['street'].get(), data['zip'].get(), data['city'].get(), data['nip'].get(), data['desc'].get())
-        messagebox.showinfo("Success", "Updated successfully!", parent=contractor_update_window)
+    if res == True:
+        db.update_contractor(selectedItem[0], data['name'].get(), data['street'].get(), data['zip'].get(), data['city'].get(), data['nip'].get(), data['desc'].get())
+        messagebox.showinfo("Success", "Updated successfully!", parent=contractorUpdateWindow)
         updateContrahentButton['state'] = DISABLED
         deleteContractorButton['state'] = DISABLED
         show_contractors()
-        contractor_update_window.destroy()
+        contractorUpdateWindow.destroy()
     else:
-        messagebox.showinfo("Wrong arguments","Wrong argument: "+str(res)+"!", parent=contractor_update_window)
+        messagebox.showinfo("Wrong arguments","Wrong argument: " + str(res) +"!", parent=contractorUpdateWindow)
 
 
 def update_contractor_window(app):
-    global contractor_update_window
-    contractor_update_window = Toplevel(app)
-    contractor_update_window.title("Update contractor")
-    contractor_update_window.minsize(500, 260)
+    global contractorUpdateWindow
+    contractorUpdateWindow = Toplevel(app)
+    contractorUpdateWindow.title("Update contractor")
+    contractorUpdateWindow.minsize(500, 260)
 
     # Dictionary for storing collected data
     contractorData = dict()
 
     # Labels and Entries
     # Name
-    name = tk.Label(contractor_update_window, text="Company Name:", height=2, padx=10)
+    name = tk.Label(contractorUpdateWindow, text="Company Name:", height=2, padx=10)
     name.grid(row=1, column=1)
-    nameInput = tk.Entry(contractor_update_window, width=50, bd=3)
+    nameInput = tk.Entry(contractorUpdateWindow, width=50, bd=3)
     nameInput.grid(row=1, column=2)
-    nameInput.insert(0,selected_item[1])
+    nameInput.insert(0, selectedItem[1])
 
     contractorData['name'] = nameInput
 
     # Street
-    street = tk.Label(contractor_update_window, text="Street:", height=2, padx=10)
+    street = tk.Label(contractorUpdateWindow, text="Street:", height=2, padx=10)
     street.grid(row=2, column=1)
-    streetInput = tk.Entry(contractor_update_window, width=50, bd=3)
+    streetInput = tk.Entry(contractorUpdateWindow, width=50, bd=3)
     streetInput.grid(row=2, column=2)
-    streetInput.insert(0,selected_item[2])
+    streetInput.insert(0, selectedItem[2])
     contractorData['street'] = streetInput
 
     # ZIP-CODE
-    zipCode = tk.Label(contractor_update_window, text="Zip-Code:", height=2, padx=10)
+    zipCode = tk.Label(contractorUpdateWindow, text="Zip-Code:", height=2, padx=10)
     zipCode.grid(row=3, column=1)
-    zipInput = tk.Entry(contractor_update_window, width=50, bd=3)
+    zipInput = tk.Entry(contractorUpdateWindow, width=50, bd=3)
     zipInput.grid(row=3, column=2)
-    zipInput.insert(0, selected_item[3])
+    zipInput.insert(0, selectedItem[3])
     contractorData['zip'] = zipInput
 
     # City
-    city = tk.Label(contractor_update_window, text="City:", height=2, padx=10)
+    city = tk.Label(contractorUpdateWindow, text="City:", height=2, padx=10)
     city.grid(row=4, column=1)
-    cityInput = tk.Entry(contractor_update_window, width=50, bd=3)
+    cityInput = tk.Entry(contractorUpdateWindow, width=50, bd=3)
     cityInput.grid(row=4, column=2)
-    cityInput.insert(0, selected_item[4])
+    cityInput.insert(0, selectedItem[4])
     contractorData['city'] = cityInput
 
     # NIP
-    nip = tk.Label(contractor_update_window, text="NIP:", height=2, padx=10)
+    nip = tk.Label(contractorUpdateWindow, text="NIP:", height=2, padx=10)
     nip.grid(row=5, column=1)
-    nipInput = tk.Entry(contractor_update_window, width=50, bd=3)
+    nipInput = tk.Entry(contractorUpdateWindow, width=50, bd=3)
     nipInput.grid(row=5, column=2)
-    nipInput.insert(0, selected_item[5])
+    nipInput.insert(0, selectedItem[5])
 
     contractorData['nip'] = nipInput
 
     # Description
-    desc = tk.Label(contractor_update_window, text="Description:", height=2, padx=10)
+    desc = tk.Label(contractorUpdateWindow, text="Description:", height=2, padx=10)
     desc.grid(row=6, column=1)
-    descInput = tk.Entry(contractor_update_window, width=50, bd=3)
+    descInput = tk.Entry(contractorUpdateWindow, width=50, bd=3)
     descInput.grid(row=6, column=2)
-    if len(selected_item) > 6:
-        descInput.insert(0, selected_item[6])
+    if len(selectedItem) > 6:
+        descInput.insert(0, selectedItem[6])
     contractorData['desc'] = descInput
 
     # Submit
-    submitLabel = tk.Button(contractor_update_window, text="Submit",
+    submitLabel = tk.Button(contractorUpdateWindow, text="Submit",
                             command=lambda: update_contractor_in_base(contractorData))
     submitLabel.grid(row=7, column=2)
 
 
 def add_contractor_window(app):
-    global contractor_add_window
-    contractor_add_window = Toplevel(app)
-    contractor_add_window.title("Add new contractor")
-    contractor_add_window.minsize(500, 260)
+    global contractorAddWindow
+    contractorAddWindow = Toplevel(app)
+    contractorAddWindow.title("Add new contractor")
+    contractorAddWindow.minsize(500, 260)
 
     # Dictionary for storing collected data
     contractorData = dict()
 
     # Labels and Entries
     # Name
-    name = tk.Label(contractor_add_window, text="Company Name:", height=2, padx=10)
+    name = tk.Label(contractorAddWindow, text="Company Name:", height=2, padx=10)
     name.grid(row=1, column=1)
-    nameInput = tk.Entry(contractor_add_window, width=50, bd=3)
+    nameInput = tk.Entry(contractorAddWindow, width=50, bd=3)
     nameInput.grid(row=1, column=2)
 
     contractorData['name'] = nameInput
 
     # Street
-    street = tk.Label(contractor_add_window, text="Street:", height=2, padx=10)
+    street = tk.Label(contractorAddWindow, text="Street:", height=2, padx=10)
     street.grid(row=2, column=1)
-    streetInput = tk.Entry(contractor_add_window, width=50, bd=3)
+    streetInput = tk.Entry(contractorAddWindow, width=50, bd=3)
     streetInput.grid(row=2, column=2)
 
     contractorData['street'] = streetInput
 
     # ZIP-CODE
-    zipCode = tk.Label(contractor_add_window, text="Zip-Code:", height=2, padx=10)
+    zipCode = tk.Label(contractorAddWindow, text="Zip-Code:", height=2, padx=10)
     zipCode.grid(row=3, column=1)
-    zipInput = tk.Entry(contractor_add_window, width=50, bd=3)
+    zipInput = tk.Entry(contractorAddWindow, width=50, bd=3)
     zipInput.grid(row=3, column=2)
 
     contractorData['zip'] = zipInput
 
     # City
-    city = tk.Label(contractor_add_window, text="City:", height=2, padx=10)
+    city = tk.Label(contractorAddWindow, text="City:", height=2, padx=10)
     city.grid(row=4, column=1)
-    cityInput = tk.Entry(contractor_add_window, width=50, bd=3)
+    cityInput = tk.Entry(contractorAddWindow, width=50, bd=3)
     cityInput.grid(row=4, column=2)
 
     contractorData['city'] = cityInput
 
     # NIP
-    nip = tk.Label(contractor_add_window, text="NIP:", height=2, padx=10)
+    nip = tk.Label(contractorAddWindow, text="NIP:", height=2, padx=10)
     nip.grid(row=5, column=1)
-    nipInput = tk.Entry(contractor_add_window, width=50, bd=3)
+    nipInput = tk.Entry(contractorAddWindow, width=50, bd=3)
     nipInput.grid(row=5, column=2)
 
     contractorData['nip'] = nipInput
 
     # Description
-    desc = tk.Label(contractor_add_window, text="Description:", height=2, padx=10)
+    desc = tk.Label(contractorAddWindow, text="Description:", height=2, padx=10)
     desc.grid(row=6, column=1)
-    descInput = tk.Entry(contractor_add_window, width=50, bd=3)
+    descInput = tk.Entry(contractorAddWindow, width=50, bd=3)
     descInput.grid(row=6, column=2)
 
     contractorData['desc'] = descInput
 
     # Submit
-    submitLabel = tk.Button(contractor_add_window, text="Submit", command=lambda: add_contractor_to_base(contractorData))
+    submitLabel = tk.Button(contractorAddWindow, text="Submit", command=lambda: add_contractor_to_base(contractorData))
     submitLabel.grid(row=7, column=2)
 
 
 def open_contractors_window(app):
     # Creating new window
-    global contractor_window
-    contractor_window = Toplevel(app)
-    contractor_window.title("Contractors")
-    contractor_window.geometry('900x500')
-    contractor_window.minsize(900, 100)
-    contractor_window['bg'] = '#f8deb4'
+    global contractorMainWindow
+    contractorMainWindow = Toplevel(app)
+    contractorMainWindow.title("Contractors")
+    contractorMainWindow.geometry('900x500')
+    contractorMainWindow.minsize(900, 100)
+    contractorMainWindow['bg'] = '#f8deb4'
 
     # Creating PanedWindow - for splitting frames in ratio
-    panedwindow = Panedwindow(contractor_window, orient=HORIZONTAL)
+    panedwindow = Panedwindow(contractorMainWindow, orient=HORIZONTAL)
     panedwindow.pack(fill=BOTH, expand=True)
 
     # Creating Left Frame
@@ -222,12 +221,12 @@ def open_contractors_window(app):
 
 
     addContrahentButton = tk.Button(addContLabel, text="Add new contractor", height=2, width=20, padx = 5, pady=5,
-                                    command=lambda: add_contractor_window(contractor_window))
+                                    command=lambda: add_contractor_window(contractorMainWindow))
     addContrahentButton.pack(fill=BOTH, side=LEFT, expand=True)
 
     global updateContrahentButton
     updateContrahentButton = tk.Button(updateContLabel, text="Update contractor", height=2, width=20, padx=5, pady=5,
-                                    command=lambda: update_contractor_window(contractor_window))
+                                       command=lambda: update_contractor_window(contractorMainWindow))
     updateContrahentButton.pack(fill=BOTH, side=LEFT, expand=True)
 
     global deleteContractorButton
@@ -235,20 +234,21 @@ def open_contractors_window(app):
                                        command=remove_contractor)
     deleteContractorButton.pack(fill=BOTH, side=LEFT, expand=True)
 
-    updateContrahentButton['state']=DISABLED
-    deleteContractorButton['state']=DISABLED
-    #Right side of window
-    global contractors_list
-    contractors_list = Listbox(fram2, height=20, width=70, border=0)
-    contractors_list.grid(row=3, column=0, columnspan=4, rowspan=10, pady=20, padx=20)
+    updateContrahentButton['state'] = DISABLED
+    deleteContractorButton['state'] = DISABLED
+
+    # Right side of window
+    global contractorsList
+    contractorsList = Listbox(fram2, height=20, width=70, border=0)
+    contractorsList.grid(row=3, column=0, columnspan=4, rowspan=10, pady=20, padx=20)
     # Create scrollbar
     scrollbar = Scrollbar(fram2)
     scrollbar.grid(row=4, column=5)
     # Set scroll to listbox
-    contractors_list.configure(yscrollcommand=scrollbar.set)
-    scrollbar.configure(command=contractors_list.yview)
+    contractorsList.configure(yscrollcommand=scrollbar.set)
+    scrollbar.configure(command=contractorsList.yview)
     # Bind select
-    contractors_list.bind('<<ListboxSelect>>', select_item)
+    contractorsList.bind('<<ListboxSelect>>', select_item)
 
 
 
