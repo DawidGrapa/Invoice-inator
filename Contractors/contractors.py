@@ -135,6 +135,7 @@ def add_contractor_window(app):
     contractorAddWindow = Toplevel(app)
     contractorAddWindow.title("Add new contractor")
     contractorAddWindow.minsize(500, 260)
+    contractorAddWindow.resizable(0,0)
 
     # Dictionary for storing collected data
     contractorData = dict()
