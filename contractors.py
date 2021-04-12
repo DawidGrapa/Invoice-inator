@@ -1,6 +1,30 @@
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
+from db import Database
+from tkinter import messagebox
+
+db = Database('contractors.db')
+
+def select_item(event):
+    try:
+        global selected_item
+        index = contractors_list.curselection()[0]
+        selected_item = contractors_list.get(index)
+    except IndexError:
+        pass
+
+def remove_contractor():
+    if messagebox.askyesno("Delete","Are you sure?"):
+        db.remove_contractor(selected_item[0])
+        show_contractors()
+
+def show_contractors():
+    contractors_list.delete(0, END)
+    for row in db.fetch_contractors():
+        contractors_list.insert(END, row)
+
+
 
 
 def print_collected_data(data):
@@ -75,7 +99,7 @@ def open_contractors_window(app):
     newWindow = Toplevel(app)
     newWindow.title("Contractors")
     newWindow.geometry('700x500')
-    newWindow.minsize(600, 100)
+    newWindow.minsize(650, 100)
     newWindow['bg'] = '#f8deb4'
 
     # Creating PanedWindow - for splitting frames in ratio
@@ -93,7 +117,25 @@ def open_contractors_window(app):
     deleteContLabel = tk.Label(fram1)
     deleteContLabel.pack()
 
-    addContrahentButton = tk.Button(addContLabel, text="Add new contractor", height=2, width=20, command=lambda: add_contractor_window(newWindow))
+    #Right side of window
+    global contractors_list
+    contractors_list = Listbox(fram2, height=20, width=70, border=0)
+    contractors_list.grid(row=3, column=0, columnspan=4, rowspan=10, pady=20, padx=20)
+    # Create scrollbar
+    scrollbar = Scrollbar(fram2)
+    scrollbar.grid(row=4, column=5)
+    # Set scroll to listbox
+    contractors_list.configure(yscrollcommand=scrollbar.set)
+    scrollbar.configure(command=contractors_list.yview)
+    # Bind select
+    contractors_list.bind('<<ListboxSelect>>', select_item)
+
+    show_contractors()
+
+    addContrahentButton = tk.Button(addContLabel, text="Add new contractor", height=2, width=20,
+                                    command=lambda: add_contractor_window(newWindow))
     addContrahentButton.pack(fill=BOTH, side=LEFT, expand=True)
-    deleteContractorButton = tk.Button(deleteContLabel, text="Delete contractor", height=2, width=20)
+    deleteContractorButton = tk.Button(deleteContLabel, text="Delete contractor", height=2, width=20,
+                                       command=remove_contractor)
     deleteContractorButton.pack(fill=BOTH, side=LEFT, expand=True)
+
