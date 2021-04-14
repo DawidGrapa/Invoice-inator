@@ -5,19 +5,22 @@ from Database.db import Database
 from tkinter import messagebox, font
 from Validators.validators import *
 
+
 db = Database('Database/contractors.db')
 
 
 def select_item(event):
     try:
-        if contractorsList.size()>0:
-            updateContrahentButton['state'] = ACTIVE
-            deleteContractorButton['state'] = ACTIVE
+        if len(contractorsList.get_children())>0:
             global selectedItem
-            index = contractorsList.curselection()[0]
-            selectedItem = contractorsList.get(index)
+            selectedItem = contractorsList.item(contractorsList.focus())["values"]
+            if len(selectedItem) > 0:
+                updateContrahentButton['state'] = ACTIVE
+                deleteContractorButton['state'] = ACTIVE
+            print(selectedItem)
     except IndexError:
         pass
+
 
 
 def remove_contractor():
@@ -29,14 +32,12 @@ def remove_contractor():
 
 
 def show_contractors():
-    contractorsList.delete(0, END)
-    bolded = font.Font(weight='bold')  # will use the default font
-    contractorsList.config(font=bolded)
+    contractorsList.delete(*contractorsList.get_children())
     for row in db.fetch_contractors():
         if row[6] == "":
-            contractorsList.insert(END, row[:6])
+            contractorsList.insert(parent = '', index = 'end', text = "A" , values = row[:6])
         else:
-            contractorsList.insert(END, row)
+            contractorsList.insert(parent = '', index = 'end', text = "A" , values = row)
 
 
 def add_contractor_to_base(data):
@@ -199,8 +200,8 @@ def open_contractors_window(app):
     global contractorMainWindow
     contractorMainWindow = Toplevel(app)
     contractorMainWindow.title("Contractors")
-    contractorMainWindow.geometry('900x500')
-    contractorMainWindow.minsize(900, 100)
+    contractorMainWindow.geometry('900x487')
+    contractorMainWindow.resizable(0,0)
     contractorMainWindow['bg'] = '#f8deb4'
 
     # Creating PanedWindow - for splitting frames in ratio
@@ -240,16 +241,36 @@ def open_contractors_window(app):
 
     # Right side of window
     global contractorsList
-    contractorsList = Listbox(fram2, height=20, width=70, border=0)
-    contractorsList.grid(row=3, column=0, columnspan=4, rowspan=10, pady=20, padx=20)
-    # Create scrollbar
+    contractorsList = Treeview(fram2, height = 23)
+
+    contractorsList['columns']=("ID","Name",'Street','Zip-Code','City','NIP','Desc')
+    contractorsList.column("#0",width = 0, stretch = NO)
+    contractorsList.column("ID",anchor = W, width = 30)
+    contractorsList.column("Name",anchor = W, width = 100)
+    contractorsList.column("Street", anchor=W, width=100)
+    contractorsList.column("Zip-Code", anchor=W, width=100)
+    contractorsList.column("City", anchor=W, width=100)
+    contractorsList.column("NIP", anchor=W, width=100)
+    contractorsList.column("Desc", anchor=W, width=100)
+
+
+    contractorsList.heading("ID", text = "ID", anchor = W)
+    contractorsList.heading("Name", text = "Name", anchor = W)
+    contractorsList.heading("Street", text = "Street", anchor = W)
+    contractorsList.heading("Zip-Code", text = "Zip-Code", anchor = W)
+    contractorsList.heading("City", text = "City", anchor = W)
+    contractorsList.heading("NIP", text = "NIP", anchor = W)
+    contractorsList.heading("Desc", text = "Desc", anchor = W)
+
+
+    #Create scrollbar
     scrollbar = Scrollbar(fram2)
-    scrollbar.grid(row=4, column=5)
+    scrollbar.pack(side = RIGHT, fill =Y)
     # Set scroll to listbox
     contractorsList.configure(yscrollcommand=scrollbar.set)
     scrollbar.configure(command=contractorsList.yview)
     # Bind select
-    contractorsList.bind('<<ListboxSelect>>', select_item)
+    contractorsList.bind("<ButtonRelease-1>", select_item)
 
     show_contractors()
-
+    contractorsList.pack(fill=BOTH)
