@@ -13,3 +13,7 @@ def add_contractor_validator(contractor):
         return "NIP"
 
     return True
+
+
+def add_product_validator(product):
+    return True
