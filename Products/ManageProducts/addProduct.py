@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import *
-from tkinter.ttk import *
-from tkinter import messagebox, font
+from tkinter import messagebox
 from Validators.validators import *
 from Database.db import Database
 

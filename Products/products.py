@@ -1,8 +1,6 @@
-import tkinter as tk
-from tkinter import *
 from tkinter.ttk import *
-from Database.db import Database
 from Products.ManageProducts.addProduct import *
+from Products.ManageProducts.deleteProduct import remove_product
 
 db = Database('Database/Database.db')
 
@@ -20,7 +18,6 @@ def select_item(event, productsList, update, delete):
 
 def open_products_window(app):
     # Creating new window
-    global productsMainWindow
     productsMainWindow = Toplevel(app)
     productsMainWindow.title("Products")
     productsMainWindow.geometry('900x487')
@@ -51,7 +48,7 @@ def open_products_window(app):
     updateProductButton = tk.Button(updateProductLabel, text="Update product", height=2, width=20, padx=5, pady=5)
     updateProductButton.pack(fill=BOTH, side=LEFT, expand=True)
 
-    deleteProductButton = tk.Button(deleteProductLabel, text="Delete product", height=2, width=20, padx=5, pady=5)
+    deleteProductButton = tk.Button(deleteProductLabel, text="Delete product", height=2, width=20, padx=5, pady=5, command = lambda : remove_product(productsMainWindow, selectedItem,updateProductButton, deleteProductButton, productsList))
     deleteProductButton.pack(fill=BOTH, side=LEFT, expand=True)
 
     updateProductButton['state'] = DISABLED

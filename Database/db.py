@@ -35,8 +35,8 @@ class Database:
         self.cur.execute("INSERT INTO products VALUES (NULL, ?,?,?,?)" ,(productname,unit,vat,price))
         self.conn.commit()
     def remove_product(self,id):
-        self.cur.execute("DELETE FROM contractors WHERE id=?",(id,))
-        self.conn.execute()
+        self.cur.execute("DELETE FROM products WHERE id=?",(id,))
+        self.conn.commit()
     def update_product(self,id):
         self.cur.execute("UPDATE products SET productname =?, unit = ?, vat = ?, price = ?")
         self.conn.commit()
