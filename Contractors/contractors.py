@@ -6,7 +6,7 @@ from tkinter import messagebox, font
 from Validators.validators import *
 
 
-db = Database('Database/contractors.db')
+db = Database('./Database/Database.db')
 
 
 def select_item(event):
