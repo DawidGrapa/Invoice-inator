@@ -4,6 +4,7 @@ from Products.ManageProducts.deleteProduct import remove_product
 
 db = Database('Database/Database.db')
 
+
 def select_item(event, productsList, update, delete):
     try:
         if len(productsList.get_children())>0:

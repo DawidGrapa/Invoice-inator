@@ -1,4 +1,4 @@
-def add_contractor_validator(contractor):
+def validate_contractor(contractor):
     name = contractor['name'].get()
     street = contractor['street'].get()
     city = contractor['city'].get()
@@ -15,5 +15,5 @@ def add_contractor_validator(contractor):
     return True
 
 
-def add_product_validator(product):
+def validate_product(product):
     return True

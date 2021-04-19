@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
-from Validators.validators import *
 from Database.db import Database
+from Validators.validators import *
 
 db = Database('Database/Database.db')
+
 
 def show_products(productsList):
     productsList.delete(*productsList.get_children())
@@ -13,7 +14,7 @@ def show_products(productsList):
 
 
 def add_product_to_base(data, productAddWindow, productsList):
-    res = add_product_validator(data)
+    res = validate_product(data)
     if res == True:
         db.insert_product(data['name'].get(), data['unit'].get(), data['vat'].get(), data['price'].get())
         messagebox.showinfo("Success", "Added successfully!", parent=productAddWindow)
@@ -21,6 +22,7 @@ def add_product_to_base(data, productAddWindow, productsList):
         productAddWindow.destroy()
     else:
         messagebox.showinfo("Wrong arguments","Wrong argument: " + str(res) +"!", parent=productAddWindow)
+
 
 def add_product_window(app, productsList):
     productAddWindow = Toplevel(app)
