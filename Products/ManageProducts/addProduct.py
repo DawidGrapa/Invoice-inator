@@ -18,7 +18,7 @@ class AddProductWindow:
 
     def add_to_base(self):
         res = validate_product(self.data)
-        if res == True:
+        if res:
             db.insert_product(self.data['name'].get(), self.data['unit'].get(), self.data['vat'].get(), self.data['price'].get())
             messagebox.showinfo("Success", "Added successfully!", parent=self.window)
             self.parent.show_products()

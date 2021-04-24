@@ -17,8 +17,8 @@ class UpdateContractorWindow:
         self.update_contractor_window()
 
     def update_in_base(self):
-        res = validate_contractor(self.data)
-        if res == True:
+        res, x = validate_contractor(self.data)
+        if res:
             db.update_contractor(self.selected[0], self.data['name'].get(), self.data['street'].get(), self.data['zip'].get(),
                                  self.data['city'].get(), self.data['nip'].get(), self.data['desc'].get())
             messagebox.showinfo("Success", "Updated successfully!", parent=self.window)
@@ -27,7 +27,7 @@ class UpdateContractorWindow:
             self.parent.show_contractors()
             self.window.destroy()
         else:
-            messagebox.showinfo("Wrong arguments", "Wrong argument: " + str(res) + "!", parent=self.window)
+            messagebox.showinfo("Wrong arguments", "Wrong argument: " + str(x) + "!", parent=self.window)
 
     def update_contractor_window(self):
         self.window.title("Update contractor")

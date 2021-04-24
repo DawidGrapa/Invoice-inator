@@ -17,15 +17,15 @@ class AddContractorWindow:
         self.expand_window()
 
     def add_to_base(self):
-        res = validate_contractor(self.data)
-        if res == True:
+        res, x = validate_contractor(self.data)
+        if res:
             db.insert_contractor(self.data['name'].get(), self.data['street'].get(), self.data['zip'].get(),
                                  self.data['city'].get(), self.data['nip'].get(), self.data['desc'].get())
             messagebox.showinfo("Success", "Added successfully!", parent=self.window)
             self.parent.show_contractors()
             self.window.destroy()
         else:
-            messagebox.showinfo("Wrong arguments", "Wrong argument: " + str(res) + "!", parent=self.window)
+            messagebox.showinfo("Wrong arguments", "Wrong argument: " + str(x) + "!", parent=self.window)
 
     def expand_window(self):
         self.window.title("Add new contractor")
