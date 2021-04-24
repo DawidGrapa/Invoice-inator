@@ -1,4 +1,3 @@
-from Contractors.contractors import *
 from PopUpWindows.about_us_window import *
 from Products.products import *
 from Contractors.contractors import *
@@ -21,7 +20,7 @@ file_menu.add_command(label="Create invoice", font='Helvetica 10 bold')
 file_menu.add_separator()
 file_menu.add_command(label="List of contractors", command=lambda: ContractorsWindow(app))
 file_menu.add_separator()
-file_menu.add_command(label = "List of products", command = lambda: open_products_window(app))
+file_menu.add_command(label = "List of products", command=lambda: ProductsWindow(app))
 
 settings_menu = Menu(my_menu, tearoff=False)
 

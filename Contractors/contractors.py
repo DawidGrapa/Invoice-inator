@@ -73,7 +73,8 @@ class ContractorsWindow:
                                     command=lambda: AddContractorWindow(self, self.main_window, self.ctr_list))
 
         self.update_button = tk.Button(update_label, text="Update contractor", height=2, width=20, padx=5, pady=5,
-                                       command=lambda: UpdateContractorWindow(self, self.main_window, self.ctr_list, self.selected))
+                                       command=lambda: UpdateContractorWindow(self, self.main_window, self.ctr_list,
+                                                                              self.selected))
 
         self.delete_button = tk.Button(delete_label, text="Delete contractor", height=2, width=20, padx=5, pady=5,
                                        command=self.remove_contractor)

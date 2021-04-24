@@ -1,85 +1,110 @@
+import tkinter as tk
+from tkinter import *
+from Database.db import Database
+from tkinter import messagebox
 from tkinter.ttk import *
-from Products.ManageProducts.addProduct import *
-from Products.ManageProducts.deleteProduct import remove_product
+from Products.ManageProducts.addProduct import AddProductWindow
 
 db = Database('Database/Database.db')
 
 
-def select_item(event, productsList, update, delete):
-    try:
-        if len(productsList.get_children())>0:
-            global selectedItem
-            selectedItem = productsList.item(productsList.focus())["values"]
-            if len(selectedItem) > 0:
-                update['state'] = ACTIVE
-                delete['state'] = ACTIVE
-    except IndexError:
-        pass
+class ProductsWindow:
+    def __init__(self, app):
+        self.app = app
+        self.window = Toplevel(app)
+        self.prod_list = Treeview()
+        self.selected = None
+        self.add_button = tk.Button()
+        self.update_button = tk.Button()
+        self.delete_button = tk.Button()
+        self.open_products_window()
 
+    def select_item(self, event):
+        try:
+            if len(self.prod_list.get_children()) > 0:
+                self.selected = self.prod_list.item(self.prod_list.focus())["values"]
+                if len(self.selected) > 0:
+                    self.update_button['state'] = ACTIVE
+                    self.delete_button['state'] = ACTIVE
+        except IndexError:
+            pass
 
-def open_products_window(app):
-    # Creating new window
-    productsMainWindow = Toplevel(app)
-    productsMainWindow.title("Products")
-    productsMainWindow.geometry('900x487')
-    productsMainWindow.resizable(0, 0)
-    productsMainWindow['bg'] = '#f8deb4'
+    def show_products(self):
+        self.prod_list.delete(*self.prod_list.get_children())
+        for row in db.fetch_products():
+            self.prod_list.insert(parent='', index='end', text="A", values=row)
 
-    # Creating PanedWindow - for splitting frames in ratio
-    panedwindow = Panedwindow(productsMainWindow, orient=HORIZONTAL)
-    panedwindow.pack(fill=BOTH, expand=True)
+    def remove_product(self):
+        if messagebox.askyesno("Delete", "Are you sure?", parent=self.window):
+            db.remove_product(self.selected[0])
+            self.update_button['state'] = DISABLED
+            self.delete_button['state'] = DISABLED
+            self.show_products()
 
-    # Creating Left Frame
-    fram1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#f8deb4')
-    fram2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#94dbd6')
-    panedwindow.add(fram1, weight=1)
-    panedwindow.add(fram2, weight=4)
+    def open_products_window(self):
+        # Creating new window
+        self.window.title("Products")
+        self.window.geometry('900x487')
+        self.window.resizable(0, 0)
+        self.window['bg'] = '#f8deb4'
 
-    #Creating Buttons
-    addProductLabel = tk.Label(fram1)
-    addProductLabel.pack()
-    updateProductLabel = tk.Label(fram1)
-    updateProductLabel.pack()
-    deleteProductLabel = tk.Label(fram1)
-    deleteProductLabel.pack()
+        # Creating PanedWindow - for splitting frames in ratio
+        panedwindow = Panedwindow(self.window, orient=HORIZONTAL)
+        panedwindow.pack(fill=BOTH, expand=True)
 
-    addProductButton = tk.Button(addProductLabel, text="Add new product", height=2, width=20, padx=5, pady=5, command = lambda: add_product_window(productsMainWindow, productsList))
-    addProductButton.pack(fill=BOTH, side=LEFT, expand=True)
+        # Creating Left Frame
+        fram1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#f8deb4')
+        fram2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#94dbd6')
+        panedwindow.add(fram1, weight=1)
+        panedwindow.add(fram2, weight=4)
 
-    updateProductButton = tk.Button(updateProductLabel, text="Update product", height=2, width=20, padx=5, pady=5)
-    updateProductButton.pack(fill=BOTH, side=LEFT, expand=True)
+        # Creating Buttons
+        add_label = tk.Label(fram1)
+        update_label = tk.Label(fram1)
+        delete_label = tk.Label(fram1)
+        add_label.pack()
+        update_label.pack()
+        delete_label.pack()
 
-    deleteProductButton = tk.Button(deleteProductLabel, text="Delete product", height=2, width=20, padx=5, pady=5, command = lambda : remove_product(productsMainWindow, selectedItem,updateProductButton, deleteProductButton, productsList))
-    deleteProductButton.pack(fill=BOTH, side=LEFT, expand=True)
+        self.add_button = tk.Button(add_label, text="Add new product", height=2, width=20, padx=5, pady=5,
+                                    command=lambda: AddProductWindow(self, self.window, self.prod_list))
+        self.add_button.pack(fill=BOTH, side=LEFT, expand=True)
 
-    updateProductButton['state'] = DISABLED
-    deleteProductButton['state'] = DISABLED
+        self.update_button = tk.Button(update_label, text="Update product", height=2, width=20, padx=5, pady=5)
+        self.update_button.pack(fill=BOTH, side=LEFT, expand=True)
 
-    # Right side of window
-    productsList = Treeview(fram2, height=23)
+        self.delete_button = tk.Button(delete_label, text="Delete product", height=2, width=20, padx=5, pady=5,
+                                       command=lambda: self.remove_product())
+        self.delete_button.pack(fill=BOTH, side=LEFT, expand=True)
 
-    productsList['columns'] = ("ID", "ProductName", 'Unit', 'VAT', 'Price')
-    productsList.column("#0", width=0, stretch=NO)
-    productsList.column("ID", anchor=W, width=30)
-    productsList.column("ProductName", anchor=W, width=100)
-    productsList.column("Unit", anchor=W, width=100)
-    productsList.column("VAT", anchor=W, width=100)
-    productsList.column("Price", anchor=W, width=100)
+        self.update_button['state'] = DISABLED
+        self.delete_button['state'] = DISABLED
 
-    productsList.heading("ID", text="ID", anchor=W)
-    productsList.heading("ProductName", text="Product Name", anchor=W)
-    productsList.heading("Unit", text="Unit", anchor=W)
-    productsList.heading("VAT", text="VAT", anchor=W)
-    productsList.heading("Price", text="Netto price", anchor=W)
+        # Right side of window
+        self.prod_list = Treeview(fram2, height=23)
 
-    # Create scrollbar
-    scrollbar = Scrollbar(fram2)
-    scrollbar.pack(side=RIGHT, fill=Y)
-    # Set scroll to listbox
-    productsList.configure(yscrollcommand=scrollbar.set)
-    scrollbar.configure(command=productsList.yview)
-    # Bind select
-    productsList.bind("<ButtonRelease-1>", lambda event: select_item(event, productsList,updateProductButton,deleteProductButton))
+        self.prod_list['columns'] = ("ID", "ProductName", 'Unit', 'VAT', 'Price')
+        self.prod_list.column("#0", width=0, stretch=NO)
+        self.prod_list.column("ID", anchor=W, width=30)
+        self.prod_list.column("ProductName", anchor=W, width=100)
+        self.prod_list.column("Unit", anchor=W, width=100)
+        self.prod_list.column("VAT", anchor=W, width=100)
+        self.prod_list.column("Price", anchor=W, width=100)
 
-    show_products(productsList)
-    productsList.pack(fill=BOTH)
+        self.prod_list.heading("ID", text="ID", anchor=W)
+        self.prod_list.heading("ProductName", text="Product Name", anchor=W)
+        self.prod_list.heading("Unit", text="Unit", anchor=W)
+        self.prod_list.heading("VAT", text="VAT", anchor=W)
+        self.prod_list.heading("Price", text="Netto price", anchor=W)
+
+        # Create scrollbar
+        scrollbar = Scrollbar(fram2)
+        scrollbar.pack(side=RIGHT, fill=Y)
+        # Set scroll to listbox
+        self.prod_list.configure(yscrollcommand=scrollbar.set)
+        scrollbar.configure(command=self.prod_list.yview)
+        # Bind select
+        self.prod_list.bind("<ButtonRelease-1>", lambda event: self.select_item(event))
+
+        self.show_products()
+        self.prod_list.pack(fill=BOTH)

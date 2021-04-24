@@ -7,65 +7,63 @@ from Validators.validators import *
 db = Database('Database/Database.db')
 
 
-def show_products(productsList):
-    productsList.delete(*productsList.get_children())
-    for row in db.fetch_products():
-        productsList.insert(parent='', index='end', text="A", values=row)
+class AddProductWindow:
+    def __init__(self, parent, app, product_list):
+        self.parent = parent
+        self.app = app
+        self.window = Toplevel(app)
+        self.pr_list = product_list
+        self.data = dict()
+        self.expand_window()
 
+    def add_to_base(self):
+        res = validate_product(self.data)
+        if res == True:
+            db.insert_product(self.data['name'].get(), self.data['unit'].get(), self.data['vat'].get(), self.data['price'].get())
+            messagebox.showinfo("Success", "Added successfully!", parent=self.window)
+            self.parent.show_products()
+            self.window.destroy()
+        else:
+            messagebox.showinfo("Wrong arguments", "Wrong argument: " + str(res) + "!", parent=self.window)
 
-def add_product_to_base(data, productAddWindow, productsList):
-    res = validate_product(data)
-    if res == True:
-        db.insert_product(data['name'].get(), data['unit'].get(), data['vat'].get(), data['price'].get())
-        messagebox.showinfo("Success", "Added successfully!", parent=productAddWindow)
-        show_products(productsList)
-        productAddWindow.destroy()
-    else:
-        messagebox.showinfo("Wrong arguments","Wrong argument: " + str(res) +"!", parent=productAddWindow)
+    def expand_window(self):
+        self.window.title("Add new product")
+        self.window.minsize(450, 200)
+        self.window.resizable(0, 0)
 
+        # Labels and Entries
+        # Name
+        name = tk.Label(self.window, text="Product Name:", height=2, padx=10)
+        name.grid(row=1, column=1)
+        nameInput = tk.Entry(self.window, width=50, bd=3)
+        nameInput.grid(row=1, column=2)
 
-def add_product_window(app, productsList):
-    productAddWindow = Toplevel(app)
-    productAddWindow.title("Add new product")
-    productAddWindow.minsize(450, 200)
-    productAddWindow.resizable(0,0)
+        self.data['name'] = nameInput
 
-    # Dictionary for storing collected data
-    productData = dict()
+        # Unit
+        unit = tk.Label(self.window, text="Unit:", height=2, padx=10)
+        unit.grid(row=2, column=1)
+        unitInput = tk.Entry(self.window, width=50, bd=3)
+        unitInput.grid(row=2, column=2)
 
-    # Labels and Entries
-    # Name
-    name = tk.Label(productAddWindow, text="Product Name:", height=2, padx=10)
-    name.grid(row=1, column=1)
-    nameInput = tk.Entry(productAddWindow, width=50, bd=3)
-    nameInput.grid(row=1, column=2)
+        self.data['unit'] = unitInput
 
-    productData['name'] = nameInput
+        # VAT
+        vat = tk.Label(self.window, text="VAT value in %:", height=2, padx=10)
+        vat.grid(row=3, column=1)
+        vatInput = tk.Entry(self.window, width=50, bd=3)
+        vatInput.grid(row=3, column=2)
 
-    # Unit
-    unit = tk.Label(productAddWindow, text="Unit:", height=2, padx=10)
-    unit.grid(row=2, column=1)
-    unitInput = tk.Entry(productAddWindow, width=50, bd=3)
-    unitInput.grid(row=2, column=2)
+        self.data['vat'] = vatInput
 
-    productData['unit'] = unitInput
+        # Price
+        price = tk.Label(self.window, text="Price:", height=2, padx=10)
+        price.grid(row=4, column=1)
+        priceInput = tk.Entry(self.window, width=50, bd=3)
+        priceInput.grid(row=4, column=2)
 
-    # VAT
-    vat = tk.Label(productAddWindow, text="VAT value in %:", height=2, padx=10)
-    vat.grid(row=3, column=1)
-    vatInput = tk.Entry(productAddWindow, width=50, bd=3)
-    vatInput.grid(row=3, column=2)
+        self.data['price'] = priceInput
 
-    productData['vat'] = vatInput
-
-    # Price
-    price = tk.Label(productAddWindow, text="Price:", height=2, padx=10)
-    price.grid(row=4, column=1)
-    priceInput = tk.Entry(productAddWindow, width=50, bd=3)
-    priceInput.grid(row=4, column=2)
-
-    productData['price'] = priceInput
-
-    # Submit
-    submitLabel = tk.Button(productAddWindow, text="Submit", command=lambda: add_product_to_base(productData, productAddWindow, productsList))
-    submitLabel.grid(row=7, column=2)
+        # Submit
+        submitLabel = tk.Button(self.window, text="Submit", command=self.add_to_base)
+        submitLabel.grid(row=7, column=2)

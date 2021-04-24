@@ -36,51 +36,51 @@ class AddContractorWindow:
         # Name
         name = tk.Label(self.window, text="Company Name:", height=2, padx=10)
         name.grid(row=1, column=1)
-        nameInput = tk.Entry(self.window, width=50, bd=3)
-        nameInput.grid(row=1, column=2)
+        name_input = tk.Entry(self.window, width=50, bd=3)
+        name_input.grid(row=1, column=2)
 
-        self.data['name'] = nameInput
+        self.data['name'] = name_input
 
         # Street
         street = tk.Label(self.window, text="Street:", height=2, padx=10)
         street.grid(row=2, column=1)
-        streetInput = tk.Entry(self.window, width=50, bd=3)
-        streetInput.grid(row=2, column=2)
+        street_input = tk.Entry(self.window, width=50, bd=3)
+        street_input.grid(row=2, column=2)
 
-        self.data['street'] = streetInput
+        self.data['street'] = street_input
 
         # ZIP-CODE
-        zipCode = tk.Label(self.window, text="Zip-Code:", height=2, padx=10)
-        zipCode.grid(row=3, column=1)
-        zipInput = tk.Entry(self.window, width=50, bd=3)
-        zipInput.grid(row=3, column=2)
+        zipcode = tk.Label(self.window, text="Zip-Code:", height=2, padx=10)
+        zipcode.grid(row=3, column=1)
+        zip_input = tk.Entry(self.window, width=50, bd=3)
+        zip_input.grid(row=3, column=2)
 
-        self.data['zip'] = zipInput
+        self.data['zip'] = zip_input
 
         # City
         city = tk.Label(self.window, text="City:", height=2, padx=10)
         city.grid(row=4, column=1)
-        cityInput = tk.Entry(self.window, width=50, bd=3)
-        cityInput.grid(row=4, column=2)
+        city_input = tk.Entry(self.window, width=50, bd=3)
+        city_input.grid(row=4, column=2)
 
-        self.data['city'] = cityInput
+        self.data['city'] = city_input
 
         # NIP
         nip = tk.Label(self.window, text="NIP:", height=2, padx=10)
         nip.grid(row=5, column=1)
-        nipInput = tk.Entry(self.window, width=50, bd=3)
-        nipInput.grid(row=5, column=2)
+        nip_input = tk.Entry(self.window, width=50, bd=3)
+        nip_input.grid(row=5, column=2)
 
-        self.data['nip'] = nipInput
+        self.data['nip'] = nip_input
 
         # Description
         desc = tk.Label(self.window, text="Description:", height=2, padx=10)
         desc.grid(row=6, column=1)
-        descInput = tk.Entry(self.window, width=50, bd=3)
-        descInput.grid(row=6, column=2)
+        desc_input = tk.Entry(self.window, width=50, bd=3)
+        desc_input.grid(row=6, column=2)
 
-        self.data['desc'] = descInput
+        self.data['desc'] = desc_input
 
         # Submit
-        submitLabel = tk.Button(self.window, text="Submit", command=lambda: self.add_to_base())
-        submitLabel.grid(row=7, column=2)
+        submit_label = tk.Button(self.window, text="Submit", command=self.add_to_base)
+        submit_label.grid(row=7, column=2)
