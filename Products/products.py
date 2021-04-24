@@ -41,6 +41,15 @@ class ProductsWindow:
             self.delete_button['state'] = DISABLED
             self.show_products()
 
+    def show_selected(self, value):
+        if value.get():
+            self.prod_list.delete(*self.prod_list.get_children())
+            for row in db.fetch_products():
+                if value.get().lower() in row[1].lower():
+                    self.prod_list.insert(parent='', index='end', text="A", values=row)
+        else:
+            self.show_products()
+
     def open_products_window(self):
         # Creating new window
         self.window.title("Products")
@@ -81,7 +90,20 @@ class ProductsWindow:
         self.delete_button['state'] = DISABLED
 
         # Right side of window
-        self.prod_list = Treeview(fram2, height=23)
+        def on_click(event):
+            e.configure(state = NORMAL)
+            e.delete(0, END)
+        #search tool
+        sv = StringVar()
+        sv.trace("w", lambda name, index, mode, sv=sv: self.show_selected(sv))
+        e = Entry(fram2, textvariable=sv, width = 60)
+        e.insert(0, "Search product...")
+        e.configure(state=DISABLED)
+        e.bind('<Button-1>', on_click)
+        e.pack(side = TOP, pady =10)
+
+        #treeview
+        self.prod_list = Treeview(fram2, height=22)
 
         self.prod_list['columns'] = ("ID", "ProductName", 'Unit', 'VAT', 'Price')
         self.prod_list.column("#0", width=0, stretch=NO)
@@ -107,4 +129,4 @@ class ProductsWindow:
         self.prod_list.bind("<ButtonRelease-1>", lambda event: self.select_item(event))
 
         self.show_products()
-        self.prod_list.pack(fill=BOTH)
+        self.prod_list.pack(fill=BOTH, padx = 2)

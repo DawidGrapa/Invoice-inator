@@ -45,6 +45,18 @@ class ContractorsWindow:
             self.delete_button['state'] = DISABLED
             self.show_contractors()
 
+    def show_selected(self, value):
+        if value.get():
+            self.ctr_list.delete(*self.ctr_list.get_children())
+            for row in db.fetch_contractors():
+                if value.get().lower() in row[1].lower():
+                    if row[6] == "":
+                        self.ctr_list.insert(parent='', index='end', text="A", values=row[:6])
+                    else:
+                        self.ctr_list.insert(parent='', index='end', text="A", values=row)
+        else:
+            self.show_contractors()
+
     def open_contractors_window(self):
         # Creating new window
         self.main_window.title("Contractors")
@@ -86,6 +98,17 @@ class ContractorsWindow:
         self.delete_button['state'] = DISABLED
 
         # Right side of window
+        def on_click(event):
+            e.configure(state = NORMAL)
+            e.delete(0, END)
+        #search tool
+        sv = StringVar()
+        sv.trace("w", lambda name, index, mode, sv=sv: self.show_selected(sv))
+        e = Entry(frame2, textvariable=sv, width = 60)
+        e.insert(0, "Search contractor...")
+        e.configure(state=DISABLED)
+        e.bind('<Button-1>', on_click)
+        e.pack(side = TOP, pady =10)
         self.ctr_list = Treeview(frame2, height=23)
 
         self.ctr_list['columns'] = ("ID", "Name", 'Street', 'Zip-Code', 'City', 'NIP', 'Desc')
