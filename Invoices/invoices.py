@@ -12,6 +12,7 @@ class ChooseContractorWindow:
         self.main_window = Toplevel(app)
         self.selected = None
         self.ctr_list = Treeview()
+
         self.choose_contractor_window()
 
     def show_contractors(self):

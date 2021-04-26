@@ -19,6 +19,8 @@ class ProductsWindow:
         self.delete_button = tk.Button()
         self.open_products_window()
 
+
+
     def select_item(self, event):
         try:
             if len(self.prod_list.get_children()) > 0:
