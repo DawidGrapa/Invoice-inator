@@ -1,7 +1,7 @@
 from Database.db import Database
-import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
+from Invoices.createInvoice import CreateInvoice
 
 db = Database('Database/Database.db')
 
@@ -38,7 +38,7 @@ class ChooseContractorWindow:
         try:
             if len(self.ctr_list.get_children()) > 0:
                 self.selected = self.ctr_list.item(self.ctr_list.focus())["values"]
-                print(self.selected)
+                CreateInvoice(self.main_window, self.selected)
         except IndexError:
             pass
 
