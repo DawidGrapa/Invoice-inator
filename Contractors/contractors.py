@@ -49,7 +49,7 @@ class ContractorsWindow:
         if value.get():
             self.ctr_list.delete(*self.ctr_list.get_children())
             for row in db.fetch_contractors():
-                if value.get().lower() in row[1].lower():
+                if any(value.get().lower() in sublist for sublist in row[1:]):
                     if row[6] == "":
                         self.ctr_list.insert(parent='', index='end', text="A", values=row[:6])
                     else:

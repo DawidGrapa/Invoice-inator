@@ -1,7 +1,7 @@
 from PopUpWindows.about_us_window import *
 from Products.products import *
 from Contractors.contractors import *
-
+from Invoices.invoices import *
 # Creating window app
 app = Tk()
 app.title("TBD Manager")
@@ -16,7 +16,7 @@ my_menu = Menu(app)
 app.config(menu=my_menu)
 
 file_menu = Menu(my_menu, tearoff=False)
-file_menu.add_command(label="Create invoice", font='Helvetica 10 bold')
+file_menu.add_command(label="Create invoice", font='Helvetica 10 bold', command = lambda : ChooseContractorWindow(app))
 file_menu.add_separator()
 file_menu.add_command(label="List of contractors", command=lambda: ContractorsWindow(app))
 file_menu.add_separator()

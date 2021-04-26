@@ -45,7 +45,7 @@ class ProductsWindow:
         if value.get():
             self.prod_list.delete(*self.prod_list.get_children())
             for row in db.fetch_products():
-                if value.get().lower() in row[1].lower():
+                if any(value.get().lower() in sublist for sublist in row[1:3]):
                     self.prod_list.insert(parent='', index='end', text="A", values=row)
         else:
             self.show_products()
@@ -129,4 +129,4 @@ class ProductsWindow:
         self.prod_list.bind("<ButtonRelease-1>", lambda event: self.select_item(event))
 
         self.show_products()
-        self.prod_list.pack(fill=BOTH, padx = 2)
+        self.prod_list.pack(fill=BOTH)
