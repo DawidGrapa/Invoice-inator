@@ -17,14 +17,14 @@ class AddProductWindow:
         self.expand_window()
 
     def add_to_base(self):
-        res = validate_product(self.data)
+        res, x = validate_product(self.data)
         if res:
             db.insert_product(self.data['name'].get(), self.data['unit'].get(), self.data['vat'].get(), self.data['price'].get())
             messagebox.showinfo("Success", "Added successfully!", parent=self.window)
             self.parent.show_products()
             self.window.destroy()
         else:
-            messagebox.showinfo("Wrong arguments", "Wrong argument: " + str(res) + "!", parent=self.window)
+            messagebox.showinfo("Wrong arguments", "Wrong argument: " + str(x) + "!", parent=self.window)
 
     def expand_window(self):
         self.window.title("Add new product")

@@ -20,24 +20,22 @@ def validate_contractor(contractor):
 
 
 def validate_product(product):
-    # name = product['name'].get()
-    # unit = product['unit'].get()
-    # vat = product['vat'].get()
-    # price = product['price'].get()
-    #
-    # x = None
-    # if len(name) == 0:
-    #     x = "name"
-    # if len(unit) == 0:
-    #     x = "unit"
-    # if len(vat) == 0 or not vat.isdecimal():
-    #     x = "vat"
-    # if len(price) == 0 or not price.isdecimal():
-    #     x = "price"
-    #
-    # if x is None:
-    #     return True, x
-    # else:
-    #     return False, x
+    name = product['name'].get()
+    unit = product['unit'].get()
+    vat = product['vat'].get()
+    price = product['price'].get()
 
-    return True
+    x = None
+    if len(name) == 0:
+        x = "name"
+    if len(unit) == 0:
+        x = "unit"
+    if len(vat) == 0 or not vat.isdecimal() or not 0 <= int(vat) <= 100:
+        x = "vat"
+    if len(price) == 0 or not price.isdecimal():
+        x = "price"
+
+    if x is None:
+        return True, x
+    else:
+        return False, x

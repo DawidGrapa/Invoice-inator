@@ -49,7 +49,7 @@ class ContractorsWindow:
         if value.get():
             self.ctr_list.delete(*self.ctr_list.get_children())
             for row in db.fetch_contractors():
-                if any(value.get().lower() in sublist.lower() for sublist in row[1:]):
+                if any(value.get().lower() in sublist for sublist in row[1:]):
                     if row[6] == "":
                         self.ctr_list.insert(parent='', index='end', text="A", values=row[:6])
                     else:
@@ -109,6 +109,7 @@ class ContractorsWindow:
         e.configure(state=DISABLED)
         e.bind('<Button-1>', on_click)
         e.pack(side = TOP, pady =10)
+
         self.ctr_list = Treeview(frame2, height=23)
 
         self.ctr_list['columns'] = ("ID", "Name", 'Street', 'Zip-Code', 'City', 'NIP', 'Desc')
