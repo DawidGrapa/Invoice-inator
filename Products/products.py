@@ -4,6 +4,7 @@ from Database.db import Database
 from tkinter import messagebox
 from tkinter.ttk import *
 from Products.ManageProducts.addProduct import AddProductWindow
+from Products.ManageProducts.updateProduct import UpdateProductWindow
 
 db = Database('Database/Database.db')
 
@@ -18,8 +19,6 @@ class ProductsWindow:
         self.update_button = tk.Button()
         self.delete_button = tk.Button()
         self.open_products_window()
-
-
 
     def select_item(self, event):
         try:
@@ -81,7 +80,9 @@ class ProductsWindow:
                                     command=lambda: AddProductWindow(self, self.window, self.prod_list))
         self.add_button.pack(fill=BOTH, side=LEFT, expand=True)
 
-        self.update_button = tk.Button(update_label, text="Update product", height=2, width=20, padx=5, pady=5)
+        self.update_button = tk.Button(update_label, text="Update product", height=2, width=20, padx=5, pady=5,
+                                       command=lambda: UpdateProductWindow(self, self.window, self.prod_list,
+                                                                           self.selected))
         self.update_button.pack(fill=BOTH, side=LEFT, expand=True)
 
         self.delete_button = tk.Button(delete_label, text="Delete product", height=2, width=20, padx=5, pady=5,

@@ -19,6 +19,18 @@ def validate_contractor(contractor):
         return False, x
 
 
+def check_float(potential_float):
+    try:
+        float(potential_float)
+        if len(potential_float.rsplit('.')[-1]) > 2:
+            return False
+        return True
+
+    except ValueError:
+        print(potential_float)
+        return False
+
+
 def validate_product(product):
     name = product['name'].get()
     unit = product['unit'].get()
@@ -30,12 +42,15 @@ def validate_product(product):
         x = "name"
     if len(unit) == 0:
         x = "unit"
-    if len(vat) == 0 or not vat.isdecimal() or not 0 <= int(vat) <= 100:
+    if len(vat) == 0 or not check_float(vat) or not 0 <= int(vat) <= 100:
         x = "vat"
-    if len(price) == 0 or not price.isdecimal():
+    if len(price) == 0 or not check_float(price):
         x = "price"
 
     if x is None:
         return True, x
     else:
         return False, x
+
+
+

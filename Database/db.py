@@ -33,14 +33,14 @@ class Database:
         rows = self.cur.fetchall()
         return rows
 
-    def insert_product(self, productname,unit, vat, price):
-        self.cur.execute("INSERT INTO products VALUES (NULL, ?,?,?,?)" ,(productname,unit,vat,price))
+    def insert_product(self, productname, unit, vat, price):
+        self.cur.execute("INSERT INTO products VALUES (NULL, ?,?,?,?)", (productname,unit,vat,price))
         self.conn.commit()
 
-    def remove_product(self,id):
-        self.cur.execute("DELETE FROM products WHERE id=?",(id,))
+    def remove_product(self, id):
+        self.cur.execute("DELETE FROM products WHERE id=?", (id,))
         self.conn.commit()
 
-    def update_product(self,id):
-        self.cur.execute("UPDATE products SET productname =?, unit = ?, vat = ?, price = ?")
+    def update_product(self, id, name, unit, vat, price):
+        self.cur.execute("UPDATE products SET productname =?, unit = ?, vat = ?, price = ? WHERE id =?",(name, unit, vat, price, id))
         self.conn.commit()
