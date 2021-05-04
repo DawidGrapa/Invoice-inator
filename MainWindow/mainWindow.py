@@ -1,3 +1,5 @@
+from tkinter import font
+
 from PopUpWindows.about_us_window import *
 from Products.products import *
 from Contractors.contractors import *
@@ -13,9 +15,10 @@ class MainWindow:
         self.photo = PhotoImage(file='Media/soy.png')
         self.my_menu = Menu(self.app)
         self.panedwindow = Panedwindow(self.app, orient=HORIZONTAL)
-        self.frame1 = tk.Frame(self.panedwindow, width=100, relief=SUNKEN, bg='#f8deb4')
+        self.leftLabelColor = '#778899'
+        self.frame1 = tk.Frame(self.panedwindow, width=100, relief=SUNKEN, bg=self.leftLabelColor)
         self.frame2 = tk.Frame(self.panedwindow, width=400, relief=SUNKEN, bg='#f8deb4')
-
+        self.myFont = font.Font(family='Monoton')
         self.createMainWindow()
 
     def createMainWindow(self):
@@ -42,25 +45,33 @@ class MainWindow:
         self.panedwindow.add(self.frame1, weight=1)
         self.panedwindow.add(self.frame2, weight=15)
 
-        createInvoice = tk.Label(self.frame1, bg='#f8deb4')
+        createInvoice = tk.Label(self.frame1, bg=self.leftLabelColor)
         createInvoice.pack()
-        contractors = tk.Label(self.frame1, bg='#f8deb4')
+        invoices = tk.Label(self.frame1, bg=self.leftLabelColor)
+        invoices.pack()
+        contractors = tk.Label(self.frame1, bg=self.leftLabelColor)
         contractors.pack()
-        products = tk.Label(self.frame1, bg='#f8deb4')
+        products = tk.Label(self.frame1, bg=self.leftLabelColor)
         products.pack()
 
-        self.createInvoice_button = tk.Button(createInvoice, text="Create Invoice", height=2,
-                                              width=20, padx=2, pady=5,
+        createInvoice_button = tk.Button(createInvoice, text="Create Invoice", bg="#B0C4DE", height=2,
+                                              width=20,
                                               command=lambda: ChooseContractorWindow(self.frame2))
-
-        self.contractors_button = tk.Button(contractors, text="Show contractors", height=2, width=20, padx=2, pady=5,
+        invoices_button = tk.Button(invoices, text="Show invoices", height = 2, width=20)
+        contractors_button = tk.Button(contractors, text="Show contractors", height=2, width=20,
                                             command=lambda: ContractorsWindow(self.app))
 
-        self.products_button = tk.Button(products, text="Show products", height=2, width=20, padx=2, pady=5,
+        products_button = tk.Button(products, text="Show products", height=2, width=20,
                                          command=lambda: ProductsWindow(self.app))
 
-        self.createInvoice_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
-        self.contractors_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
-        self.products_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
+        products_button['font']=self.myFont
+        createInvoice_button['font'] = self.myFont
+        invoices_button['font'] = self.myFont
+        contractors_button['font'] = self.myFont
+
+        createInvoice_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
+        invoices_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
+        contractors_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
+        products_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
 
         self.app.mainloop()
