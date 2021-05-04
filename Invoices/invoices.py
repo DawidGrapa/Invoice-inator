@@ -39,7 +39,7 @@ class ChooseContractorWindow:
         try:
             if len(self.ctr_list.get_children()) > 0:
                 self.selected = self.ctr_list.item(self.ctr_list.focus())["values"]
-                CreateInvoice(self.main_window, self.selected)
+                CreateInvoice(self.selected, self.main_window, self.app)
         except IndexError:
             pass
 

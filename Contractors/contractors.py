@@ -70,15 +70,15 @@ class ContractorsWindow:
 
         # Creating Left Frame
         frame1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#f8deb4')
-        frame2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#94dbd6')
+        frame2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#f8deb4')
         panedwindow.add(frame1, weight=1)
         panedwindow.add(frame2, weight=4)
 
-        add_label = tk.Label(frame1)
+        add_label = tk.Label(frame1, bg='#f8deb4')
         add_label.pack()
-        update_label = tk.Label(frame1)
+        update_label = tk.Label(frame1, bg='#f8deb4')
         update_label.pack()
-        delete_label = tk.Label(frame1)
+        delete_label = tk.Label(frame1, bg='#f8deb4')
         delete_label.pack()
 
         self.add_button = tk.Button(add_label, text="Add new contractor", height=2, width=20, padx=5, pady=5,
@@ -90,9 +90,9 @@ class ContractorsWindow:
 
         self.delete_button = tk.Button(delete_label, text="Delete contractor", height=2, width=20, padx=5, pady=5,
                                        command=self.remove_contractor)
-        self.add_button.pack(fill=BOTH, side=LEFT, expand=True)
-        self.update_button.pack(fill=BOTH, side=LEFT, expand=True)
-        self.delete_button.pack(fill=BOTH, side=LEFT, expand=True)
+        self.add_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
+        self.update_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
+        self.delete_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
 
         self.update_button['state'] = DISABLED
         self.delete_button['state'] = DISABLED

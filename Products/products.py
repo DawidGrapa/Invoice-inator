@@ -64,30 +64,30 @@ class ProductsWindow:
 
         # Creating Left Frame
         fram1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#f8deb4')
-        fram2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#94dbd6')
+        fram2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#f8deb4')
         panedwindow.add(fram1, weight=1)
         panedwindow.add(fram2, weight=4)
 
         # Creating Buttons
-        add_label = tk.Label(fram1)
-        update_label = tk.Label(fram1)
-        delete_label = tk.Label(fram1)
+        add_label = tk.Label(fram1, bg='#f8deb4')
+        update_label = tk.Label(fram1, bg='#f8deb4')
+        delete_label = tk.Label(fram1, bg='#f8deb4')
         add_label.pack()
         update_label.pack()
         delete_label.pack()
 
         self.add_button = tk.Button(add_label, text="Add new product", height=2, width=20, padx=5, pady=5,
                                     command=lambda: AddProductWindow(self, self.window, self.prod_list))
-        self.add_button.pack(fill=BOTH, side=LEFT, expand=True)
+        self.add_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
 
         self.update_button = tk.Button(update_label, text="Update product", height=2, width=20, padx=5, pady=5,
                                        command=lambda: UpdateProductWindow(self, self.window, self.prod_list,
                                                                            self.selected))
-        self.update_button.pack(fill=BOTH, side=LEFT, expand=True)
+        self.update_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
 
         self.delete_button = tk.Button(delete_label, text="Delete product", height=2, width=20, padx=5, pady=5,
                                        command=lambda: self.remove_product())
-        self.delete_button.pack(fill=BOTH, side=LEFT, expand=True)
+        self.delete_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
 
         self.update_button['state'] = DISABLED
         self.delete_button['state'] = DISABLED
