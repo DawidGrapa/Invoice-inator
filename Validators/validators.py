@@ -52,5 +52,4 @@ def validate_product(product):
     else:
         return False, x
 
-
-
+# TODO COMPANY VALIDATOR

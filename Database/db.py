@@ -7,6 +7,7 @@ class Database:
         self.cur = self.conn.cursor()
         self.cur.execute("CREATE TABLE IF NOT EXISTS contractors (id INTEGER PRIMARY  KEY, name text, street text, zip text, city text, nip text, description text)")
         self.cur.execute("CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, productname text, unit text, vat int, price float )")
+        self.cur.execute("CREATE TABLE IF NOT EXISTS company (id INTEGER PRIMARY KEY, companyname text, street text, zip text, city text, nip text, account_number text)")
         self.conn.commit()
 
     # About contractors
@@ -43,4 +44,18 @@ class Database:
 
     def update_product(self, id, name, unit, vat, price):
         self.cur.execute("UPDATE products SET productname =?, unit = ?, vat = ?, price = ? WHERE id =?",(name, unit, vat, price, id))
+        self.conn.commit()
+
+    #about own company
+    def get_company(self):
+        self.cur.execute("SELECT * from company")
+        rows = self.cur.fetchall()
+        return rows
+
+    def add_company(self, company, street, zip, city, nip, bank):
+        self.cur.execute("INSERT INTO company VALUES (NULL, ?, ?, ?, ?, ?, ?)", (company, street, zip, city, nip, bank))
+        self.conn.commit()
+
+    def update_company(self, id, company, street, zip, city, nip, bank):
+        self.cur.execute("UPDATE company SET companyname =?, street =?, zip=?, city =?, nip=?, account_number =? WHERE id = ?", (company, street, zip, city, nip, bank, id))
         self.conn.commit()

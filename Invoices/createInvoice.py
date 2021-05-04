@@ -16,6 +16,6 @@ class CreateInvoice:
 
     def create_invoice_window(self):
         self.contractors_window.destroy()
-        name = tk.Label(self.window, text=self.selected, height=2, padx=10)
-        name.grid(row=1, column=1)
+
+
 

@@ -1,5 +1,5 @@
 from tkinter import font
-
+from Company.companyWindow import CompanyWindow
 from PopUpWindows.about_us_window import *
 from Products.products import *
 from Contractors.contractors import *
@@ -54,6 +54,8 @@ class MainWindow:
         contractors.pack()
         products = tk.Label(self.frame1, bg=self.leftLabelColor)
         products.pack()
+        company = tk.Label(self.frame1, bg=self.leftLabelColor)
+        company.pack()
 
         createInvoice_button = tk.Button(createInvoice, text="Create Invoice", bg=self.buttonColor, height=2,
                                               width=20,
@@ -64,15 +66,18 @@ class MainWindow:
 
         products_button = tk.Button(products, text="Show products", height=2, width=20, bg=self.buttonColor,
                                          command=lambda: ProductsWindow(self.app))
+        company_button = tk.Button(company, text="My company", height = 2, width=20, bg=self.buttonColor, command=lambda: CompanyWindow(self.app))
 
         products_button['font']=self.myFont
         createInvoice_button['font'] = self.myFont
         invoices_button['font'] = self.myFont
         contractors_button['font'] = self.myFont
+        company_button['font'] = self.myFont
 
         createInvoice_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
         invoices_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
         contractors_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
         products_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
+        company_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
 
         self.app.mainloop()
