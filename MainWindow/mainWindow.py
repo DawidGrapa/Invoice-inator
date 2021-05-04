@@ -16,9 +16,10 @@ class MainWindow:
         self.my_menu = Menu(self.app)
         self.panedwindow = Panedwindow(self.app, orient=HORIZONTAL)
         self.leftLabelColor = '#778899'
+        self.buttonColor = '#E6E6FA'
         self.frame1 = tk.Frame(self.panedwindow, width=100, relief=SUNKEN, bg=self.leftLabelColor)
         self.frame2 = tk.Frame(self.panedwindow, width=400, relief=SUNKEN, bg='#f8deb4')
-        self.myFont = font.Font(family='Monoton')
+        self.myFont = font.Font(family='AngsanaUPC')
         self.createMainWindow()
 
     def createMainWindow(self):
@@ -54,14 +55,14 @@ class MainWindow:
         products = tk.Label(self.frame1, bg=self.leftLabelColor)
         products.pack()
 
-        createInvoice_button = tk.Button(createInvoice, text="Create Invoice", bg="#B0C4DE", height=2,
+        createInvoice_button = tk.Button(createInvoice, text="Create Invoice", bg=self.buttonColor, height=2,
                                               width=20,
                                               command=lambda: ChooseContractorWindow(self.frame2))
-        invoices_button = tk.Button(invoices, text="Show invoices", height = 2, width=20)
-        contractors_button = tk.Button(contractors, text="Show contractors", height=2, width=20,
+        invoices_button = tk.Button(invoices, text="Show invoices", height = 2, width=20, bg=self.buttonColor)
+        contractors_button = tk.Button(contractors, text="Show contractors", height=2, width=20, bg=self.buttonColor,
                                             command=lambda: ContractorsWindow(self.app))
 
-        products_button = tk.Button(products, text="Show products", height=2, width=20,
+        products_button = tk.Button(products, text="Show products", height=2, width=20, bg=self.buttonColor,
                                          command=lambda: ProductsWindow(self.app))
 
         products_button['font']=self.myFont
