@@ -5,9 +5,12 @@ class Database:
     def __init__(self, db):
         self.conn = sqlite3.connect(db)
         self.cur = self.conn.cursor()
-        self.cur.execute("CREATE TABLE IF NOT EXISTS contractors (id INTEGER PRIMARY  KEY, name text, street text, zip text, city text, nip text, description text)")
-        self.cur.execute("CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, productname text, unit text, vat int, price float )")
-        self.cur.execute("CREATE TABLE IF NOT EXISTS company (id INTEGER PRIMARY KEY, companyname text, street text, zip text, city text, nip text, account_number text)")
+        self.cur.execute(
+            "CREATE TABLE IF NOT EXISTS contractors (id INTEGER PRIMARY  KEY, name text, street text, zip text, city text, nip text, description text)")
+        self.cur.execute(
+            "CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, productname text, unit text, vat int, price float )")
+        self.cur.execute(
+            "CREATE TABLE IF NOT EXISTS company (id INTEGER PRIMARY KEY, companyname text, street text, zip text, city text, nip text, account_number text)")
         self.conn.commit()
 
     # About contractors
@@ -17,7 +20,8 @@ class Database:
         return rows
 
     def insert_contractor(self, name, street, zip, city, nip, description):
-        self.cur.execute("INSERT INTO contractors VALUES (NULL,?,?,?,?,?,?)", (name, street, zip, city, nip, description))
+        self.cur.execute("INSERT INTO contractors VALUES (NULL,?,?,?,?,?,?)",
+                         (name, street, zip, city, nip, description))
         self.conn.commit()
 
     def remove_contractor(self, id):
@@ -25,7 +29,8 @@ class Database:
         self.conn.commit()
 
     def update_contractor(self, id, name, street, zip, city, nip, description):
-        self.cur.execute("UPDATE contractors SET name = ?,street=?,zip=?,city=?,nip=?,description=? WHERE id = ?",(name,street,zip,city,nip,description,id))
+        self.cur.execute("UPDATE contractors SET name = ?,street=?,zip=?,city=?,nip=?,description=? WHERE id = ?",
+                         (name, street, zip, city, nip, description, id))
         self.conn.commit()
 
     # About products
@@ -35,7 +40,7 @@ class Database:
         return rows
 
     def insert_product(self, productname, unit, vat, price):
-        self.cur.execute("INSERT INTO products VALUES (NULL, ?,?,?,?)", (productname,unit,vat,price))
+        self.cur.execute("INSERT INTO products VALUES (NULL, ?,?,?,?)", (productname, unit, vat, price))
         self.conn.commit()
 
     def remove_product(self, id):
@@ -43,10 +48,11 @@ class Database:
         self.conn.commit()
 
     def update_product(self, id, name, unit, vat, price):
-        self.cur.execute("UPDATE products SET productname =?, unit = ?, vat = ?, price = ? WHERE id =?",(name, unit, vat, price, id))
+        self.cur.execute("UPDATE products SET productname =?, unit = ?, vat = ?, price = ? WHERE id =?",
+                         (name, unit, vat, price, id))
         self.conn.commit()
 
-    #about own company
+    # about own company
     def get_company(self):
         self.cur.execute("SELECT * from company")
         rows = self.cur.fetchall()
@@ -57,5 +63,11 @@ class Database:
         self.conn.commit()
 
     def update_company(self, id, company, street, zip, city, nip, bank):
-        self.cur.execute("UPDATE company SET companyname =?, street =?, zip=?, city =?, nip=?, account_number =? WHERE id = ?", (company, street, zip, city, nip, bank, id))
+        self.cur.execute(
+            "UPDATE company SET companyname =?, street =?, zip=?, city =?, nip=?, account_number =? WHERE id = ?",
+            (company, street, zip, city, nip, bank, id))
+        self.conn.commit()
+
+    def remove_company(self, id):
+        self.cur.execute("DELETE FROM company WHERE id=?", (id,))
         self.conn.commit()
