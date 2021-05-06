@@ -7,7 +7,8 @@ db = Database('Database/Database.db')
 
 
 class ChooseContractorWindow:
-    def __init__(self, app):
+    def __init__(self, app, main_app):
+        self.main_app = main_app
         self.app = app
         self.main_window = Toplevel(app)
         self.selected = None
@@ -40,6 +41,7 @@ class ChooseContractorWindow:
             if len(self.ctr_list.get_children()) > 0:
                 self.selected = self.ctr_list.item(self.ctr_list.focus())["values"]
                 CreateInvoice(self.selected, self.main_window, self.app)
+                self.main_app.createInvoice_button['state']=DISABLED
         except IndexError:
             pass
 

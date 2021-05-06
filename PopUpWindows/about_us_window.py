@@ -1,3 +1,4 @@
+from datetime import date
 from tkinter import *
 
 
@@ -5,7 +6,7 @@ def open_about_us_window(app):
     # Creating new window
     newWindow = Toplevel(app)
     newWindow.title("About us")
-    newWindow.geometry('260x280')
+    newWindow.geometry('260x150')
     newWindow.resizable(0, 0)
     newWindow['bg'] = '#f8deb4'
 

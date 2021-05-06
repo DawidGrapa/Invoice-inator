@@ -17,6 +17,7 @@ class MainWindow:
         self.panedwindow = Panedwindow(self.app, orient=HORIZONTAL)
         self.leftLabelColor = '#778899'
         self.buttonColor = '#E6E6FA'
+        self.createInvoice_button = None
         self.frame1 = tk.Frame(self.panedwindow, width=100, relief=SUNKEN, bg=self.leftLabelColor)
         self.frame2 = tk.Frame(self.panedwindow, width=400, relief=SUNKEN, bg='#f8deb4')
         self.myFont = font.Font(family='AngsanaUPC')
@@ -57,9 +58,9 @@ class MainWindow:
         company = tk.Label(self.frame1, bg=self.leftLabelColor)
         company.pack()
 
-        createInvoice_button = tk.Button(createInvoice, text="Create Invoice", bg=self.buttonColor, height=2,
+        self.createInvoice_button = tk.Button(createInvoice, text="Create Invoice", bg=self.buttonColor, height=2,
                                          width=20,
-                                         command=lambda: ChooseContractorWindow(self.frame2))
+                                         command=lambda: ChooseContractorWindow(self.frame2, self))
         invoices_button = tk.Button(invoices, text="Show invoices", height=2, width=20, bg=self.buttonColor)
         contractors_button = tk.Button(contractors, text="Show contractors", height=2, width=20, bg=self.buttonColor,
                                        command=lambda: ContractorsWindow(self.app))
@@ -70,12 +71,12 @@ class MainWindow:
                                    command=lambda: CompanyWindow(self.app))
 
         products_button['font'] = self.myFont
-        createInvoice_button['font'] = self.myFont
+        self.createInvoice_button['font'] = self.myFont
         invoices_button['font'] = self.myFont
         contractors_button['font'] = self.myFont
         company_button['font'] = self.myFont
 
-        createInvoice_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
+        self.createInvoice_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
         invoices_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
         contractors_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
         products_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
