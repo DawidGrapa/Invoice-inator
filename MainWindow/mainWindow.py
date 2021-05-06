@@ -58,17 +58,18 @@ class MainWindow:
         company.pack()
 
         createInvoice_button = tk.Button(createInvoice, text="Create Invoice", bg=self.buttonColor, height=2,
-                                              width=20,
-                                              command=lambda: ChooseContractorWindow(self.frame2))
-        invoices_button = tk.Button(invoices, text="Show invoices", height = 2, width=20, bg=self.buttonColor)
+                                         width=20,
+                                         command=lambda: ChooseContractorWindow(self.frame2))
+        invoices_button = tk.Button(invoices, text="Show invoices", height=2, width=20, bg=self.buttonColor)
         contractors_button = tk.Button(contractors, text="Show contractors", height=2, width=20, bg=self.buttonColor,
-                                            command=lambda: ContractorsWindow(self.app))
+                                       command=lambda: ContractorsWindow(self.app))
 
         products_button = tk.Button(products, text="Show products", height=2, width=20, bg=self.buttonColor,
-                                         command=lambda: ProductsWindow(self.app))
-        company_button = tk.Button(company, text="My company", height = 2, width=20, bg=self.buttonColor, command=lambda: CompanyWindow(self.app))
+                                    command=lambda: ProductsWindow(self.app))
+        company_button = tk.Button(company, text="My company", height=2, width=20, bg=self.buttonColor,
+                                   command=lambda: CompanyWindow(self.app))
 
-        products_button['font']=self.myFont
+        products_button['font'] = self.myFont
         createInvoice_button['font'] = self.myFont
         invoices_button['font'] = self.myFont
         contractors_button['font'] = self.myFont

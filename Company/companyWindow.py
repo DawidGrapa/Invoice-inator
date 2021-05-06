@@ -23,7 +23,7 @@ class CompanyWindow:
             db.add_company(self.data['name'].get(), self.data['street'].get(), self.data['zip'].get(),
                                  self.data['city'].get(), self.data['nip'].get(), self.data['bank'].get())
             messagebox.showinfo("Success", "Updated successfully!", parent=self.window)
-
+        self.window.destroy()
     def open_window(self):
         self.window.title("Company")
         self.window.minsize(500, 260)
@@ -73,7 +73,6 @@ class CompanyWindow:
         #Buttons
         update_button = tk.Button(self.window, text="Update", padx=5, command=self.update)
         update_button.grid(row=7, column=2)
-        print(self.company[0][1])
         if self.company:
             name_input.insert(0, self.company[0][1])
             street_input.insert(0, self.company[0][2])
