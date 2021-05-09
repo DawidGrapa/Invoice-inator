@@ -16,15 +16,19 @@ class EditCompany:
         self.open_window()
 
     def update(self):
-        if self.company:
-            db.update_company(1, self.data['name'].get(), self.data['street'].get(), self.data['zip'].get(),
-                              self.data['city'].get(), self.data['nip'].get(), self.data['bank'].get())
-            messagebox.showinfo("Success", "Updated successfully!", parent=self.window)
+        res, x = validate_company(self.data)
+        if res:
+            if self.company:
+                db.update_company(1, self.data['name'].get(), self.data['street'].get(), self.data['zip'].get(),
+                                  self.data['city'].get(), self.data['nip'].get(), self.data['bank'].get())
+                messagebox.showinfo("Success", "Updated successfully!", parent=self.window)
+            else:
+                db.add_company(self.data['name'].get(), self.data['street'].get(), self.data['zip'].get(),
+                               self.data['city'].get(), self.data['nip'].get(), self.data['bank'].get())
+                messagebox.showinfo("Success", "Updated successfully!", parent=self.window)
+            self.app.destroy()
         else:
-            db.add_company(self.data['name'].get(), self.data['street'].get(), self.data['zip'].get(),
-                           self.data['city'].get(), self.data['nip'].get(), self.data['bank'].get())
-            messagebox.showinfo("Success", "Updated successfully!", parent=self.window)
-        self.app.destroy()
+            messagebox.showinfo("Wrong arguments", "Wrong argument: " + str(x) + "!", parent=self.window)
 
     def open_window(self):
         self.window.title("Company")

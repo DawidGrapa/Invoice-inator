@@ -52,4 +52,25 @@ def validate_product(product):
     else:
         return False, x
 
-# TODO COMPANY VALIDATOR
+
+def validate_company(company):
+    name = company['name'].get()
+    street = company['street'].get()
+    zip = company['zip'].get()
+    city = company['city'].get()
+    nip = company['nip'].get()
+    bank = company['bank'].get()
+
+    x = None
+    if len(name) == 0: x = "name"
+    if len(street) == 0: x = "street"
+    if len(city) == 0: x = "city"
+    if len(zip) == 0: x = "zip-code"
+    if len(nip) != 10 or not nip.isdecimal():
+        x = "NIP"
+    if len(bank) == 0: x = "bank"
+
+    if x is None:
+        return True, x
+    else:
+        return False, x
