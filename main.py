@@ -1,3 +1,3 @@
-from MainWindow.mainWindow import *
+from AppWindow.appWindow import *
 
-MainWindow()
+AppWindow()

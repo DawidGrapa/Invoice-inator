@@ -63,15 +63,15 @@ class ProductsWindow:
         panedwindow.pack(fill=BOTH, expand=True)
 
         # Creating Left Frame
-        fram1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#f8deb4')
-        fram2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#f8deb4')
-        panedwindow.add(fram1, weight=1)
-        panedwindow.add(fram2, weight=4)
+        frame1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#f8deb4')
+        frame2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#f8deb4')
+        panedwindow.add(frame1, weight=1)
+        panedwindow.add(frame2, weight=4)
 
         # Creating Buttons
-        add_label = tk.Label(fram1, bg='#f8deb4')
-        update_label = tk.Label(fram1, bg='#f8deb4')
-        delete_label = tk.Label(fram1, bg='#f8deb4')
+        add_label = tk.Label(frame1, bg='#f8deb4')
+        update_label = tk.Label(frame1, bg='#f8deb4')
+        delete_label = tk.Label(frame1, bg='#f8deb4')
         add_label.pack()
         update_label.pack()
         delete_label.pack()
@@ -96,17 +96,18 @@ class ProductsWindow:
         def on_click(event):
             e.configure(state = NORMAL)
             e.delete(0, END)
-        #search tool
+
+        # Search tool
         sv = StringVar()
         sv.trace("w", lambda name, index, mode, sv=sv: self.show_selected(sv))
-        e = Entry(fram2, textvariable=sv, width = 60)
+        e = Entry(frame2, textvariable=sv, width = 60)
         e.insert(0, "Search product...")
         e.configure(state=DISABLED)
         e.bind('<Button-1>', on_click)
         e.pack(side = TOP, pady =10)
 
-        #treeview
-        self.prod_list = Treeview(fram2, height=22)
+        # Treeview
+        self.prod_list = Treeview(frame2, height=22)
 
         self.prod_list['columns'] = ("ID", "ProductName", 'Unit', 'VAT', 'Price')
         self.prod_list.column("#0", width=0, stretch=NO)
@@ -123,7 +124,7 @@ class ProductsWindow:
         self.prod_list.heading("Price", text="Netto price", anchor=W)
 
         # Create scrollbar
-        scrollbar = Scrollbar(fram2)
+        scrollbar = Scrollbar(frame2)
         scrollbar.pack(side=RIGHT, fill=Y)
         # Set scroll to listbox
         self.prod_list.configure(yscrollcommand=scrollbar.set)

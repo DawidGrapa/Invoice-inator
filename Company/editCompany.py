@@ -6,6 +6,7 @@ from Database.db import Database
 
 db = Database('Database/Database.db')
 
+
 class EditCompany:
     def __init__(self, app):
         self.app = app
@@ -17,11 +18,11 @@ class EditCompany:
     def update(self):
         if self.company:
             db.update_company(1, self.data['name'].get(), self.data['street'].get(), self.data['zip'].get(),
-                                 self.data['city'].get(), self.data['nip'].get(), self.data['bank'].get())
+                              self.data['city'].get(), self.data['nip'].get(), self.data['bank'].get())
             messagebox.showinfo("Success", "Updated successfully!", parent=self.window)
         else:
             db.add_company(self.data['name'].get(), self.data['street'].get(), self.data['zip'].get(),
-                                 self.data['city'].get(), self.data['nip'].get(), self.data['bank'].get())
+                           self.data['city'].get(), self.data['nip'].get(), self.data['bank'].get())
             messagebox.showinfo("Success", "Updated successfully!", parent=self.window)
         self.app.destroy()
 
@@ -71,7 +72,7 @@ class EditCompany:
         bank_input.grid(row=6, column=2)
         self.data['bank'] = bank_input
 
-        #Buttons
+        # Buttons
         update_button = tk.Button(self.window, text="Update", padx=5, command=self.update)
         update_button.grid(row=7, column=2)
         if self.company:

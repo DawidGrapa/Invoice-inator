@@ -56,7 +56,7 @@ class ChooseContractorWindow:
             e.configure(state=NORMAL)
             e.delete(0, END)
 
-        # search tool
+        # Search tool
         sv = StringVar()
         sv.trace("w", lambda name, index, mode, sv=sv: self.show_selected(sv))
         e = Entry(self.main_window, textvariable=sv, width=60)

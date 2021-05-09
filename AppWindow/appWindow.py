@@ -9,7 +9,7 @@ from Contractors.contractors import ContractorsWindow
 from Products.products import ProductsWindow
 
 
-class MainWindow:
+class AppWindow:
     def __init__(self):
         self.app = Tk()
         self.photo = PhotoImage(file='Media/soy.png')
@@ -21,9 +21,9 @@ class MainWindow:
         self.frame1 = tk.Frame(self.panedwindow, width=100, relief=SUNKEN, bg=self.leftLabelColor)
         self.frame2 = tk.Frame(self.panedwindow, width=400, relief=SUNKEN, bg='#f8deb4')
         self.myFont = font.Font(family='AngsanaUPC')
-        self.createMainWindow()
+        self.create_app_window()
 
-    def createMainWindow(self):
+    def create_app_window(self):
         self.app.title("TBD Manager")
         self.app.state("zoomed")
         self.app['bg'] = '#f8deb4'
@@ -40,27 +40,25 @@ class MainWindow:
         self.my_menu.add_cascade(label="Settings", menu=settings_menu)
         self.my_menu.add_cascade(label="Help", menu=help_menu)
 
-        # splitting main window
-
+        # Splitting main window
         self.panedwindow.pack(fill=BOTH, expand=0)
 
         self.panedwindow.add(self.frame1, weight=1)
         self.panedwindow.add(self.frame2, weight=15)
 
-        createInvoice = tk.Label(self.frame1, bg=self.leftLabelColor)
-        createInvoice.pack()
+        create_invoice = tk.Label(self.frame1, bg=self.leftLabelColor)
         invoices = tk.Label(self.frame1, bg=self.leftLabelColor)
-        invoices.pack()
         contractors = tk.Label(self.frame1, bg=self.leftLabelColor)
-        contractors.pack()
         products = tk.Label(self.frame1, bg=self.leftLabelColor)
-        products.pack()
         company = tk.Label(self.frame1, bg=self.leftLabelColor)
+        create_invoice.pack()
+        invoices.pack()
+        contractors.pack()
+        products.pack()
         company.pack()
 
-        self.createInvoice_button = tk.Button(createInvoice, text="Create Invoice", bg=self.buttonColor, height=2,
-                                         width=20,
-                                         command=lambda: ChooseContractorWindow(self.frame2, self))
+        self.createInvoice_button = tk.Button(create_invoice, text="Create Invoice", bg=self.buttonColor, height=2,
+                                              width=20, command=lambda: ChooseContractorWindow(self.frame2, self))
         invoices_button = tk.Button(invoices, text="Show invoices", height=2, width=20, bg=self.buttonColor)
         contractors_button = tk.Button(contractors, text="Show contractors", height=2, width=20, bg=self.buttonColor,
                                        command=lambda: ContractorsWindow(self.app))

@@ -40,7 +40,6 @@ class UpdateContractorWindow:
         name_input = tk.Entry(self.window, width=50, bd=3)
         name_input.grid(row=1, column=2)
         name_input.insert(0, self.selected[1])
-
         self.data['name'] = name_input
 
         # Street

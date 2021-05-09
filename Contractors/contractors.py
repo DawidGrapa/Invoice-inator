@@ -101,14 +101,14 @@ class ContractorsWindow:
         def on_click(event):
             e.configure(state = NORMAL)
             e.delete(0, END)
-        #search tool
+        # Search tool
         sv = StringVar()
         sv.trace("w", lambda name, index, mode, sv=sv: self.show_selected(sv))
-        e = Entry(frame2, textvariable=sv, width = 60)
+        e = Entry(frame2, textvariable=sv, width=60)
         e.insert(0, "Search contractor...")
         e.configure(state=DISABLED)
         e.bind('<Button-1>', on_click)
-        e.pack(side = TOP, pady =10)
+        e.pack(side=TOP, pady=10)
 
         self.ctr_list = Treeview(frame2, height=23)
 

@@ -51,11 +51,11 @@ class CreateInvoice:
         paid = tk.Label(label1, bg="orange", text="Payment: ", height=1)
         paid.grid(row=1, column=6, padx=(10, 0))
 
-        suwak = Combobox(label1, width=13, state="readonly")
-        suwak.bind("<<ComboboxSelected>>", lambda e: label1.focus())
-        suwak['values'] = ("cash", "bank transfer")
-        suwak.current(1)
-        suwak.grid(row=1, column=7)
+        payment = Combobox(label1, width=13, state="readonly")
+        payment.bind("<<ComboboxSelected>>", lambda e: label1.focus())
+        payment['values'] = ("cash", "bank transfer")
+        payment.current(1)
+        payment.grid(row=1, column=7)
 
         # Second row
         label2 = tk.Label(self.window, bg="#f8deb4")
