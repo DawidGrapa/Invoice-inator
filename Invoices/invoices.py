@@ -40,8 +40,10 @@ class ChooseContractorWindow:
         try:
             if len(self.ctr_list.get_children()) > 0:
                 self.selected = self.ctr_list.item(self.ctr_list.focus())["values"]
-                CreateInvoice(self.selected, self.main_window, self.app)
-                self.main_app.createInvoice_button['state']=DISABLED
+                if self.selected:
+                    CreateInvoice(self.selected, self.main_window, self.app, self.main_app)
+                    self.main_app.createInvoice_button['state'] = DISABLED
+                    self.main_app.company_button['state'] = DISABLED
         except IndexError:
             pass
 

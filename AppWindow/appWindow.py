@@ -18,6 +18,7 @@ class AppWindow:
         self.leftLabelColor = '#778899'
         self.buttonColor = '#E6E6FA'
         self.createInvoice_button = None
+        self.company_button = None
         self.frame1 = tk.Frame(self.panedwindow, width=100, relief=SUNKEN, bg=self.leftLabelColor)
         self.frame2 = tk.Frame(self.panedwindow, width=400, relief=SUNKEN, bg='#f8deb4')
         self.myFont = font.Font(family='AngsanaUPC')
@@ -65,19 +66,19 @@ class AppWindow:
 
         products_button = tk.Button(products, text="Show products", height=2, width=20, bg=self.buttonColor,
                                     command=lambda: ProductsWindow(self.app))
-        company_button = tk.Button(company, text="My company", height=2, width=20, bg=self.buttonColor,
+        self.company_button = tk.Button(company, text="My company", height=2, width=20, bg=self.buttonColor,
                                    command=lambda: CompanyWindow(self.app))
 
         products_button['font'] = self.myFont
         self.createInvoice_button['font'] = self.myFont
         invoices_button['font'] = self.myFont
         contractors_button['font'] = self.myFont
-        company_button['font'] = self.myFont
+        self.company_button['font'] = self.myFont
 
         self.createInvoice_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
         invoices_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
         contractors_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
         products_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
-        company_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
+        self.company_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
 
         self.app.mainloop()

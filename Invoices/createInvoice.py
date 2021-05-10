@@ -4,17 +4,24 @@ from tkinter.ttk import *
 import tkinter as tk
 from tkcalendar import Calendar, DateEntry
 import datetime
-from Products.products import ProductsWindow
+from Invoices.selectProduct import SelectProductWindow
 
 db = Database('Database/Database.db')
 
 
 class CreateInvoice:
-    def __init__(self, selected, app, main_app):
+    def __init__(self, selected, app, main_app, top):
         self.window = main_app
         self.selected = selected
         self.contractors_window = app
+        self.top = top
         self.create_invoice_window()
+
+    def clean_window(self):
+        for widget in self.top.frame2.winfo_children():
+            widget.destroy()
+            self.top.createInvoice_button['state'] = NORMAL
+            self.top.company_button['state'] = NORMAL
 
     def create_invoice_window(self):
         self.contractors_window.destroy()
@@ -82,7 +89,7 @@ class CreateInvoice:
         label3 = tk.Label(self.window, bg="#f8deb4")
         label3.pack(side=tk.TOP, anchor='w', pady=(15, 0))
 
-        add_product = tk.Button(label3, text="Add product", height=1, width=15, command=lambda:ProductsWindow(self.window))
+        add_product = tk.Button(label3, text="Add product", height=1, width=15, command=lambda:SelectProductWindow(self.window))
         add_product.grid(row=1, column=1, padx=(0, 6))
 
         delete_product = tk.Button(label3, text="Delete product", height=1, width=15)
@@ -124,5 +131,5 @@ class CreateInvoice:
         safe = tk.Button(label5, text="Save", height=1, width=15)
         safe.grid(row=1, column=1, padx=(0, 6))
 
-        cancel = tk.Button(label5, text="Cancel", height=1, width=15)
+        cancel = tk.Button(label5, text="Cancel", height=1, width=15, command=self.clean_window)
         cancel.grid(row=1, column=2)
