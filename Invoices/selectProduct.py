@@ -23,7 +23,6 @@ class SelectProductWindow:
                 # otwieranie wpisz ilosc
                 if self.selected:
                     self.open_quantity_window()
-
         except IndexError:
             pass
 
@@ -39,7 +38,7 @@ class SelectProductWindow:
         values.append(self.selected[3])
         values.append(round(float(values[4]) * (100+float(values[5])) / 100, 2))
         self.treeview.insert(parent='', index='end', text="A", values=values)
-        window.destroy()
+        self.window.destroy()
 
     def open_quantity_window(self):
         quantity_window = Toplevel(self.window)
