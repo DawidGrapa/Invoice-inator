@@ -17,7 +17,8 @@ class Database:
         self.cur.execute(
             "CREATE TABLE IF NOT EXISTS invoices (id INTEGER PRIMARY  KEY, companyname text, date text, payment text)"
         )
-        self.cur.execute("CREATE TABLE IF NOT EXISTS invoice_products (invoice_id INTEGER, product_name text, quantity text, unit text, price text, vat text)")
+        self.cur.execute(
+            "CREATE TABLE IF NOT EXISTS invoice_products (invoice_id INTEGER, product_name text, quantity text, unit text, price text, vat text)")
         self.conn.commit()
 
     # About contractors
@@ -79,7 +80,7 @@ class Database:
         self.cur.execute("DELETE FROM company WHERE id=?", (id,))
         self.conn.commit()
 
-    #invoices
+    # invoices
     def add_invoice(self, name, date, payment):
         self.cur.execute("INSERT INTO invoices VALUES (NULL, ?, ?, ?)", (name, date, payment))
         self.conn.commit()
@@ -93,5 +94,6 @@ class Database:
             return [0]
 
     def add_invoice_product(self, invoice_id, product_name, quantity, unit, price, vat):
-        self.cur.execute("INSERT INTO invoice_products VALUES (?, ?, ?, ?, ?, ?)", (invoice_id, product_name, quantity, unit, price, vat))
+        self.cur.execute("INSERT INTO invoice_products VALUES (?, ?, ?, ?, ?, ?)",
+                         (invoice_id, product_name, quantity, unit, price, vat))
         self.conn.commit()

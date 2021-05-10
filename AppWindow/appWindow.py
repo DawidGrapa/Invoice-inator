@@ -19,10 +19,16 @@ class AppWindow:
         self.buttonColor = '#E6E6FA'
         self.createInvoice_button = None
         self.company_button = None
-        self.frame1 = tk.Frame(self.panedwindow,  relief=SUNKEN, bg=self.leftLabelColor)
-        self.frame2 = tk.Frame(self.panedwindow,  relief=SUNKEN, bg='#f8deb4')
+        self.frame1 = tk.Frame(self.panedwindow, relief=SUNKEN, bg=self.leftLabelColor)
+        self.frame2 = tk.Frame(self.panedwindow, relief=SUNKEN, bg='#f8deb4')
         self.myFont = font.Font(family='AngsanaUPC')
         self.create_app_window()
+
+    def start_creating_invoice(self):
+        if db.get_company():
+            ChooseContractorWindow(self.frame2, self)
+        else:
+            messagebox.showinfo(title="Error", message="You have to add your company first!")
 
     def create_app_window(self):
         self.app.title("TBD Manager")
@@ -59,7 +65,7 @@ class AppWindow:
         company.pack()
 
         self.createInvoice_button = tk.Button(create_invoice, text="Create Invoice", bg=self.buttonColor, height=2,
-                                              width=20, command=lambda: ChooseContractorWindow(self.frame2, self))
+                                              width=20, command=self.start_creating_invoice)
         invoices_button = tk.Button(invoices, text="Show invoices", height=2, width=20, bg=self.buttonColor)
         contractors_button = tk.Button(contractors, text="Show contractors", height=2, width=20, bg=self.buttonColor,
                                        command=lambda: ContractorsWindow(self.app))
@@ -67,7 +73,7 @@ class AppWindow:
         products_button = tk.Button(products, text="Show products", height=2, width=20, bg=self.buttonColor,
                                     command=lambda: ProductsWindow(self.app))
         self.company_button = tk.Button(company, text="My company", height=2, width=20, bg=self.buttonColor,
-                                   command=lambda: CompanyWindow(self.app))
+                                        command=lambda: CompanyWindow(self.app))
 
         products_button['font'] = self.myFont
         self.createInvoice_button['font'] = self.myFont

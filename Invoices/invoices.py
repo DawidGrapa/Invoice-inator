@@ -13,7 +13,6 @@ class ChooseContractorWindow:
         self.main_window = Toplevel(app)
         self.selected = None
         self.ctr_list = Treeview()
-
         self.choose_contractor_window()
 
     def show_contractors(self):
@@ -36,14 +35,17 @@ class ChooseContractorWindow:
         else:
             self.show_contractors()
 
+    def create_invoice(self):
+        CreateInvoice(self.selected, self.main_window, self.app, self.main_app)
+        self.main_app.createInvoice_button['state'] = DISABLED
+        self.main_app.company_button['state'] = DISABLED
+
     def select_item(self, event):
         try:
             if len(self.ctr_list.get_children()) > 0:
                 self.selected = self.ctr_list.item(self.ctr_list.focus())["values"]
                 if self.selected:
-                    CreateInvoice(self.selected, self.main_window, self.app, self.main_app)
-                    self.main_app.createInvoice_button['state'] = DISABLED
-                    self.main_app.company_button['state'] = DISABLED
+                    self.create_invoice()
         except IndexError:
             pass
 

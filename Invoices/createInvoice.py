@@ -18,6 +18,9 @@ class CreateInvoice:
         self.date = None
         self.payment = None
         self.prod_list = None
+        self.selected_product = None
+        self.cancel = None
+        self.delete_product = None
         self.create_invoice_window()
 
     def clean_window(self):
@@ -26,12 +29,28 @@ class CreateInvoice:
             self.top.createInvoice_button['state'] = NORMAL
             self.top.company_button['state'] = NORMAL
 
+    def delete_from_treeview(self):
+        x = self.prod_list.selection()[0]
+        self.prod_list.delete(x)
+        self.delete_product['state'] = DISABLED
+
     def add_invoice(self):
         db.add_invoice(self.selected[1], self.date.get(), self.payment.get())
         last = db.get_last_invoice()
         for line in self.prod_list.get_children():
             last = db.get_last_invoice()
-            db.add_invoice_product(last[0], self.prod_list.item(line)['values'][1], self.prod_list.item(line)['values'][2], self.prod_list.item(line)['values'][3], self.prod_list.item(line)['values'][4], self.prod_list.item(line)['values'][5])
+            db.add_invoice_product(last[0], self.prod_list.item(line)['values'][1],
+                                   self.prod_list.item(line)['values'][2], self.prod_list.item(line)['values'][3],
+                                   self.prod_list.item(line)['values'][4], self.prod_list.item(line)['values'][5])
+
+    def select_item(self, event):
+        try:
+            if len(self.prod_list.get_children()) > 0:
+                self.selected_product = self.prod_list.item(self.prod_list.focus())["values"]
+                if self.selected_product:
+                    self.delete_product['state'] = ACTIVE
+        except IndexError:
+            pass
 
     def create_invoice_window(self):
         self.contractors_window.destroy()
@@ -48,7 +67,7 @@ class CreateInvoice:
             invoice_no_input.delete(0, END)
 
         invoice_no_input = tk.Entry(label1, width=5)
-        invoice_no_input.insert(0, db.get_last_invoice()[0]+1)
+        invoice_no_input.insert(0, db.get_last_invoice()[0] + 1)
         invoice_no_input.configure(state=DISABLED)
         invoice_no_input.bind('<Button-1>', on_click)
         invoice_no_input.bind("<Return>", lambda e: label1.focus())
@@ -99,12 +118,14 @@ class CreateInvoice:
         label3 = tk.Label(self.window, bg="#f8deb4")
         label3.pack(side=tk.TOP, anchor='w', pady=(15, 0))
 
-        add_product = tk.Button(label3, text="Add product", height=1, width=15, command=lambda:SelectProductWindow(self.window, self.prod_list))
+        add_product = tk.Button(label3, text="Add product", height=1, width=15,
+                                command=lambda: SelectProductWindow(self.window, self.prod_list))
         add_product.grid(row=1, column=1, padx=(0, 6))
 
-        delete_product = tk.Button(label3, text="Delete product", height=1, width=15)
-        delete_product['state'] = DISABLED
-        delete_product.grid(row=1, column=2)
+        self.delete_product = tk.Button(label3, text="Delete product", height=1, width=15,
+                                        command=self.delete_from_treeview)
+        self.delete_product['state'] = DISABLED
+        self.delete_product.grid(row=1, column=2)
 
         # Fourth row - products treeview
         label4 = tk.Label(self.window, bg="#f8deb4")
@@ -132,6 +153,8 @@ class CreateInvoice:
         self.prod_list.heading("VAT", text="VAT", anchor=W)
         self.prod_list.heading("brutto", text="Brutto", anchor=W)
 
+        self.prod_list.bind("<ButtonRelease-1>", self.select_item)
+
         self.prod_list.grid(row=1, column=1, pady=(1, 0))
 
         # Fifth row - more buttons
@@ -141,5 +164,5 @@ class CreateInvoice:
         save = tk.Button(label5, text="Save", height=1, width=15, command=self.add_invoice)
         save.grid(row=1, column=1, padx=(0, 6))
 
-        cancel = tk.Button(label5, text="Cancel", height=1, width=15, command=self.clean_window)
-        cancel.grid(row=1, column=2)
+        self.cancel = tk.Button(label5, text="Cancel", height=1, width=15, command=self.clean_window)
+        self.cancel.grid(row=1, column=2)
