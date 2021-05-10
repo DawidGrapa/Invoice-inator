@@ -19,8 +19,8 @@ class AppWindow:
         self.buttonColor = '#E6E6FA'
         self.createInvoice_button = None
         self.company_button = None
-        self.frame1 = tk.Frame(self.panedwindow, width=100, relief=SUNKEN, bg=self.leftLabelColor)
-        self.frame2 = tk.Frame(self.panedwindow, width=400, relief=SUNKEN, bg='#f8deb4')
+        self.frame1 = tk.Frame(self.panedwindow,  relief=SUNKEN, bg=self.leftLabelColor)
+        self.frame2 = tk.Frame(self.panedwindow,  relief=SUNKEN, bg='#f8deb4')
         self.myFont = font.Font(family='AngsanaUPC')
         self.create_app_window()
 

@@ -8,11 +8,12 @@ db = Database('Database/Database.db')
 
 
 class SelectProductWindow:
-    def __init__(self, app):
+    def __init__(self, app, treeview):
         self.app = app
         self.window = Toplevel(app)
         self.prod_list = Treeview()
         self.selected = None
+        self.treeview = treeview
         self.open_products_window()
 
     def select_item(self, event):
@@ -20,13 +21,15 @@ class SelectProductWindow:
             if len(self.prod_list.get_children()) > 0:
                 self.selected = self.prod_list.item(self.prod_list.focus())["values"]
                 # otwieranie wpisz ilosc
-                self.open_quantity_window()
-                return self.selected
+                if self.selected:
+                    self.open_quantity_window()
+
         except IndexError:
             pass
 
     def boxfun(self, window):
         messagebox.showinfo("Success", "Added successfully!", parent=window)
+        self.treeview.insert(parent='', index='end', text="A", values=self.selected)
         window.destroy()
 
     def open_quantity_window(self):

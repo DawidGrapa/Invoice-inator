@@ -89,7 +89,7 @@ class CreateInvoice:
         label3 = tk.Label(self.window, bg="#f8deb4")
         label3.pack(side=tk.TOP, anchor='w', pady=(15, 0))
 
-        add_product = tk.Button(label3, text="Add product", height=1, width=15, command=lambda:SelectProductWindow(self.window))
+        add_product = tk.Button(label3, text="Add product", height=1, width=15, command=lambda:SelectProductWindow(self.window, prod_list))
         add_product.grid(row=1, column=1, padx=(0, 6))
 
         delete_product = tk.Button(label3, text="Delete product", height=1, width=15)
