@@ -4,6 +4,7 @@ from tkinter.ttk import *
 import tkinter as tk
 from tkcalendar import Calendar, DateEntry
 import datetime
+from Products.products import ProductsWindow
 
 db = Database('Database/Database.db')
 
@@ -76,3 +77,42 @@ class CreateInvoice:
         contractor_nip.insert(1.0, self.selected[5])
         contractor_nip.configure(state='disabled')
         contractor_nip.grid(row=1, column=4)
+
+        # Third row - buttons
+        label3 = tk.Label(self.window, bg="#f8deb4")
+        label3.pack(side=tk.TOP, anchor='w', pady=(15, 0))
+
+        add_product = tk.Button(label3, text="Add product", height=1, width=15, command=lambda:ProductsWindow(self.window))
+        add_product.grid(row=1, column=1, padx=(0, 6))
+
+        delete_product = tk.Button(label3, text="Delete product", height=1, width=15)
+        delete_product['state'] = DISABLED
+        delete_product.grid(row=1, column=2)
+
+        # Fourth row - products treeview
+        label4 = tk.Label(self.window, bg="#f8deb4")
+        label4.pack(side=tk.TOP, anchor='w')
+
+        # trying to change colors...
+        style = Style().configure("Treeview", background="#383838", foreground="blue", fieldbackground="red")
+        prod_list = Treeview(label4, height=22, style="Treeview")
+
+        prod_list['columns'] = ("ID", "ProductName", 'Quantity', 'Unit', 'netto', 'VAT', 'brutto')
+        prod_list.column("#0", width=0, stretch=NO)
+        prod_list.column("ID", anchor=W, width=40)
+        prod_list.column("ProductName", anchor=W, width=150)
+        prod_list.column('Quantity', anchor=W, width=80)
+        prod_list.column("Unit", anchor=W, width=55)
+        prod_list.column("netto", anchor=W, width=85)
+        prod_list.column("VAT", anchor=W, width=55)
+        prod_list.column("brutto", anchor=W, width=85)
+
+        prod_list.heading("ID", text="ID", anchor=W)
+        prod_list.heading("ProductName", text="Product Name", anchor=W)
+        prod_list.heading("Quantity", text="Quantity", anchor=W)
+        prod_list.heading("Unit", text="Unit", anchor=W)
+        prod_list.heading("netto", text="Netto", anchor=W)
+        prod_list.heading("VAT", text="VAT", anchor=W)
+        prod_list.heading("brutto", text="Brutto", anchor=W)
+
+        prod_list.grid(row=1, column=1, pady=(1, 0))
