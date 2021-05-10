@@ -116,3 +116,13 @@ class CreateInvoice:
         prod_list.heading("brutto", text="Brutto", anchor=W)
 
         prod_list.grid(row=1, column=1, pady=(1, 0))
+
+        # Fifth row - more buttons
+        label5 = tk.Label(self.window, bg="#f8deb4")
+        label5.pack(side=tk.TOP, anchor='w')
+
+        safe = tk.Button(label5, text="Save", height=1, width=15)
+        safe.grid(row=1, column=1, padx=(0, 6))
+
+        cancel = tk.Button(label5, text="Cancel", height=1, width=15)
+        cancel.grid(row=1, column=2)
