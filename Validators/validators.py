@@ -44,7 +44,7 @@ def validate_product(product):
         x = "unit"
     if len(vat) == 0 or not check_float(vat) or not 0 <= int(vat) <= 100:
         x = "vat"
-    if len(price) == 0 or not check_float(price):
+    if len(price) == 0:
         x = "price"
 
     if x is None:

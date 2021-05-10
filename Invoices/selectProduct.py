@@ -27,9 +27,18 @@ class SelectProductWindow:
         except IndexError:
             pass
 
-    def boxfun(self, window):
+    def boxfun(self, window, quantity):
         messagebox.showinfo("Success", "Added successfully!", parent=window)
-        self.treeview.insert(parent='', index='end', text="A", values=self.selected)
+        # TODO validator
+        values = []
+        values.append(self.selected[0])
+        values.append(self.selected[1])
+        values.append(quantity.get())
+        values.append(self.selected[2])
+        values.append(str(round(float(self.selected[4]) * float(values[2]), 2)))
+        values.append(self.selected[3])
+        values.append(round(float(values[4]) * (100+float(values[5])) / 100, 2))
+        self.treeview.insert(parent='', index='end', text="A", values=values)
         window.destroy()
 
     def open_quantity_window(self):
@@ -43,7 +52,7 @@ class SelectProductWindow:
         label.pack(pady=(10, 0))
         quantity = tk.Entry(quantity_window, width=20, bd=3)
         quantity.pack()
-        submit = tk.Button(quantity_window, text="Submit", command=lambda: self.boxfun(quantity_window))
+        submit = tk.Button(quantity_window, text="Submit", command=lambda: self.boxfun(quantity_window, quantity))
         submit.pack(pady=(10, 0))
 
     def show_products(self):
@@ -79,11 +88,11 @@ class SelectProductWindow:
         # Search tool
         sv = StringVar()
         sv.trace("w", lambda name, index, mode, sv=sv: self.show_selected(sv))
-        e = Entry(frame, textvariable=sv, width = 60)
+        e = Entry(frame, textvariable=sv, width=60)
         e.insert(0, "Search product...")
         e.configure(state=DISABLED)
         e.bind('<Button-1>', on_click)
-        e.pack(side = TOP, pady =10)
+        e.pack(side=TOP, pady=10)
 
         # Treeview
         self.prod_list = Treeview(frame, height=22)
