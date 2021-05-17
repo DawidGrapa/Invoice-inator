@@ -30,7 +30,7 @@ class PDF:
         width, height = A4
 
         # Image and date and no
-        c.drawImage('Media/soy.jpg', 50, height - 135, mask="auto", height=50, width=50)
+        c.drawImage('Media/soy_invoice.png', 50, height - 120, mask="auto", height=60, width=300)
         c.setFont("Helvetica-Bold", 10)
         c.drawString(420, height - 85, "Invoice number:")
         c.setFont("Helvetica", 10)
@@ -40,7 +40,7 @@ class PDF:
         c.drawString(420, height - 125, "Issue date:")
 
         # company info
-        c.setFont("Helvetica-Bold", 10)
+        c.setFont("Helvetica-Bold", 12)
         c.drawString(50, height - 185, "Seller:")
         c.setFont("Helvetica", 10)
         c.drawString(50, height - 200, company[1])
@@ -71,7 +71,7 @@ class PDF:
 
         data = []
 
-        data.append(['ID', 'Product name', 'Quantity', 'Unit', 'Netto price', 'VAT', 'Brutto price'])
+        data.append(['ID', 'Product name', 'Quantity', 'Unit', 'Netto price', 'VAT [%]', 'Brutto price'])
         netto = 0
         brutto = 0
         for id, p in enumerate(products):
@@ -80,8 +80,9 @@ class PDF:
             brutto += float(p[6])
             minus += 17
 
-        t = Table(data, [20, 170, 70, 40, 80, 40, 80])
+        t = Table(data, [20, 170, 60, 40, 77, 56, 77])
         t.setStyle(TableStyle([('GRID', (0, 0), (-1, -1), 0.25, colors.black),
+                               ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
                                ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold', 11),
                                ('ALIGN', (2, 0), (-1, -1), 'RIGHT')]))
         w, h = t.wrap(width, height)
@@ -90,7 +91,7 @@ class PDF:
         height -= minus
 
         c.setFont("Helvetica-Bold", 10)
-        c.drawString(450, height - 30, "Netto value: " + str(netto))
+        c.drawString(450, height - 30, "Netto value:  " + str(netto))
         c.drawString(450, height - 50, "Brutto value: " + str(brutto))
 
         c.drawString(50, height - 150, "......................................")

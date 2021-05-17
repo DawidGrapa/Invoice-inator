@@ -1,4 +1,3 @@
-from tkinter import font, filedialog
 from Company.companyWindow import CompanyWindow
 from PopUpWindows.about_us_window import *
 from Products.products import *
@@ -31,7 +30,7 @@ class AppWindow:
             messagebox.showinfo(title="Error", message="You have to add your company first!")
 
     def create_app_window(self):
-        self.app.title("TBD Manager")
+        self.app.title("invoice-inator")
         self.app.state("zoomed")
         self.app['bg'] = '#f8deb4'
         self.app.iconphoto(True, self.photo)

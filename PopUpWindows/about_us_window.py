@@ -14,9 +14,9 @@ def open_about_us_window(app):
     frame.pack(padx=10, pady=10)
 
     sv = StringVar()
-    sv.set("TBD Manager v0.1 \n\n Authors: \n Dawid Grapa & Julia Szpak \n\n April 2021")
+    sv.set("Invoice-inator v0.3 \n\n Authors: \n Dawid Grapa & Julia Szpak \n\n May 2021")
 
-    text = Text(frame, bg="#f8deb4", font="Times 13")
+    text = Text(frame, bg="#f8deb4", font="Helvetica 13")
     text.insert(INSERT, sv.get())
     text.config(state=DISABLED)
     text.pack()
