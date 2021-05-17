@@ -48,7 +48,7 @@ class AppWindow:
         self.my_menu.add_cascade(label="Help", menu=help_menu)
 
         # Splitting main window
-        self.panedwindow.pack(fill=BOTH, expand=0)
+        self.panedwindow.pack(fill=BOTH, expand=1)
 
         self.panedwindow.add(self.frame1, weight=1)
         self.panedwindow.add(self.frame2, weight=15)

@@ -98,7 +98,7 @@
       <Position>4</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="32" parent="8" name="price">
+    <column id="32" parent="8" name="netto">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>
@@ -106,67 +106,79 @@
       <Position>6</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="34" parent="9" name="id">
+    <column id="34" parent="8" name="brutto">
+      <Position>7</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="35" parent="9" name="id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="35" parent="9" name="companyname">
+    <column id="36" parent="9" name="companyname">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="36" parent="9" name="date">
+    <column id="37" parent="9" name="date">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="37" parent="9" name="payment">
+    <column id="38" parent="9" name="payment">
       <Position>4</Position>
       <DataType>text|0s</DataType>
     </column>
-    <key id="38" parent="9">
+    <column id="39" parent="9" name="format">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+    </column>
+    <column id="40" parent="9" name="company_id">
+      <Position>6</Position>
+      <DataType>integer|0s</DataType>
+    </column>
+    <key id="41" parent="9">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="39" parent="10" name="id">
+    <column id="42" parent="10" name="id">
       <Position>1</Position>
       <DataType>INTEGER|0s</DataType>
     </column>
-    <column id="40" parent="10" name="productname">
+    <column id="43" parent="10" name="productname">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="41" parent="10" name="unit">
+    <column id="44" parent="10" name="unit">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="42" parent="10" name="vat">
+    <column id="45" parent="10" name="vat">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="43" parent="10" name="price">
+    <column id="46" parent="10" name="price">
       <Position>5</Position>
       <DataType>float|0s</DataType>
     </column>
-    <key id="44" parent="10">
+    <key id="47" parent="10">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="45" parent="11" name="type">
+    <column id="48" parent="11" name="type">
       <Position>1</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="46" parent="11" name="name">
+    <column id="49" parent="11" name="name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="47" parent="11" name="tbl_name">
+    <column id="50" parent="11" name="tbl_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="48" parent="11" name="rootpage">
+    <column id="51" parent="11" name="rootpage">
       <Position>4</Position>
       <DataType>int|0s</DataType>
     </column>
-    <column id="49" parent="11" name="sql">
+    <column id="52" parent="11" name="sql">
       <Position>5</Position>
       <DataType>text|0s</DataType>
     </column>

@@ -1,3 +1,11 @@
+from tkinter import filedialog
+from reportlab.platypus import Table, TableStyle, Paragraph
+from reportlab.lib import colors
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.styles import getSampleStyleSheet
 from Database.db import Database
 from tkinter import *
 from tkinter.ttk import *
@@ -5,6 +13,7 @@ import tkinter as tk
 from tkcalendar import Calendar, DateEntry
 import datetime
 from Invoices.selectProduct import SelectProductWindow
+from Invoices.save_as_pdf import PDF
 
 db = Database('Database/Database.db')
 
@@ -21,6 +30,7 @@ class CreateInvoice:
         self.selected_product = None
         self.cancel = None
         self.delete_product = None
+        self.invoice_no_pattern = None
         self.create_invoice_window()
 
     def clean_window(self):
@@ -34,14 +44,20 @@ class CreateInvoice:
         self.prod_list.delete(x)
         self.delete_product['state'] = DISABLED
 
+    def save_as_pdf(self):
+        if self.prod_list.get_children():
+            PDF()
+            self.clean_window()
+
+
     def add_invoice(self):
-        db.add_invoice(self.selected[1], self.date.get(), self.payment.get())
+        db.add_invoice(self.selected[1], self.date.get(), self.payment.get(), str(self.invoice_no_pattern.get(1.0, "end-1c")), self.selected[0])
         last = db.get_last_invoice()
         for line in self.prod_list.get_children():
-            last = db.get_last_invoice()
             db.add_invoice_product(last[0], self.prod_list.item(line)['values'][1],
                                    self.prod_list.item(line)['values'][2], self.prod_list.item(line)['values'][3],
-                                   self.prod_list.item(line)['values'][4], self.prod_list.item(line)['values'][5])
+                                   self.prod_list.item(line)['values'][4], self.prod_list.item(line)['values'][5], self.prod_list.item(line)['values'][6])
+        self.save_as_pdf()
 
     def select_item(self, event):
         try:
@@ -73,10 +89,10 @@ class CreateInvoice:
         invoice_no_input.bind("<Return>", lambda e: label1.focus())
         invoice_no_input.grid(row=1, column=2, pady=1)
 
-        invoice_no_pattern = tk.Text(label1, bg="lightgrey", width=10, height=1)
-        invoice_no_pattern.insert(1.0, "AB/CD/EF")
-        invoice_no_pattern.configure(state='disabled')
-        invoice_no_pattern.grid(row=1, column=3)
+        self.invoice_no_pattern = tk.Text(label1, bg="lightgrey", width=10, height=1)
+        self.invoice_no_pattern.insert(1.0, "AB/CD/EF")
+        self.invoice_no_pattern.configure(state='disabled')
+        self.invoice_no_pattern.grid(row=1, column=3)
 
         issue_date = tk.Label(label1, bg="orange", text="Issue date: ", height=1)
         issue_date.grid(row=1, column=4, padx=(10, 0))

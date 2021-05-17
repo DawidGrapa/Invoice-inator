@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter.ttk import *
 from Database.db import Database
 from tkinter import messagebox
+from Invoices.save_as_pdf import PDF
 
 db = Database('Database/Database.db')
 
@@ -14,6 +15,7 @@ class ShowInvoicesWindow:
         self.invoices_list = Treeview()
         self.selected = None
         self.delete_button = None
+        self.save_button = None
         self.open_invoices_window()
 
     def delete_invoice(self):
@@ -28,6 +30,7 @@ class ShowInvoicesWindow:
                 self.selected = self.invoices_list.item(self.invoices_list.focus())["values"]
                 if len(self.selected) > 0:
                     self.delete_button['state'] = ACTIVE
+                    self.save_button['state'] = ACTIVE
         except IndexError:
             pass
 
@@ -40,7 +43,7 @@ class ShowInvoicesWindow:
         if value.get():
             self.invoices_list.delete(*self.invoices_list.get_children())
             for row in db.fetch_invoices():
-                if any(value.get().lower() in sublist.lower() for sublist in row[1:]):
+                if any(value.get().lower() in sublist.lower() for sublist in row[1:5]):
                     self.invoices_list.insert(parent='', index='end', text="A", values=row)
         else:
             self.show_invoices()
@@ -63,12 +66,19 @@ class ShowInvoicesWindow:
 
         delete_label = tk.Label(frame1, bg='#f8deb4')
         delete_label.pack()
+        save_label = tk.Label(frame1, bg='#f8deb4')
+        save_label.pack()
 
         self.delete_button = tk.Button(delete_label, text="Delete invoice", height=2, width=20, padx=5, pady=5,
                                        command=self.delete_invoice)
         self.delete_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
 
+        self.save_button = tk.Button(save_label, text="Save invoice", height=2, width=20, padx=5, pady=5,
+                                     command=lambda: PDF())
+        self.save_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
+
         self.delete_button['state'] = DISABLED
+        self.save_button['state'] = DISABLED
 
         # Right side of window
         def on_click(event):

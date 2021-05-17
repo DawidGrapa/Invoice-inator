@@ -15,10 +15,10 @@ class Database:
             "CREATE TABLE IF NOT EXISTS company (id INTEGER PRIMARY KEY, companyname text, street text, zip text, "
             "city text, nip text, account_number text)")
         self.cur.execute(
-            "CREATE TABLE IF NOT EXISTS invoices (id INTEGER PRIMARY  KEY, companyname text, date text, payment text)"
+            "CREATE TABLE IF NOT EXISTS invoices (id INTEGER PRIMARY  KEY, companyname text, date text, payment text, format text, company_id integer)"
         )
         self.cur.execute(
-            "CREATE TABLE IF NOT EXISTS invoice_products (invoice_id INTEGER, product_name text, quantity text, unit text, price text, vat text)")
+            "CREATE TABLE IF NOT EXISTS invoice_products (invoice_id INTEGER, product_name text, quantity text, unit text, netto text, vat text, brutto text)")
         self.conn.commit()
 
     # About contractors
@@ -40,6 +40,11 @@ class Database:
         self.cur.execute("UPDATE contractors SET name=?,street=?,zip=?,city=?,nip=?,description=? WHERE id=?",
                          (name, street, zip, city, nip, description, id))
         self.conn.commit()
+
+    def get_contractor(self, id):
+        self.cur.execute("SELECT * from contractors where id=?", (id,))
+        result = self.cur.fetchone()
+        return result
 
     # About products
     def fetch_products(self):
@@ -81,8 +86,8 @@ class Database:
         self.conn.commit()
 
     # invoices
-    def add_invoice(self, name, date, payment):
-        self.cur.execute("INSERT INTO invoices VALUES (NULL, ?, ?, ?)", (name, date, payment))
+    def add_invoice(self, name, date, payment, format, company_id):
+        self.cur.execute("INSERT INTO invoices VALUES (NULL, ?, ?, ?, ?, ?)", (name, date, payment, format, company_id))
         self.conn.commit()
 
     def get_last_invoice(self):
@@ -93,9 +98,9 @@ class Database:
         else:
             return [0]
 
-    def add_invoice_product(self, invoice_id, product_name, quantity, unit, price, vat):
-        self.cur.execute("INSERT INTO invoice_products VALUES (?, ?, ?, ?, ?, ?)",
-                         (invoice_id, product_name, quantity, unit, price, vat))
+    def add_invoice_product(self, invoice_id, product_name, quantity, unit, netto, vat, brutto):
+        self.cur.execute("INSERT INTO invoice_products VALUES (?, ?, ?, ?, ?, ?, ?)",
+                         (invoice_id, product_name, quantity, unit, netto, vat, brutto))
         self.conn.commit()
 
     def fetch_invoices(self):
@@ -107,3 +112,8 @@ class Database:
     def remove_invoice(self, id):
         self.cur.execute("DELETE FROM invoices WHERE id=?", (id,))
         self.conn.commit()
+
+    def fetch_invoice_products(self, id):
+        self.cur.execute("SELECT * from invoice_products WHERE invoice_id=?", (id,))
+        rows = self.cur.fetchall()
+        return rows
