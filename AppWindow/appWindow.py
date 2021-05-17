@@ -7,6 +7,7 @@ from Invoices.invoices import *
 from Invoices.invoices import ChooseContractorWindow
 from Contractors.contractors import ContractorsWindow
 from Products.products import ProductsWindow
+from Invoices.showInvoices import ShowInvoicesWindow
 
 
 class AppWindow:
@@ -21,7 +22,6 @@ class AppWindow:
         self.company_button = None
         self.frame1 = tk.Frame(self.panedwindow, relief=SUNKEN, bg=self.leftLabelColor)
         self.frame2 = tk.Frame(self.panedwindow, relief=SUNKEN, bg='#f8deb4')
-        self.myFont = font.Font(family='AngsanaUPC')
         self.create_app_window()
 
     def start_creating_invoice(self):
@@ -64,22 +64,23 @@ class AppWindow:
         products.pack()
         company.pack()
 
-        self.createInvoice_button = tk.Button(create_invoice, text="Create Invoice", bg=self.buttonColor, height=2,
-                                              width=20, command=self.start_creating_invoice)
-        invoices_button = tk.Button(invoices, text="Show invoices", height=2, width=20, bg=self.buttonColor)
-        contractors_button = tk.Button(contractors, text="Show contractors", height=2, width=20, bg=self.buttonColor,
+        create_button_png = PhotoImage(file='Media/create_button.png')
+        invoices_button_png = PhotoImage(file='Media/invoices_button.png')
+        contractors_button_png = PhotoImage(file='Media/contractors_button.png')
+        products_button_png = PhotoImage(file='Media/products_button.png')
+        company_button_png = PhotoImage(file='Media/company_button.png')
+
+        self.createInvoice_button = tk.Button(create_invoice, image=create_button_png, highlightthickness=0, bd=0,
+                                              command=self.start_creating_invoice, borderwidth=0)
+        invoices_button = tk.Button(invoices, image=invoices_button_png, highlightthickness=0, bd=0,
+                                    command=lambda: ShowInvoicesWindow(self.app))
+        contractors_button = tk.Button(contractors, image=contractors_button_png, highlightthickness=0, bd=0,
                                        command=lambda: ContractorsWindow(self.app))
 
-        products_button = tk.Button(products, text="Show products", height=2, width=20, bg=self.buttonColor,
+        products_button = tk.Button(products, image=products_button_png, highlightthickness=0, bd=0,
                                     command=lambda: ProductsWindow(self.app))
-        self.company_button = tk.Button(company, text="My company", height=2, width=20, bg=self.buttonColor,
+        self.company_button = tk.Button(company, image=company_button_png, highlightthickness=0, bd=0,
                                         command=lambda: CompanyWindow(self.app))
-
-        products_button['font'] = self.myFont
-        self.createInvoice_button['font'] = self.myFont
-        invoices_button['font'] = self.myFont
-        contractors_button['font'] = self.myFont
-        self.company_button['font'] = self.myFont
 
         self.createInvoice_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
         invoices_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)

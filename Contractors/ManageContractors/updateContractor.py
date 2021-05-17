@@ -19,7 +19,8 @@ class UpdateContractorWindow:
     def update_in_base(self):
         res, x = validate_contractor(self.data)
         if res:
-            db.update_contractor(self.selected[0], self.data['name'].get(), self.data['street'].get(), self.data['zip'].get(),
+            db.update_contractor(self.selected[0], self.data['name'].get(), self.data['street'].get(),
+                                 self.data['zip'].get(),
                                  self.data['city'].get(), self.data['nip'].get(), self.data['desc'].get())
             messagebox.showinfo("Success", "Updated successfully!", parent=self.window)
             self.parent.update_button['state'] = DISABLED

@@ -97,3 +97,13 @@ class Database:
         self.cur.execute("INSERT INTO invoice_products VALUES (?, ?, ?, ?, ?, ?)",
                          (invoice_id, product_name, quantity, unit, price, vat))
         self.conn.commit()
+
+    def fetch_invoices(self):
+        self.cur.execute("SELECT * from invoices")
+        rows = self.cur.fetchall()
+        rows.sort(key=lambda x: x[0], reverse=1)
+        return rows
+
+    def remove_invoice(self, id):
+        self.cur.execute("DELETE FROM invoices WHERE id=?", (id,))
+        self.conn.commit()
