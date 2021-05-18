@@ -1,5 +1,6 @@
 from tkinter import filedialog
 import os
+import subprocess
 
 from reportlab.platypus import Table, TableStyle, Paragraph
 from reportlab.lib import colors
@@ -69,9 +70,8 @@ class PDF:
 
         minus = 400
 
-        data = []
+        data = [['ID', 'Product name', 'Quantity', 'Unit', 'Netto price', 'VAT [%]', 'Brutto price']]
 
-        data.append(['ID', 'Product name', 'Quantity', 'Unit', 'Netto price', 'VAT [%]', 'Brutto price'])
         netto = 0
         brutto = 0
         for id, p in enumerate(products):
@@ -99,11 +99,7 @@ class PDF:
         c.drawString(60, height - 170, "Seller's Signature")
         c.drawString(421, height - 170, "Customer's Signature")
 
-
-
-
-        # zapis do pliku
+        # Save to file
         c.showPage()
         c.save()
-        import subprocess
         subprocess.Popen([file_name], shell=True)

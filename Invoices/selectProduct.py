@@ -64,7 +64,7 @@ class SelectProductWindow:
             self.prod_list.delete(*self.prod_list.get_children())
             for row in db.fetch_products():
                 if any(value.get().lower() in sublist.lower() for sublist in row[1:3]):
-                    self.prod_list.insert(parent='', index='end', text="A", values=row)
+                    self.prod_list.insert(parent='', index='end', text="A", values=row, tag=('odd',))
         else:
             self.show_products()
 
