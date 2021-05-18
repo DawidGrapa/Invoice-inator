@@ -19,9 +19,9 @@ class ChooseContractorWindow:
         self.ctr_list.delete(*self.ctr_list.get_children())
         for row in db.fetch_contractors():
             if row[6] == "":
-                self.ctr_list.insert(parent='', index='end', text="A", values=row[:6])
+                self.ctr_list.insert(parent='', index='end', text=row[5], values=row[:6])
             else:
-                self.ctr_list.insert(parent='', index='end', text="A", values=row)
+                self.ctr_list.insert(parent='', index='end', text=row[5], values=row)
 
     def show_selected(self, value):
         if value.get():
@@ -29,9 +29,9 @@ class ChooseContractorWindow:
             for row in db.fetch_contractors():
                 if any(value.get().lower() in sublist.lower() for sublist in row[1:]):
                     if row[6] == "":
-                        self.ctr_list.insert(parent='', index='end', text="A", values=row[:6])
+                        self.ctr_list.insert(parent='', index='end', text=row[5], values=row[:6])
                     else:
-                        self.ctr_list.insert(parent='', index='end', text="A", values=row)
+                        self.ctr_list.insert(parent='', index='end', text=row[5], values=row)
         else:
             self.show_contractors()
 
@@ -44,6 +44,7 @@ class ChooseContractorWindow:
         try:
             if len(self.ctr_list.get_children()) > 0:
                 self.selected = self.ctr_list.item(self.ctr_list.focus())["values"]
+                self.selected[5] = self.ctr_list.item(self.ctr_list.focus())["text"]
                 if self.selected:
                     self.create_invoice()
         except IndexError:
