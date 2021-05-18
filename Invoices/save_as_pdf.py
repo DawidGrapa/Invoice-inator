@@ -91,8 +91,8 @@ class PDF:
         height -= minus
 
         c.setFont("Helvetica-Bold", 10)
-        c.drawString(450, height - 30, "Netto value:  " + str(netto))
-        c.drawString(450, height - 50, "Brutto value: " + str(brutto))
+        c.drawString(450, height - 30, "Netto value:  " + str(round(netto,2)))
+        c.drawString(450, height - 50, "Brutto value: " + str(round(brutto,2)))
 
         c.drawString(50, height - 150, "......................................")
         c.drawString(420, height - 150, "......................................")

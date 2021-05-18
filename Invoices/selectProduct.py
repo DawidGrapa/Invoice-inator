@@ -3,7 +3,7 @@ from tkinter import *
 from Database.db import Database
 from tkinter import messagebox
 from tkinter.ttk import *
-
+from Validators.validators import validate_quantity
 db = Database('Database/Database.db')
 
 
@@ -27,18 +27,19 @@ class SelectProductWindow:
             pass
 
     def boxfun(self, window, quantity):
-        messagebox.showinfo("Success", "Added successfully!", parent=window)
-        # TODO validator
-        values = []
-        values.append(self.selected[0])
-        values.append(self.selected[1])
-        values.append(quantity.get())
-        values.append(self.selected[2])
-        values.append(str(round(float(self.selected[4]) * float(values[2]), 2)))
-        values.append(self.selected[3])
-        values.append(round(float(values[4]) * (100+float(values[5])) / 100, 2))
-        self.treeview.insert(parent='', index='end', text="A", values=values)
-        self.window.destroy()
+        if validate_quantity(quantity)[0]:
+            messagebox.showinfo("Success", "Added successfully!", parent=window)
+
+            values = []
+            values.append(self.selected[0])
+            values.append(self.selected[1])
+            values.append(quantity.get())
+            values.append(self.selected[2])
+            values.append(str(round(float(self.selected[4]) * float(values[2]), 2)))
+            values.append(self.selected[3])
+            values.append(round(float(values[4]) * (100+float(values[5])) / 100, 2))
+            self.treeview.insert(parent='', index='end', text="A", values=values)
+            self.window.destroy()
 
     def open_quantity_window(self):
         quantity_window = Toplevel(self.window)

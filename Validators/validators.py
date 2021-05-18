@@ -44,7 +44,7 @@ def validate_product(product):
         x = "unit"
     if len(vat) == 0 or not check_float(vat) or not 0 <= int(vat) <= 100:
         x = "vat"
-    if len(price) == 0:
+    if len(price) == 0 or float(price) < 0:
         x = "price"
 
     if x is None:
@@ -70,6 +70,17 @@ def validate_company(company):
         x = "NIP"
     if len(bank) == 0: x = "bank"
 
+    if x is None:
+        return True, x
+    else:
+        return False, x
+
+
+def validate_quantity(q):
+    quantity = q.get()
+    x = None
+    if not check_float(quantity) or float(quantity) < 0:
+        x = "quantity"
     if x is None:
         return True, x
     else:
