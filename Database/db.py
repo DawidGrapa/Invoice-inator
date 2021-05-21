@@ -19,7 +19,11 @@ class Database:
         )
         self.cur.execute(
             "CREATE TABLE IF NOT EXISTS invoice_products (invoice_id INTEGER, product_name text, quantity text, unit text, netto text, vat text, brutto text)")
+        self.cur.execute(
+            "CREATE TABLE IF NOT EXISTS settings (id INTEGER PRIMARY KEY, format text)"
+        )
         self.conn.commit()
+
 
     # About contractors
     def fetch_contractors(self):
@@ -84,6 +88,22 @@ class Database:
     def remove_company(self, id):
         self.cur.execute("DELETE FROM company WHERE id=?", (id,))
         self.conn.commit()
+
+    #settings
+    def add_settings(self, format):
+        self.cur.execute("INSERT INTO settings VALUES (NULL, ?)", (format,))
+        self.conn.commit()
+
+    def update_settings(self,id , format):
+        self.cur.execute(
+            "UPDATE settings SET format=? WHERE id=?", (format, id,)
+        )
+        self.conn.commit()
+
+    def get_settings(self):
+        self.cur.execute("SELECT * from settings")
+        row = self.cur.fetchone()
+        return row
 
     # invoices
     def add_invoice(self, name, date, payment, format, company_id):

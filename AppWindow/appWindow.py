@@ -7,7 +7,7 @@ from Invoices.invoices import ChooseContractorWindow
 from Contractors.contractors import ContractorsWindow
 from Products.products import ProductsWindow
 from Invoices.showInvoices import ShowInvoicesWindow
-
+from PopUpWindows.settings import Settings
 
 class AppWindow:
     def __init__(self):
@@ -42,6 +42,8 @@ class AppWindow:
         help_menu.add_command(label="Getting started")
         help_menu.add_separator()
         help_menu.add_command(label="About us", command=lambda: open_about_us_window(self.app))
+
+        settings_menu.add_command(label= "Invoice settings", command = lambda: Settings(self.app))
 
         self.my_menu.add_cascade(label="Settings", menu=settings_menu)
         self.my_menu.add_cascade(label="Help", menu=help_menu)
