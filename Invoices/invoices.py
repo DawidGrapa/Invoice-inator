@@ -56,6 +56,8 @@ class ChooseContractorWindow:
         self.main_window.resizable(0, 0)
         self.main_window['bg'] = '#f8deb4'
 
+        print(db.get_settings())
+
         # Right side of window
         def on_click(event):
             e.configure(state=NORMAL)

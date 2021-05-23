@@ -76,7 +76,8 @@ class PDF:
         netto = 0
         brutto = 0
         for id, p in enumerate(products):
-            data.append([str(id + 1), p[1], p[2], p[3], p[7], p[4], p[5], p[6]])
+            data.append([str(id + 1), p[1], p[2], p[3], str('{:.2f}'.format(float(p[7]))), str('{:.2f}'.format(float(p[4]))),
+                         p[5], str('{:.2f}'.format(float(p[6])))])
             netto += float(p[4])
             brutto += float(p[6])
             minus += 17
@@ -92,8 +93,8 @@ class PDF:
         height -= minus
 
         c.setFont("Helvetica-Bold", 10)
-        c.drawString(450, height - 30, "Netto value:  " + str(round(netto,2)))
-        c.drawString(450, height - 50, "Brutto value: " + str(round(brutto,2)))
+        c.drawString(450, height - 30, "Netto value:  " + str('{:.2f}'.format(round(netto, 2))))
+        c.drawString(450, height - 50, "Brutto value: " + str('{:.2f}'.format(round(brutto, 2))))
 
         c.drawString(50, height - 150, "......................................")
         c.drawString(420, height - 150, "......................................")

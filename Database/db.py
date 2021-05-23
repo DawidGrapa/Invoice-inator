@@ -90,10 +90,6 @@ class Database:
             (company, street, zip, city, nip, bank, id))
         self.conn.commit()
 
-    def remove_company(self, id):
-        self.cur.execute("DELETE FROM company WHERE id=?", (id,))
-        self.conn.commit()
-
     #settings
     def add_settings(self, format):
         self.cur.execute("INSERT INTO settings VALUES (NULL, ?)", (format,))
