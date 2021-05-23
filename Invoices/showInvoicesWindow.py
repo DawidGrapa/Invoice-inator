@@ -37,14 +37,14 @@ class ShowInvoicesWindow:
     def show_invoices(self):
         self.invoices_list.delete(*self.invoices_list.get_children())
         for row in db.fetch_invoices():
-            self.invoices_list.insert(parent='', index='end', text="A", values=row[:6])
+            self.invoices_list.insert(parent='', index='end', text="A", values=row[1:4])
 
     def show_selected(self, value):
         if value.get():
             self.invoices_list.delete(*self.invoices_list.get_children())
             for row in db.fetch_invoices():
-                if any(value.get().lower() in sublist.lower() for sublist in row[1:5]):
-                    self.invoices_list.insert(parent='', index='end', text="A", values=row)
+                if any(value.get().lower() in sublist.lower() for sublist in row[2:6]):
+                    self.invoices_list.insert(parent='', index='end', text="A", values=row[1:])
         else:
             self.show_invoices()
 

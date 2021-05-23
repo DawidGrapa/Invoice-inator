@@ -23,8 +23,8 @@ class PDF:
 
         company = db.get_company()[0]
         last = db.get_last_invoice()
-        contractor = db.get_contractor(last[5])
-        products = db.fetch_invoice_products(last[0])
+        contractor = db.get_contractor(last[6])
+        products = db.fetch_invoice_products(last[1])
 
         c = canvas.Canvas(file_name, pagesize=A4)
         c.setFont("Helvetica", 10)
@@ -35,7 +35,7 @@ class PDF:
         c.setFont("Helvetica-Bold", 10)
         c.drawString(420, height - 85, "Invoice number:")
         c.setFont("Helvetica", 10)
-        c.drawString(420, height - 100, str(last[0]) + '/' + last[4])
+        c.drawString(420, height - 100, str(last[1]) + last[5])
         c.drawString(420, height - 140, last[2])
         c.setFont("Helvetica-Bold", 10)
         c.drawString(420, height - 125, "Issue date:")
@@ -70,17 +70,17 @@ class PDF:
 
         minus = 400
 
-        data = [['ID', 'Product name', 'Quantity', 'Unit', 'Netto price', 'VAT [%]', 'Brutto price']]
+        data = [['ID', 'Product name', 'Quantity', 'Unit', 'Unit Price', 'Netto price', 'VAT [%]', 'Brutto price']]
 
         netto = 0
         brutto = 0
         for id, p in enumerate(products):
-            data.append([str(id + 1), p[1], p[2], p[3], p[4], p[5], p[6]])
+            data.append([str(id + 1), p[1], p[2], p[3], p[7], p[4], p[5], p[6]])
             netto += float(p[4])
             brutto += float(p[6])
             minus += 17
 
-        t = Table(data, [20, 170, 60, 40, 77, 56, 77])
+        t = Table(data, [20, 120, 60, 40, 67, 67, 56, 77])
         t.setStyle(TableStyle([('GRID', (0, 0), (-1, -1), 0.25, colors.black),
                                ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
                                ('FONT', (0, 0), (-1, 0), 'Helvetica-Bold', 11),

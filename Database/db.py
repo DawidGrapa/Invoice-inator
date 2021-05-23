@@ -15,10 +15,10 @@ class Database:
             "CREATE TABLE IF NOT EXISTS company (id INTEGER PRIMARY KEY, companyname text, street text, zip text, "
             "city text, nip text, account_number text)")
         self.cur.execute(
-            "CREATE TABLE IF NOT EXISTS invoices (id INTEGER PRIMARY  KEY, companyname text, date text, payment text, format text, company_id integer)"
+            "CREATE TABLE IF NOT EXISTS invoices (id INTEGER PRIMARY  KEY, invoice_id integer, companyname text, date text, payment text, format text, company_id integer)"
         )
         self.cur.execute(
-            "CREATE TABLE IF NOT EXISTS invoice_products (invoice_id INTEGER, product_name text, quantity text, unit text, netto text, vat text, brutto text)")
+            "CREATE TABLE IF NOT EXISTS invoice_products (invoice_id INTEGER, product_name text, quantity text, unit text, netto text, vat text, brutto text, unit_price text)")
         self.cur.execute(
             "CREATE TABLE IF NOT EXISTS settings (id INTEGER PRIMARY KEY, format text)"
         )
@@ -55,6 +55,11 @@ class Database:
         self.cur.execute("SELECT * from products")
         rows = self.cur.fetchall()
         return rows
+
+    def get_product(self, id):
+        self.cur.execute("SELECT * FROM products WHERE id = ?", (id,))
+        result = self.cur.fetchone()
+        return result
 
     def insert_product(self, productname, unit, vat, price):
         self.cur.execute("INSERT INTO products VALUES (NULL, ?,?,?,?)", (productname, unit, vat, price))
@@ -106,8 +111,8 @@ class Database:
         return row
 
     # invoices
-    def add_invoice(self, name, date, payment, format, company_id):
-        self.cur.execute("INSERT INTO invoices VALUES (NULL, ?, ?, ?, ?, ?)", (name, date, payment, format, company_id))
+    def add_invoice(self, invoice_id, name, date, payment, format, company_id):
+        self.cur.execute("INSERT INTO invoices VALUES (NULL,?, ?, ?, ?, ?, ?)", (invoice_id ,name, date, payment, format, company_id))
         self.conn.commit()
 
     def get_last_invoice(self):
@@ -116,12 +121,17 @@ class Database:
         if result:
             return result
         else:
-            return [0]
+            return [0,0]
 
-    def add_invoice_product(self, invoice_id, product_name, quantity, unit, netto, vat, brutto):
-        self.cur.execute("INSERT INTO invoice_products VALUES (?, ?, ?, ?, ?, ?, ?)",
-                         (invoice_id, product_name, quantity, unit, netto, vat, brutto))
+    def add_invoice_product(self, invoice_id, product_name, quantity, unit, netto, vat, brutto, unit_price):
+        self.cur.execute("INSERT INTO invoice_products VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                         (invoice_id, product_name, quantity, unit, netto, vat, brutto, unit_price))
         self.conn.commit()
+
+    def check_id(self, id):
+        self.cur.execute("SELECT invoice_id from invoices where invoice_id = ?", (id,))
+        rows = self.cur.fetchall()
+        return rows
 
     def fetch_invoices(self):
         self.cur.execute("SELECT * from invoices")
@@ -130,7 +140,8 @@ class Database:
         return rows
 
     def remove_invoice(self, id):
-        self.cur.execute("DELETE FROM invoices WHERE id=?", (id,))
+        self.cur.execute("DELETE FROM invoices WHERE invoice_id=?", (id,))
+        self.cur.execute("DELETE FROM invoice_products WHERE invoice_id=?", (id,))
         self.conn.commit()
 
     def fetch_invoice_products(self, id):

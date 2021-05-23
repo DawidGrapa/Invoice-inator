@@ -2,7 +2,7 @@ from Database.db import Database
 from tkinter import *
 from tkinter.ttk import *
 import tkinter as tk
-from tkcalendar import Calendar, DateEntry
+from tkcalendar import DateEntry
 import datetime
 from Invoices.selectProduct import SelectProductWindow
 from Invoices.save_as_pdf import PDF
@@ -24,7 +24,23 @@ class CreateInvoice:
         self.cancel = None
         self.delete_product = None
         self.invoice_no_pattern = None
+        self.invoice_no_input = None
+        self.settings = db.get_settings()
         self.create_invoice_window()
+
+    def insert_pattern(self):
+        today = datetime.date.today()
+        res = self.settings[1]
+        year = today.strftime("/%y")
+        month = today.strftime("/%m")
+        day = today.strftime("%m/%d/%y")
+
+        if res == "InvoiceNo/Month":
+            self.invoice_no_pattern.insert(1.0, month)
+        elif res == "InvoiceNo/Month/Year":
+            self.invoice_no_pattern.insert(1.0, month + year)
+        elif res == "InvoiceNo/Year":
+            self.invoice_no_pattern.insert(1.0, year)
 
     def clean_window(self):
         for widget in self.top.frame2.winfo_children():
@@ -38,19 +54,22 @@ class CreateInvoice:
         self.delete_product['state'] = DISABLED
 
     def save_as_pdf(self):
-        if self.prod_list.get_children():
-            PDF()
-            self.clean_window()
+        PDF()
+        self.clean_window()
 
     def add_invoice(self):
-        db.add_invoice(self.selected[1], self.date.get(), self.payment.get(), str(self.invoice_no_pattern.get(1.0, "end-1c")), self.selected[0])
-        last = db.get_last_invoice()
-        for line in self.prod_list.get_children():
-            db.add_invoice_product(last[0], self.prod_list.item(line)['values'][1],
-                                   self.prod_list.item(line)['values'][2], self.prod_list.item(line)['values'][3],
-                                   self.prod_list.item(line)['values'][4], self.prod_list.item(line)['values'][5],
-                                   self.prod_list.item(line)['values'][6])
-        self.save_as_pdf()
+        if self.prod_list.get_children() and not len(db.check_id(self.invoice_no_input.get())):
+            db.add_invoice(self.invoice_no_input.get(), self.selected[1], self.date.get(), self.payment.get(),
+                           str(self.invoice_no_pattern.get(1.0, "end-1c")), self.selected[0])
+            last = db.get_last_invoice()
+
+            for line in self.prod_list.get_children():
+                product = db.get_product(self.prod_list.item(line)['values'][0])
+                db.add_invoice_product(last[1], self.prod_list.item(line)['values'][1],
+                                       self.prod_list.item(line)['values'][2], self.prod_list.item(line)['values'][3],
+                                       self.prod_list.item(line)['values'][4], self.prod_list.item(line)['values'][5],
+                                       self.prod_list.item(line)['values'][6], product[4])
+            self.save_as_pdf()
 
     def select_item(self, event):
         try:
@@ -75,18 +94,18 @@ class CreateInvoice:
         invoice_no.grid(row=1, column=1)
 
         def on_click(event):
-            invoice_no_input.configure(state=NORMAL)
-            invoice_no_input.delete(0, END)
+            self.invoice_no_input.configure(state=NORMAL)
+            self.invoice_no_input.delete(0, END)
 
-        invoice_no_input = tk.Entry(label1, font=font_small, width=5)
-        invoice_no_input.insert(0, db.get_last_invoice()[0] + 1)
-        invoice_no_input.configure(state=DISABLED)
-        invoice_no_input.bind('<Button-1>', on_click)
-        invoice_no_input.bind("<Return>", lambda e: label1.focus())
-        invoice_no_input.grid(row=1, column=2, pady=1)
+        self.invoice_no_input = tk.Entry(label1, font=font_small, width=5)
+        self.invoice_no_input.insert(0, db.get_last_invoice()[1] + 1)
+        self.invoice_no_input.configure(state=DISABLED)
+        self.invoice_no_input.bind('<Button-1>', on_click)
+        self.invoice_no_input.bind("<Return>", lambda e: label1.focus())
+        self.invoice_no_input.grid(row=1, column=2, pady=1)
 
         self.invoice_no_pattern = tk.Text(label1, bg="lightgrey", font=font_small, width=10, height=1)
-        self.invoice_no_pattern.insert(1.0, "AB/CD/EF")
+        self.insert_pattern()
         self.invoice_no_pattern.configure(state='disabled')
         self.invoice_no_pattern.grid(row=1, column=3)
 
@@ -94,7 +113,8 @@ class CreateInvoice:
         issue_date.grid(row=1, column=4, padx=(10, 0))
 
         year = datetime.datetime.today().year
-        self.date = DateEntry(label1, width=12, bg="darkblue", fg="white", font=font_small, date_pattern='dd/mm/y', year=year)
+        self.date = DateEntry(label1, width=12, bg="darkblue", fg="white", font=font_small, date_pattern='dd/mm/y',
+                              year=year)
         self.date.grid(row=1, column=5)
 
         paid = tk.Label(label1, bg=bg, text="Payment: ", font=font, height=2)
