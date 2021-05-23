@@ -1,3 +1,5 @@
+from tkinter import messagebox
+
 from Database.db import Database
 from tkinter import *
 from tkinter.ttk import *
@@ -7,6 +9,7 @@ import datetime
 from Invoices.selectProduct import SelectProductWindow
 from Invoices.save_as_pdf import PDF
 from tkinter.font import Font
+from Validators.validators import validate_invoice_no
 
 db = Database('Database/Database.db')
 
@@ -58,7 +61,16 @@ class CreateInvoice:
         self.clean_window()
 
     def add_invoice(self):
-        if self.prod_list.get_children() and not len(db.check_id(self.invoice_no_input.get())):
+        if validate_invoice_no(self.invoice_no_input.get()) is False:
+            messagebox.showinfo(title="Error!", message="Wrong invoice number!")
+
+        elif len(db.check_id(self.invoice_no_input.get())):
+            messagebox.showinfo(title="Error!", message="Invoice with this number exists!")
+
+        elif len(self.prod_list.get_children()) == 0:
+            messagebox.showinfo(title="Error!", message="Add some products!")
+
+        elif self.prod_list.get_children() and not len(db.check_id(self.invoice_no_input.get())):
             db.add_invoice(self.invoice_no_input.get(), self.selected[1], self.date.get(), self.payment.get(),
                            str(self.invoice_no_pattern.get(1.0, "end-1c")), self.selected[0])
             last = db.get_last_invoice()

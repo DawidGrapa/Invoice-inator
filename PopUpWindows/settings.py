@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from tkinter.ttk import Combobox
 
 from Database.db import Database
@@ -18,14 +19,16 @@ class Settings:
             db.update_settings(1, self.format.get())
         else:
             db.add_settings(self.format.get())
+        messagebox.showinfo(title="Success", message="Saved!")
+        self.window.destroy()
 
     def open_settings_window(self):
         self.window.title("Settings")
-        self.window.geometry('400x400')
+        self.window.geometry('300x150')
         self.window.resizable(0, 0)
         self.window['bg'] = '#f8deb4'
         text = Text(self.window, bg="#ffccb3", font="Times 13", height=1)
-        text.insert(INSERT, "Select format:")
+        text.insert(INSERT, "Select invoice format:")
         text.config(state=DISABLED)
 
         self.format = Combobox(self.window, width=27, text="Select format:")

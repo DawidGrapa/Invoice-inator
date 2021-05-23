@@ -85,3 +85,9 @@ def validate_quantity(q):
         return True, x
     else:
         return False, x
+
+
+def validate_invoice_no(i):
+    if i.isdecimal() is False: return False
+    if int(i) < 0: return False
+    return True

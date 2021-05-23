@@ -36,9 +36,10 @@ class PDF:
         c.drawString(420, height - 85, "Invoice number:")
         c.setFont("Helvetica", 10)
         c.drawString(420, height - 100, str(last[1]) + last[5])
-        c.drawString(420, height - 140, last[2])
         c.setFont("Helvetica-Bold", 10)
         c.drawString(420, height - 125, "Issue date:")
+        c.setFont("Helvetica", 10)
+        c.drawString(420, height - 140, last[3])
 
         # company info
         c.setFont("Helvetica-Bold", 12)
@@ -66,7 +67,7 @@ class PDF:
         c.setFont("Helvetica-Bold", 12)
         c.drawString(50, height - 310, "Payment type:")
         c.setFont("Helvetica", 10)
-        c.drawString(50, height - 325, last[3])
+        c.drawString(50, height - 325, last[4])
 
         minus = 400
 
