@@ -22,6 +22,8 @@ class Database:
         self.cur.execute(
             "CREATE TABLE IF NOT EXISTS settings (id INTEGER PRIMARY KEY, format text)"
         )
+        if self.get_settings() is None:
+            self.add_settings("InvoiceNo/Month/Year")
         self.conn.commit()
 
 

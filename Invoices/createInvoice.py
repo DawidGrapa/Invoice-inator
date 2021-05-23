@@ -34,7 +34,7 @@ class CreateInvoice:
     def insert_pattern(self):
         today = datetime.date.today()
         res = self.settings[1]
-        year = today.strftime("/%y")
+        year = today.strftime("/%Y")
         month = today.strftime("/%m")
         day = today.strftime("%m/%d/%y")
 
