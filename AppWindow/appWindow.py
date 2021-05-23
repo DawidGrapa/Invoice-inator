@@ -1,13 +1,16 @@
 from Company.companyWindow import CompanyWindow
-from PopUpWindows.about_us_window import *
-from Products.products import *
-from Contractors.contractors import *
-from Invoices.invoices import *
+from PopUpWindows.aboutUsWindow import *
+from Products.showProductsWindow import *
+from Contractors.showContactorsWindow import *
+# from Invoices.invoices import *
 from Invoices.invoices import ChooseContractorWindow
-from Contractors.contractors import ContractorsWindow
-from Products.products import ProductsWindow
-from Invoices.showInvoices import ShowInvoicesWindow
+from Contractors.showContactorsWindow import ContractorsWindow
+from Products.showProductsWindow import ProductsWindow
+from Invoices.showInvoicesWindow import ShowInvoicesWindow
 from PopUpWindows.settings import Settings
+
+from PIL import ImageTk, Image
+
 
 class AppWindow:
     def __init__(self):
@@ -43,7 +46,7 @@ class AppWindow:
         help_menu.add_separator()
         help_menu.add_command(label="About us", command=lambda: open_about_us_window(self.app))
 
-        settings_menu.add_command(label= "Invoice settings", command = lambda: Settings(self.app))
+        settings_menu.add_command(label="Invoice settings", command=lambda: Settings(self.app))
 
         self.my_menu.add_cascade(label="Settings", menu=settings_menu)
         self.my_menu.add_cascade(label="Help", menu=help_menu)
@@ -64,6 +67,17 @@ class AppWindow:
         contractors.pack()
         products.pack()
         company.pack()
+
+        logo = Image.open('Media/soy_invoice.png')
+        # The (450, 350) is (height, width)
+        logo_resized = logo.resize((320, 70), Image.ANTIALIAS)
+        logo = ImageTk.PhotoImage(logo_resized)
+        logo_label = Label(self.frame1, image=logo)
+
+        width = int(self.frame1.winfo_reqwidth())
+        height = int(self.frame1.winfo_reqheight())
+        print("width: " + str(width) + ", height: " + str(height))
+        logo_label.place(x=10, y=700)
 
         create_button_png = PhotoImage(file='Media/create_button.png')
         invoices_button_png = PhotoImage(file='Media/invoices_button.png')

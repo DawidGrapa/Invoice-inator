@@ -63,15 +63,15 @@ class ProductsWindow:
         panedwindow.pack(fill=BOTH, expand=True)
 
         # Creating Left Frame
-        frame1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#f8deb4')
+        frame1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#778899')
         frame2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#f8deb4')
         panedwindow.add(frame1, weight=1)
         panedwindow.add(frame2, weight=4)
 
         # Creating Buttons
-        add_label = tk.Label(frame1, bg='#f8deb4')
-        update_label = tk.Label(frame1, bg='#f8deb4')
-        delete_label = tk.Label(frame1, bg='#f8deb4')
+        add_label = tk.Label(frame1, bg='#778899')
+        update_label = tk.Label(frame1, bg='#778899')
+        delete_label = tk.Label(frame1, bg='#778899')
         add_label.pack()
         update_label.pack()
         delete_label.pack()

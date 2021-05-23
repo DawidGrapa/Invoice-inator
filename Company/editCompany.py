@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from Validators.validators import *
+from tkinter.font import Font
 from Database.db import Database
 
 db = Database('Database/Database.db')
@@ -33,6 +34,9 @@ class EditCompany:
     def open_window(self):
         self.window.title("Company")
         self.window.minsize(500, 260)
+
+        font = Font(family="Bookman Old Style", size=16)
+        font_small = Font(family="Bookman Old Style", size=12)
 
         # Name
         name = tk.Label(self.window, text="Company Name:", height=2, padx=10)

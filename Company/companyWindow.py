@@ -4,6 +4,7 @@ from tkinter import font, messagebox
 from Company.editCompany import EditCompany
 from Database.db import Database
 import tkinter as tk
+from tkinter.font import Font
 
 db = Database('Database/Database.db')
 
@@ -19,21 +20,24 @@ class CompanyWindow:
         self.create()
 
     def fill(self):
+        font = Font(family="Bookman Old Style", size=16)
+        font_small = Font(family="Bookman Old Style", size=12)
         if self.company:
             for i in range(len(self.company[0]) - 1):
-                left = tk.Label(self.window, text=self.help[i].upper(), bg='#f8deb4',
-                                font=self.fontStyle)
+                left = tk.Label(self.window, text=self.help[i].upper(), bg='#778899',
+                                font=font)
                 x = StringVar()
                 x.set(str(self.company[0][i + 1]))
                 # TODO we to zmien
-                text = Text(self.window, bg="#ffccb3", font="Times 13", height=1)
+
+                text = Text(self.window, bg="lightgrey", font=font, height=1)
                 text.insert(INSERT, x.get())
                 text.config(state=DISABLED)
                 left.pack()
                 text.pack(padx=10)
                 self.type = "Update"
         else:
-            text = Text(self.window, bg="#f8deb4", height = 1)
+            text = Text(self.window, bg="#f8deb4", height=1)
             text.tag_configure("center", justify='center')
             text.insert(INSERT, "You haven't added any company so far")
             text.tag_add("center", "1.0", "end")
@@ -53,11 +57,11 @@ class CompanyWindow:
         else:
             self.window.geometry('600x120')
         self.window.resizable(0, 0)
-        self.window['bg'] = '#f8deb4'
+        self.window['bg'] = '#778899'
         self.fill()
 
         update = tk.Button(self.window, text=self.type, padx=20, pady=10, command=lambda: EditCompany(self.window))
-        update.pack(pady = (15,10))
+        update.pack(pady=(15, 10))
 
         if self.company:
             delete = tk.Button(self.window, text="Delete", padx=20, pady=10, command=self.delete)

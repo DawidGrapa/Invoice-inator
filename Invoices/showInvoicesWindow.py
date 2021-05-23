@@ -59,14 +59,14 @@ class ShowInvoicesWindow:
         panedwindow.pack(fill=BOTH, expand=True)
 
         # Creating Left Frame
-        frame1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#f8deb4')
+        frame1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#778899')
         frame2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#f8deb4')
         panedwindow.add(frame1, weight=1)
         panedwindow.add(frame2, weight=4)
 
-        delete_label = tk.Label(frame1, bg='#f8deb4')
+        delete_label = tk.Label(frame1, bg='#778899')
         delete_label.pack()
-        save_label = tk.Label(frame1, bg='#f8deb4')
+        save_label = tk.Label(frame1, bg='#778899')
         save_label.pack()
 
         self.delete_button = tk.Button(delete_label, text="Delete invoice", height=2, width=20, padx=5, pady=5,
