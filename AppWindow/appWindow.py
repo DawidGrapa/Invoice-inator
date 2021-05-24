@@ -2,6 +2,7 @@ from Company.companyWindow import CompanyWindow
 from PopUpWindows.aboutUsWindow import *
 from Products.showProductsWindow import *
 from Contractors.showContactorsWindow import *
+import subprocess
 # from Invoices.invoices import *
 from Invoices.invoices import ChooseContractorWindow
 from Contractors.showContactorsWindow import ContractorsWindow
@@ -32,6 +33,12 @@ class AppWindow:
         else:
             messagebox.showinfo(title="Error", message="You have to add your company first!")
 
+    def open_getting_started(self):
+        # file_name = 'getting_started.pdf'
+        # subprocess.Popen([file_name], shell=True)
+        # import os
+        # os.startfile('AppWindow/getting_started.pdf')
+
     def create_app_window(self):
         self.app.title("invoice-inator")
         self.app.state("zoomed")
@@ -42,7 +49,7 @@ class AppWindow:
         settings_menu = Menu(self.my_menu, tearoff=False)
 
         help_menu = Menu(self.my_menu, tearoff=False)
-        help_menu.add_command(label="Getting started")
+        help_menu.add_command(label="Getting started", command=self.open_getting_started)
         help_menu.add_separator()
         help_menu.add_command(label="About us", command=lambda: open_about_us_window(self.app))
 

@@ -109,19 +109,19 @@ class ProductsWindow:
         # Treeview
         self.prod_list = Treeview(frame2, height=22)
 
-        self.prod_list['columns'] = ("ID", "ProductName", 'Unit', 'VAT', 'Price')
+        self.prod_list['columns'] = ("ID", "ProductName", 'Unit', 'VAT', 'Unit price')
         self.prod_list.column("#0", width=0, stretch=NO)
         self.prod_list.column("ID", anchor=W, width=30)
         self.prod_list.column("ProductName", anchor=W, width=100)
         self.prod_list.column("Unit", anchor=W, width=100)
         self.prod_list.column("VAT", anchor=W, width=100)
-        self.prod_list.column("Price", anchor=W, width=100)
+        self.prod_list.column("Unit price", anchor=W, width=100)
 
         self.prod_list.heading("ID", text="ID", anchor=W)
         self.prod_list.heading("ProductName", text="Product Name", anchor=W)
         self.prod_list.heading("Unit", text="Unit", anchor=W)
         self.prod_list.heading("VAT", text="VAT", anchor=W)
-        self.prod_list.heading("Price", text="Netto price", anchor=W)
+        self.prod_list.heading("Unit price", text="Unit price", anchor=W)
 
         # Create scrollbar
         scrollbar = Scrollbar(frame2)

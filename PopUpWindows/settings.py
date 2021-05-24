@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+from tkinter.font import Font
 from tkinter.ttk import Combobox
 
 from Database.db import Database
@@ -26,12 +27,13 @@ class Settings:
         self.window.title("Settings")
         self.window.geometry('300x150')
         self.window.resizable(0, 0)
-        self.window['bg'] = '#f8deb4'
-        text = Text(self.window, bg="#ffccb3", font="Times 13", height=1)
-        text.insert(INSERT, "Select invoice format:")
+        self.window['bg'] = '#778899'
+        font = Font(family="Bookman Old Style", size=16)
+        text = Text(self.window, bg="lightgrey", font=font, height=1)
+        text.insert(INSERT, "Select date format")
         text.config(state=DISABLED)
 
-        self.format = Combobox(self.window, width=27, text="Select format:")
+        self.format = Combobox(self.window, width=27, state='readonly', text="Select format:")
         self.format.bind("<<ComboboxSelected>>", lambda e: self.window.focus())
         self.format['values'] = ('InvoiceNo/Month/Year', 'InvoiceNo/Year', 'InvoiceNo/Month')
         self.format.current(0)

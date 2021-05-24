@@ -62,7 +62,7 @@ class UpdateProductWindow:
         self.data['vat'] = vat_input
 
         # Price
-        price = tk.Label(self.window, text="Price:", height=2, padx=10)
+        price = tk.Label(self.window, text="Unit price:", height=2, padx=10)
         price.grid(row=4, column=1)
         price_input = tk.Entry(self.window, width=50, bd=3)
         price_input.grid(row=4, column=2)
