@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter.ttk import *
 from Database.db import Database
 from tkinter import messagebox
-from Invoices.save_as_pdf import PDF
+from Invoices.saveAsPdf import PDF
 
 db = Database('Database/Database.db')
 

@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import *
 from Database.db import Database
-from tkinter import messagebox
 from tkinter.ttk import *
 from Validators.validators import validate_quantity
 db = Database('Database/Database.db')
@@ -13,6 +12,7 @@ class SelectProductWindow:
         self.window = Toplevel(app)
         self.prod_list = Treeview()
         self.selected = None
+        self.frame = None
         self.treeview = treeview
         self.open_products_window()
 
@@ -28,8 +28,6 @@ class SelectProductWindow:
 
     def boxfun(self, window, quantity):
         if validate_quantity(quantity)[0]:
-            messagebox.showinfo("Success", "Added successfully!", parent=window)
-
             values = []
             values.append(self.selected[0])
             values.append(self.selected[1])
@@ -38,6 +36,7 @@ class SelectProductWindow:
             values.append(str(round(float(self.selected[4]) * float(values[2]), 2)))
             values.append(self.selected[3])
             values.append(round(float(values[4]) * (100+float(values[5])) / 100, 2))
+
             self.treeview.insert(parent='', index='end', text="A", values=values)
             self.window.destroy()
 
@@ -46,12 +45,13 @@ class SelectProductWindow:
         quantity_window.title("Add quantity")
         quantity_window.geometry('250x150')
         quantity_window.resizable(0, 0)
-        quantity_window['bg'] = '#f8deb4'
+        quantity_window['bg'] = '#999999'
 
-        label = tk.Label(quantity_window, text="Quantity: ", height=2, bg="#f8deb4")
+        label = tk.Label(quantity_window, text="Quantity: ", height=2, bg="#999999")
         label.pack(pady=(10, 0))
         quantity = tk.Entry(quantity_window, width=20, bd=3)
         quantity.pack()
+        quantity.focus_set()
         submit = tk.Button(quantity_window, text="Submit", command=lambda: self.boxfun(quantity_window, quantity))
         submit.pack(pady=(10, 0))
 
@@ -69,33 +69,8 @@ class SelectProductWindow:
         else:
             self.show_products()
 
-    def open_products_window(self):
-        # Creating new window
-        self.window.title("Products")
-        self.window.geometry('900x487')
-        self.window.resizable(0, 0)
-        self.window['bg'] = '#f8deb4'
-
-        # Creating Left Frame
-        frame = tk.Frame(self.window, width=400, height=400, relief=SUNKEN, bg='#f8deb4')
-        frame.pack(fill=BOTH)
-
-        # Right side of window
-        def on_click(event):
-            e.configure(state=NORMAL)
-            e.delete(0, END)
-
-        # Search tool
-        sv = StringVar()
-        sv.trace("w", lambda name, index, mode, sv=sv: self.show_selected(sv))
-        e = Entry(frame, textvariable=sv, width=60)
-        e.insert(0, "Search product...")
-        e.configure(state=DISABLED)
-        e.bind('<Button-1>', on_click)
-        e.pack(side=TOP, pady=10)
-
-        # Treeview
-        self.prod_list = Treeview(frame, height=22)
+    def create_products_list(self):
+        self.prod_list = Treeview(self.frame, height=22)
 
         self.prod_list['columns'] = ("ID", "ProductName", 'Unit', 'VAT', 'Price')
         self.prod_list.column("#0", width=0, stretch=NO)
@@ -112,7 +87,7 @@ class SelectProductWindow:
         self.prod_list.heading("Price", text="Netto price", anchor=W)
 
         # Create scrollbar
-        scrollbar = Scrollbar(frame)
+        scrollbar = Scrollbar(self.frame)
         scrollbar.pack(side=RIGHT, fill=Y)
         # Set scroll to listbox
         self.prod_list.configure(yscrollcommand=scrollbar.set)
@@ -122,3 +97,31 @@ class SelectProductWindow:
 
         self.show_products()
         self.prod_list.pack(fill=X)
+
+    def open_products_window(self):
+        # Creating new window
+        self.window.title("Products")
+        self.window.geometry('900x487')
+        self.window.resizable(0, 0)
+        self.window['bg'] = '#999999'
+
+        # Creating Left Frame
+        self.frame = tk.Frame(self.window, width=400, height=400, relief=SUNKEN, bg='#999999')
+        self.frame.pack(fill=BOTH)
+
+        # Right side of window
+        def on_click(event):
+            e.configure(state=NORMAL)
+            e.delete(0, END)
+
+        # Search tool
+        sv = StringVar()
+        sv.trace("w", lambda name, index, mode, sv=sv: self.show_selected(sv))
+        e = Entry(self.frame, textvariable=sv, width=60)
+        e.insert(0, "Search product...")
+        e.configure(state=DISABLED)
+        e.bind('<Button-1>', on_click)
+        e.pack(side=TOP, pady=10)
+
+        # Treeview
+        self.create_products_list()

@@ -79,11 +79,15 @@ def validate_company(company):
 def validate_quantity(q):
     quantity = q.get()
     x = None
-    if not check_float(quantity) or float(quantity) < 0:
+    try:
+        if float(quantity) < 0:
+            x = "quantity"
+        if x is None:
+            return True, x
+        else:
+            return False, x
+    except ValueError:
         x = "quantity"
-    if x is None:
-        return True, x
-    else:
         return False, x
 
 

@@ -9,7 +9,7 @@ from PIL import ImageTk, Image
 from Company.companyWindow import CompanyWindow
 from Contractors.showContactorsWindow import ContractorsWindow
 from Database.db import Database
-from Invoices.invoices import ChooseContractorWindow
+from Invoices.choose_contractor import ChooseContractorWindow
 from Invoices.showInvoicesWindow import ShowInvoicesWindow
 from PopUpWindows.aboutUsWindow import open_about_us_window
 from PopUpWindows.settings import Settings
@@ -30,7 +30,7 @@ class AppWindow:
         self.createInvoice_button = None
         self.company_button = None
         self.frame1 = tk.Frame(self.panedwindow, relief=SUNKEN, bg=self.leftLabelColor)
-        self.frame2 = tk.Frame(self.panedwindow, relief=SUNKEN, bg='#f8deb4')
+        self.frame2 = tk.Frame(self.panedwindow, relief=SUNKEN, bg='#999999')
         self.create_app_window()
 
     def start_creating_invoice(self):
