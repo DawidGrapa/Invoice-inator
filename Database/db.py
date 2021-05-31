@@ -15,17 +15,18 @@ class Database:
             "CREATE TABLE IF NOT EXISTS company (id INTEGER PRIMARY KEY, companyname text, street text, zip text, "
             "city text, nip text, account_number text)")
         self.cur.execute(
-            "CREATE TABLE IF NOT EXISTS invoices (id INTEGER PRIMARY  KEY, invoice_id integer, companyname text, date text, payment text, format text, company_id integer)"
+            "CREATE TABLE IF NOT EXISTS invoices (id INTEGER PRIMARY  KEY, invoice_id integer, companyname text, "
+            "date text, payment text, format text, company_id integer) "
         )
         self.cur.execute(
-            "CREATE TABLE IF NOT EXISTS invoice_products (invoice_id INTEGER, product_name text, quantity text, unit text, netto text, vat text, brutto text, unit_price text)")
+            "CREATE TABLE IF NOT EXISTS invoice_products (invoice_id INTEGER, product_name text, quantity text, "
+            "unit text, netto text, vat text, brutto text, unit_price text)")
         self.cur.execute(
             "CREATE TABLE IF NOT EXISTS settings (id INTEGER PRIMARY KEY, format text)"
         )
         if self.get_settings() is None:
             self.add_settings("InvoiceNo/Month/Year")
         self.conn.commit()
-
 
     # About contractors
     def fetch_contractors(self):
@@ -79,8 +80,8 @@ class Database:
     # about own company
     def get_company(self):
         self.cur.execute("SELECT * from company")
-        rows = self.cur.fetchall()
-        return rows
+        row = self.cur.fetchone()
+        return row
 
     def add_company(self, company, street, zip, city, nip, bank):
         self.cur.execute("INSERT INTO company VALUES (NULL, ?, ?, ?, ?, ?, ?)", (company, street, zip, city, nip, bank))
@@ -92,12 +93,12 @@ class Database:
             (company, street, zip, city, nip, bank, id))
         self.conn.commit()
 
-    #settings
+    # settings
     def add_settings(self, format):
         self.cur.execute("INSERT INTO settings VALUES (NULL, ?)", (format,))
         self.conn.commit()
 
-    def update_settings(self,id , format):
+    def update_settings(self, id, format):
         self.cur.execute(
             "UPDATE settings SET format=? WHERE id=?", (format, id,)
         )
@@ -110,7 +111,8 @@ class Database:
 
     # invoices
     def add_invoice(self, invoice_id, name, date, payment, format, company_id):
-        self.cur.execute("INSERT INTO invoices VALUES (NULL,?, ?, ?, ?, ?, ?)", (invoice_id ,name, date, payment, format, company_id))
+        self.cur.execute("INSERT INTO invoices VALUES (NULL,?, ?, ?, ?, ?, ?)",
+                         (invoice_id, name, date, payment, format, company_id))
         self.conn.commit()
 
     def get_last_invoice(self):
@@ -119,7 +121,7 @@ class Database:
         if result:
             return result
         else:
-            return [0,0]
+            return [0, 0]
 
     def add_invoice_product(self, invoice_id, product_name, quantity, unit, netto, vat, brutto, unit_price):
         self.cur.execute("INSERT INTO invoice_products VALUES (?, ?, ?, ?, ?, ?, ?, ?)",

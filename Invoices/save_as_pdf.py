@@ -21,7 +21,7 @@ class PDF:
         last = db.get_last_invoice()
         file_name = selected_folder+"/Invoice_"+str(last[0])+".pdf"
 
-        company = db.get_company()[0]
+        company = db.get_company()
         last = db.get_last_invoice()
         contractor = db.get_contractor(last[6])
         products = db.fetch_invoice_products(last[1])

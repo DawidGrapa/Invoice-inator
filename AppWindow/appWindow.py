@@ -1,16 +1,23 @@
-from Company.companyWindow import CompanyWindow
-from PopUpWindows.aboutUsWindow import *
-from Products.showProductsWindow import *
-from Contractors.showContactorsWindow import *
 import subprocess
-# from Invoices.invoices import *
-from Invoices.invoices import ChooseContractorWindow
-from Contractors.showContactorsWindow import ContractorsWindow
-from Products.showProductsWindow import ProductsWindow
-from Invoices.showInvoicesWindow import ShowInvoicesWindow
-from PopUpWindows.settings import Settings
+import os
+import tkinter as tk
+from tkinter import *
+from tkinter.ttk import *
 
 from PIL import ImageTk, Image
+
+from Company.companyWindow import CompanyWindow
+from Contractors.showContactorsWindow import ContractorsWindow
+from Database.db import Database
+from Invoices.invoices import ChooseContractorWindow
+from Invoices.showInvoicesWindow import ShowInvoicesWindow
+from PopUpWindows.aboutUsWindow import open_about_us_window
+from PopUpWindows.settings import Settings
+from Products.showProductsWindow import ProductsWindow
+
+db = Database('Database/Database.db')
+
+
 
 
 class AppWindow:
@@ -20,7 +27,6 @@ class AppWindow:
         self.my_menu = Menu(self.app)
         self.panedwindow = Panedwindow(self.app, orient=HORIZONTAL)
         self.leftLabelColor = '#778899'
-        self.buttonColor = '#E6E6FA'
         self.createInvoice_button = None
         self.company_button = None
         self.frame1 = tk.Frame(self.panedwindow, relief=SUNKEN, bg=self.leftLabelColor)
@@ -31,21 +37,14 @@ class AppWindow:
         if db.get_company():
             ChooseContractorWindow(self.frame2, self)
         else:
-            messagebox.showinfo(title="Error", message="You have to add your company first!")
+            tk.messagebox.showinfo(title="Error", message="You have to add your company first!")
 
     def open_getting_started(self):
-        # file_name = 'getting_started.pdf'
-        # subprocess.Popen([file_name], shell=True)
-        # import os
-        # os.startfile('AppWindow/getting_started.pdf')
+        this_folder = os.path.dirname(os.path.abspath(__file__))
+        file_name = os.path.join(this_folder, '../Media/getting_started.pdf')
+        subprocess.Popen([file_name], shell=True)
 
-    def create_app_window(self):
-        self.app.title("invoice-inator")
-        self.app.state("zoomed")
-        self.app['bg'] = '#f8deb4'
-        self.app.iconphoto(True, self.photo)
-        self.app.config(menu=self.my_menu)
-
+    def create_menu(self):
         settings_menu = Menu(self.my_menu, tearoff=False)
 
         help_menu = Menu(self.my_menu, tearoff=False)
@@ -57,6 +56,15 @@ class AppWindow:
 
         self.my_menu.add_cascade(label="Settings", menu=settings_menu)
         self.my_menu.add_cascade(label="Help", menu=help_menu)
+
+    def create_app_window(self):
+        self.app.title("invoice-inator")
+        self.app.state("zoomed")
+        self.app['bg'] = '#f8deb4'
+        self.app.iconphoto(True, self.photo)
+        self.app.config(menu=self.my_menu)
+
+        self.create_menu()
 
         # Splitting main window
         self.panedwindow.pack(fill=BOTH, expand=1)
@@ -80,11 +88,7 @@ class AppWindow:
         logo_resized = logo.resize((320, 70), Image.ANTIALIAS)
         logo = ImageTk.PhotoImage(logo_resized)
         logo_label = Label(self.frame1, image=logo)
-
-        width = int(self.frame1.winfo_reqwidth())
-        height = int(self.frame1.winfo_reqheight())
-        print("width: " + str(width) + ", height: " + str(height))
-        logo_label.place(x=10, y=700)
+        logo_label.pack(side=tk.BOTTOM, pady=30)
 
         create_button_png = PhotoImage(file='Media/create_button.png')
         invoices_button_png = PhotoImage(file='Media/invoices_button.png')
