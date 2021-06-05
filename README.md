@@ -1,4 +1,4 @@
-![soy_invoice](https://user-images.githubusercontent.com/72798812/120894595-84d58580-c619-11eb-8ef9-aa1817aac3b7.png)
+![soy_invoice](https://user-images.githubusercontent.com/73083473/120899245-0388ed80-c62f-11eb-90c2-d3751e453ffc.png)
 ## Application created by [Julia Szpak](https://github.com/xxLucia)  and [DawidGrapa](https://github.com/DawidGrapa).
 
 <hr> 
