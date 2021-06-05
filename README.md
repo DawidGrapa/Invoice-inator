@@ -1,9 +1,9 @@
 ![soy_invoice](https://user-images.githubusercontent.com/72798812/120894595-84d58580-c619-11eb-8ef9-aa1817aac3b7.png)
-#Application created by [Julia Szpak](https://github.com/xxLucia)  and [DawidGrapa](https://github.com/DawidGrapa).
+# Application created by [Julia Szpak](https://github.com/xxLucia)  and [DawidGrapa](https://github.com/DawidGrapa).
 
 <hr> 
 
-##How to run
+## How to run
 <li>
 On windows:
 </li>
@@ -21,7 +21,7 @@ Or you can run these commands:
     pip3 install -r requirements.txt || pip install -r requirements.txt  
     python3 main.py || python main.py || py main.py
 
-##How does it all work?
+## How does it all work?
 <ul>
 <li>
 Put your company's data:<br>
