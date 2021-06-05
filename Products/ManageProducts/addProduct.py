@@ -1,9 +1,9 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
-from Database.db import Database
-from Validators.validators import *
 
+from Validators.validators import *
+from Database.db import Database
 db = Database('Database/Database.db')
 
 
@@ -19,7 +19,8 @@ class AddProductWindow:
     def add_to_base(self):
         res, x = validate_product(self.data)
         if res:
-            db.insert_product(self.data['name'].get(), self.data['unit'].get(), self.data['vat'].get(), self.data['price'].get())
+            db.insert_product(self.data['name'].get(), self.data['unit'].get(), self.data['vat'].get(),
+                              self.data['price'].get().replace(",", '.'))
             messagebox.showinfo("Success", "Added successfully!", parent=self.window)
             self.parent.show_products()
             self.window.destroy()
@@ -28,8 +29,11 @@ class AddProductWindow:
 
     def expand_window(self):
         self.window.title("Add new product")
-        self.window.minsize(450, 200)
         self.window.resizable(0, 0)
+
+        width = self.app.winfo_screenwidth()
+        height = self.app.winfo_screenheight()
+        self.window.geometry('%dx%d+%d+%d' % (450, 200, width//2-220, height//2-100))
 
         # Labels and Entries
         # Name

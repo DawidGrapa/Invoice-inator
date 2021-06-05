@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import *
-from Database.db import Database
 from Contractors.ManageContractors.addContractor import AddContractorWindow
 from Contractors.ManageContractors.updateContractor import UpdateContractorWindow
 
+from Database.db import Database
 db = Database('Database/Database.db')
 
 
@@ -12,6 +12,8 @@ class ContractorsWindow:
     def __init__(self, app):
         self.app = app
         self.main_window = Toplevel(app)
+        self.color1 = '#778899'
+        self.color2 = '#999999'
         self.ctr_list = Treeview()
         self.selected = None
         self.frame1 = None
@@ -29,6 +31,13 @@ class ContractorsWindow:
             else:
                 self.ctr_list.insert(parent='', index='end', text="A", values=row)
 
+    def remove_contractor(self):
+        if tk.messagebox.askyesno("Delete", "Are you sure?", parent=self.main_window):
+            db.remove_contractor(self.selected[0])
+            self.update_button['state'] = DISABLED
+            self.delete_button['state'] = DISABLED
+            self.show_contractors()
+
     def select_item(self, event):
         try:
             if len(self.ctr_list.get_children()) > 0:
@@ -39,13 +48,7 @@ class ContractorsWindow:
         except IndexError:
             pass
 
-    def remove_contractor(self):
-        if tk.messagebox.askyesno("Delete", "Are you sure?", parent=self.main_window):
-            db.remove_contractor(self.selected[0])
-            self.update_button['state'] = DISABLED
-            self.delete_button['state'] = DISABLED
-            self.show_contractors()
-
+    # Function to show lines with searched word (from search tool)
     def show_selected(self, value):
         if value.get():
             self.ctr_list.delete(*self.ctr_list.get_children())
@@ -92,27 +95,28 @@ class ContractorsWindow:
         self.ctr_list.pack(fill=BOTH)
 
     def open_contractors_window(self):
-        # Creating new window
         self.main_window.title("Contractors")
-        self.main_window.geometry('900x487')
+        width = self.app.winfo_screenwidth()
+        height = self.app.winfo_screenheight()
+        self.main_window.geometry('%dx%d+%d+%d' % (900, 487, width//2-450, height//2-243))
         self.main_window.resizable(0, 0)
-        self.main_window['bg'] = '#999999'
+        self.main_window['bg'] = self.color2
 
         # Creating PanedWindow - for splitting frames in ratio
         panedwindow = Panedwindow(self.main_window, orient=HORIZONTAL)
         panedwindow.pack(fill=BOTH, expand=True)
 
-        # Creating Left Frame
-        self.frame1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#778899')
-        self.frame2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#999999')
+        self.frame1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg=self.color1)
+        self.frame2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg=self.color2)
         panedwindow.add(self.frame1, weight=1)
         panedwindow.add(self.frame2, weight=4)
 
-        add_label = tk.Label(self.frame1, bg='#778899')
+        # Creating left frame - buttons
+        add_label = tk.Label(self.frame1, bg=self.color1)
         add_label.pack()
-        update_label = tk.Label(self.frame1, bg='#778899')
+        update_label = tk.Label(self.frame1, bg=self.color1)
         update_label.pack()
-        delete_label = tk.Label(self.frame1, bg='#778899')
+        delete_label = tk.Label(self.frame1, bg=self.color1)
         delete_label.pack()
 
         self.add_button = tk.Button(add_label, text="Add new contractor", height=2, width=20, padx=5, pady=5,
@@ -131,7 +135,7 @@ class ContractorsWindow:
         self.update_button['state'] = DISABLED
         self.delete_button['state'] = DISABLED
 
-        # Right side of window
+        # Creating right frame - search tool and contractors list
         def on_click(event):
             e.configure(state=NORMAL)
             e.delete(0, END)
@@ -145,5 +149,5 @@ class ContractorsWindow:
         e.bind('<Button-1>', on_click)
         e.pack(side=TOP, pady=10)
 
-        # contractors_list
+        # Creating list of contractors
         self.create_contractors_list()

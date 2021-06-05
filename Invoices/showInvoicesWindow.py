@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import *
-from tkinter.ttk import *
-from Database.db import Database
 from tkinter import messagebox
-from Invoices.saveAsPdf import PDF
+from tkinter.ttk import *
 
+from Invoices.saveAsPdf import PDF
+from Database.db import Database
 db = Database('Database/Database.db')
 
 
@@ -16,13 +16,9 @@ class ShowInvoicesWindow:
         self.selected = None
         self.delete_button = None
         self.save_button = None
+        self.width = self.app.winfo_screenwidth()
+        self.height = self.app.winfo_screenheight()
         self.open_invoices_window()
-
-    def delete_invoice(self):
-        if messagebox.askyesno("Delete", "Are you sure?", parent=self.main_window):
-            db.remove_invoice(self.selected[0])
-            self.delete_button['state'] = DISABLED
-            self.show_invoices()
 
     def select_item(self, event):
         try:
@@ -34,11 +30,7 @@ class ShowInvoicesWindow:
         except IndexError:
             pass
 
-    def show_invoices(self):
-        self.invoices_list.delete(*self.invoices_list.get_children())
-        for row in db.fetch_invoices():
-            self.invoices_list.insert(parent='', index='end', text="A", values=row[1:4])
-
+    # Function to show lines with searched word (from search tool)
     def show_selected(self, value):
         if value.get():
             self.invoices_list.delete(*self.invoices_list.get_children())
@@ -48,22 +40,33 @@ class ShowInvoicesWindow:
         else:
             self.show_invoices()
 
+    def show_invoices(self):
+        self.invoices_list.delete(*self.invoices_list.get_children())
+        for row in db.fetch_invoices():
+            self.invoices_list.insert(parent='', index='end', text="A", values=row[1:4])
+
+    def delete_invoice(self):
+        if messagebox.askyesno("Delete", "Are you sure?", parent=self.main_window):
+            db.remove_invoice(self.selected[0])
+            self.delete_button['state'] = DISABLED
+            self.show_invoices()
+
     def open_invoices_window(self):
         self.main_window.title("Invoices")
-        self.main_window.geometry('900x487')
+        self.main_window.geometry('%dx%d+%d+%d' % (900, 487, self.width//2 - 450, self.height//2 - 240))
         self.main_window.resizable(0, 0)
-        self.main_window['bg'] = '#f8deb4'
+        self.main_window['bg'] = '#999999'
 
         # Creating PanedWindow - for splitting frames in ratio
         panedwindow = Panedwindow(self.main_window, orient=HORIZONTAL)
         panedwindow.pack(fill=BOTH, expand=True)
 
-        # Creating Left Frame
         frame1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#778899')
-        frame2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#f8deb4')
+        frame2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#999999')
         panedwindow.add(frame1, weight=1)
         panedwindow.add(frame2, weight=4)
 
+        # Creating left frame - buttons
         delete_label = tk.Label(frame1, bg='#778899')
         delete_label.pack()
         save_label = tk.Label(frame1, bg='#778899')
@@ -80,7 +83,7 @@ class ShowInvoicesWindow:
         self.delete_button['state'] = DISABLED
         self.save_button['state'] = DISABLED
 
-        # Right side of window
+        # Creating right frame - search tool and invoices list
         def on_click(event):
             e.configure(state=NORMAL)
             e.delete(0, END)
@@ -94,6 +97,7 @@ class ShowInvoicesWindow:
         e.bind('<Button-1>', on_click)
         e.pack(side=TOP, pady=10)
 
+        # List of invoices
         self.invoices_list = Treeview(frame2, height=23)
 
         self.invoices_list['columns'] = ("ID", "Name", 'Date')

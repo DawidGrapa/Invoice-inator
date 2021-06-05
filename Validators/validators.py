@@ -1,3 +1,27 @@
+import re
+
+
+def delete_spaces(s):
+    # Remove all non-word characters (everything except numbers and letters)
+    s = re.sub(r"[^\w\s]", '', s)
+
+    # Replace all runs of whitespace with a single dash
+    s = re.sub(r"\s+", '', s)
+
+    return s
+
+
+def check_float(potential_float):
+    try:
+        float(potential_float)
+        if len(potential_float.rsplit('.')[-1]) > 2:
+            return False
+        return True
+    except ValueError:
+        print(potential_float)
+        return False
+
+
 def validate_contractor(contractor):
     name = contractor['name'].get()
     street = contractor['street'].get()
@@ -19,23 +43,11 @@ def validate_contractor(contractor):
         return False, x
 
 
-def check_float(potential_float):
-    try:
-        float(potential_float)
-        if len(potential_float.rsplit('.')[-1]) > 2:
-            return False
-        return True
-
-    except ValueError:
-        print(potential_float)
-        return False
-
-
 def validate_product(product):
     name = product['name'].get()
     unit = product['unit'].get()
     vat = product['vat'].get()
-    price = product['price'].get()
+    price = product['price'].get().replace(",", ".")
 
     x = None
     if len(name) == 0:
@@ -60,7 +72,7 @@ def validate_company(company):
     city = company['city'].get()
     nip = company['nip'].get()
     bank = company['bank'].get()
-
+    bank = delete_spaces(bank)
     x = None
     if len(name) == 0: x = "name"
     if len(street) == 0: x = "street"
@@ -68,7 +80,8 @@ def validate_company(company):
     if len(zip) == 0: x = "zip-code"
     if len(nip) != 10 or not nip.isdecimal():
         x = "NIP"
-    if len(bank) == 0: x = "bank"
+    if len(bank) == 0 or not bank.isdecimal():
+        x = "bank"
 
     if x is None:
         return True, x
@@ -77,7 +90,7 @@ def validate_company(company):
 
 
 def validate_quantity(q):
-    quantity = q.get()
+    quantity = q.get().replace(",", ".")
     x = None
     try:
         if float(quantity) < 0:
@@ -91,7 +104,7 @@ def validate_quantity(q):
         return False, x
 
 
-def validate_invoice_no(i):
-    if i.isdecimal() is False: return False
-    if int(i) < 0: return False
+def validate_invoice_no(number):
+    if number.isdecimal() is False: return False
+    if int(number) < 0: return False
     return True

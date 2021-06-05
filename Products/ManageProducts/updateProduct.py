@@ -1,25 +1,27 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
+
 from Validators.validators import *
 from Database.db import Database
-
 db = Database('Database/Database.db')
 
 
 class UpdateProductWindow:
     def __init__(self, parent_window, app, product_list, selected):
+        self.app = app
         self.window = Toplevel(app)
         self.parent = parent_window
         self.pr_list = product_list
         self.data = dict()
         self.selected = selected
-        self.expand_window()
+        self.update_product_window()
 
     def update_in_base(self):
         res, x = validate_product(self.data)
         if res:
-            db.update_product(self.selected[0], self.data['name'].get(), self.data['unit'].get(), self.data['vat'].get(), self.data['price'].get())
+            db.update_product(self.selected[0], self.data['name'].get(), self.data['unit'].get(), self.data['vat'].get(),
+                              self.data['price'].get().replace(',', '.'))
             messagebox.showinfo("Success", "Updated successfully!", parent=self.window)
             self.parent.update_button['state'] = DISABLED
             self.parent.delete_button['state'] = DISABLED
@@ -28,10 +30,13 @@ class UpdateProductWindow:
         else:
             messagebox.showinfo("Wrong arguments", "Wrong argument: " + str(x) + "!", parent=self.window)
 
-    def expand_window(self):
+    def update_product_window(self):
         self.window.title("Update product")
-        self.window.minsize(450, 200)
         self.window.resizable(0, 0)
+
+        width = self.app.winfo_screenwidth()
+        height = self.app.winfo_screenheight()
+        self.window.geometry('%dx%d+%d+%d' % (450, 200, width//2-220, height//2-100))
 
         # Labels and Entries
         # Name
@@ -70,6 +75,6 @@ class UpdateProductWindow:
 
         self.data['price'] = price_input
 
-        # Submit
+        # Submit button
         submit_label = tk.Button(self.window, text="Submit", command=self.update_in_base)
         submit_label.grid(row=7, column=2)

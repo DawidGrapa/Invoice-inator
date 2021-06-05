@@ -16,7 +16,7 @@ class Database:
             "city text, nip text, account_number text)")
         self.cur.execute(
             "CREATE TABLE IF NOT EXISTS invoices (id INTEGER PRIMARY  KEY, invoice_id integer, companyname text, "
-            "date text, payment text, format text, company_id integer) "
+            "date text, payment text, format text, street text, zip text, city text, nip text) "
         )
         self.cur.execute(
             "CREATE TABLE IF NOT EXISTS invoice_products (invoice_id INTEGER, product_name text, quantity text, "
@@ -110,9 +110,9 @@ class Database:
         return row
 
     # invoices
-    def add_invoice(self, invoice_id, name, date, payment, format, company_id):
-        self.cur.execute("INSERT INTO invoices VALUES (NULL,?, ?, ?, ?, ?, ?)",
-                         (invoice_id, name, date, payment, format, company_id))
+    def add_invoice(self, invoice_id, name, date, payment, format, street, zip, city, nip):
+        self.cur.execute("INSERT INTO invoices VALUES (NULL,?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                         (invoice_id, name, date, payment, format, street, zip, city, nip))
         self.conn.commit()
 
     def get_last_invoice(self):

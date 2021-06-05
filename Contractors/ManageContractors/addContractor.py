@@ -2,8 +2,8 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from Validators.validators import *
-from Database.db import Database
 
+from Database.db import Database
 db = Database('Database/Database.db')
 
 
@@ -29,7 +29,9 @@ class AddContractorWindow:
 
     def expand_window(self):
         self.window.title("Add new contractor")
-        self.window.minsize(500, 260)
+        width = self.app.winfo_screenwidth()
+        height = self.app.winfo_screenheight()
+        self.window.geometry('%dx%d+%d+%d' % (500, 260, width//2-250, height//2-130))
         self.window.resizable(0, 0)
 
         # Labels and Entries
@@ -49,7 +51,7 @@ class AddContractorWindow:
 
         self.data['street'] = street_input
 
-        # ZIP-CODE
+        # Zip-code
         zipcode = tk.Label(self.window, text="Zip-Code:", height=2, padx=10)
         zipcode.grid(row=3, column=1)
         zip_input = tk.Entry(self.window, width=50, bd=3)
@@ -81,6 +83,6 @@ class AddContractorWindow:
 
         self.data['desc'] = desc_input
 
-        # Submit
+        # Submit button
         submit_label = tk.Button(self.window, text="Submit", command=self.add_to_base)
         submit_label.grid(row=7, column=2)

@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import *
-from Database.db import Database
 from tkinter.ttk import *
+
 from Products.ManageProducts.addProduct import AddProductWindow
 from Products.ManageProducts.updateProduct import UpdateProductWindow
-
+from Database.db import Database
 db = Database('Database/Database.db')
 
 
@@ -20,16 +20,6 @@ class ProductsWindow:
         self.delete_button = tk.Button()
         self.open_products_window()
 
-    def select_item(self, event):
-        try:
-            if len(self.prod_list.get_children()) > 0:
-                self.selected = self.prod_list.item(self.prod_list.focus())["values"]
-                if len(self.selected) > 0:
-                    self.update_button['state'] = ACTIVE
-                    self.delete_button['state'] = ACTIVE
-        except IndexError:
-            pass
-
     def show_products(self):
         self.prod_list.delete(*self.prod_list.get_children())
         for row in db.fetch_products():
@@ -42,6 +32,17 @@ class ProductsWindow:
             self.delete_button['state'] = DISABLED
             self.show_products()
 
+    def select_item(self, event):
+        try:
+            if len(self.prod_list.get_children()) > 0:
+                self.selected = self.prod_list.item(self.prod_list.focus())["values"]
+                if len(self.selected) > 0:
+                    self.update_button['state'] = ACTIVE
+                    self.delete_button['state'] = ACTIVE
+        except IndexError:
+            pass
+
+    # Function to show lines with searched word (from search tool)
     def show_selected(self, value):
         if value.get():
             self.prod_list.delete(*self.prod_list.get_children())
@@ -81,23 +82,24 @@ class ProductsWindow:
         self.prod_list.pack(fill=BOTH)
 
     def open_products_window(self):
-        # Creating new window
         self.window.title("Products")
-        self.window.geometry('900x487')
         self.window.resizable(0, 0)
         self.window['bg'] = '#999999'
+
+        width = self.app.winfo_screenwidth()
+        height = self.app.winfo_screenheight()
+        self.window.geometry('%dx%d+%d+%d' % (900, 487, width//2-450, height//2-243))
 
         # Creating PanedWindow - for splitting frames in ratio
         panedwindow = Panedwindow(self.window, orient=HORIZONTAL)
         panedwindow.pack(fill=BOTH, expand=True)
 
-        # Creating Left Frame
         frame1 = tk.Frame(panedwindow, width=100, height=300, relief=SUNKEN, bg='#778899')
         self.frame2 = tk.Frame(panedwindow, width=400, height=400, relief=SUNKEN, bg='#999999')
         panedwindow.add(frame1, weight=1)
         panedwindow.add(self.frame2, weight=4)
 
-        # Creating Buttons
+        # Creating left frame - buttons
         add_label = tk.Label(frame1, bg='#778899')
         update_label = tk.Label(frame1, bg='#778899')
         delete_label = tk.Label(frame1, bg='#778899')
@@ -121,7 +123,7 @@ class ProductsWindow:
         self.update_button['state'] = DISABLED
         self.delete_button['state'] = DISABLED
 
-        # Right side of window
+        # Creating right frame - search tool and a list of products
         def on_click(event):
             e.configure(state = NORMAL)
             e.delete(0, END)
@@ -135,5 +137,5 @@ class ProductsWindow:
         e.bind('<Button-1>', on_click)
         e.pack(side = TOP, pady =10)
 
-        # Treeview
+        # List of products
         self.create_products_list()
