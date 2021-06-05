@@ -24,7 +24,7 @@ Or you can run these commands:
 ## How does it all work?
 <ul>
 <li>
-Put your company's data:<br>
+First thing first! Put your company's data<br>
 </li>
 
 ![Animation](https://user-images.githubusercontent.com/72798812/120896209-d6354300-c620-11eb-9528-6b7b37f78231.gif)  
