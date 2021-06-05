@@ -47,12 +47,12 @@ Add some products...
 Make invoice with Invoice-inator!
 </li></ul>
 
-<img src="https://user-images.githubusercontent.com/72798812/120898584-be16f100-c62b-11eb-8974-f142ffca3d48.gif" width=auto height=400px alt="Invoice creation process">
+<img src="https://user-images.githubusercontent.com/72798812/120898584-be16f100-c62b-11eb-8974-f142ffca3d48.gif" width=auto height=440px alt="Invoice creation process">
 
 <ul><li>
 <b>Final result</b>
 </li></ul>
 
-<img src="https://user-images.githubusercontent.com/72798812/120899034-f5869d00-c62d-11eb-85e4-4f1d7ace35e8.png" width=auto height=800px alt="Invoice creation process">
+<img src="https://user-images.githubusercontent.com/72798812/120899034-f5869d00-c62d-11eb-85e4-4f1d7ace35e8.png" width=auto height=800px alt="Final result in pdf">
 
 </li></ul>
