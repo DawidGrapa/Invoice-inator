@@ -1,4 +1,5 @@
-![soy_invoice](https://user-images.githubusercontent.com/73083473/120899245-0388ed80-c62f-11eb-90c2-d3751e453ffc.png)
+<img src="https://user-images.githubusercontent.com/73083473/120899245-0388ed80-c62f-11eb-90c2-d3751e453ffc.png" width=550px height=auto alt="App logo">
+
 ## Application created by [Julia Szpak](https://github.com/xxLucia)  and [DawidGrapa](https://github.com/DawidGrapa).
 
 <hr> 
@@ -37,7 +38,7 @@ Add some products...
 <img src="https://user-images.githubusercontent.com/72798812/120896728-0ed61c00-c623-11eb-9932-19744688c00b.png" width=auto height=350px alt="Adding products">
 
 <ul><li>
-...and contractors:
+...and contractors
 </li></ul>
 
 <img src="https://user-images.githubusercontent.com/72798812/120896802-5e1c4c80-c623-11eb-8492-3e64d764d3e1.png" width=auto height=350px alt="Adding contractors">
