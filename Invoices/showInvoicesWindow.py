@@ -51,6 +51,9 @@ class ShowInvoicesWindow:
             self.delete_button['state'] = DISABLED
             self.show_invoices()
 
+    def save_invoice(self):
+        PDF(self.selected[0])
+
     def open_invoices_window(self):
         self.main_window.title("Invoices")
         self.main_window.geometry('%dx%d+%d+%d' % (900, 487, self.width//2 - 450, self.height//2 - 240))
@@ -75,9 +78,9 @@ class ShowInvoicesWindow:
         self.delete_button = tk.Button(delete_label, text="Delete invoice", height=2, width=20, padx=5, pady=5,
                                        command=self.delete_invoice)
         self.delete_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
-
+        print(self.selected)
         self.save_button = tk.Button(save_label, text="Save invoice", height=2, width=20, padx=5, pady=5,
-                                     command=lambda: PDF())
+                                     command=self.save_invoice)
         self.save_button.pack(fill=BOTH, side=LEFT, expand=True, pady=10)
 
         self.delete_button['state'] = DISABLED

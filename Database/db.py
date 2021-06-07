@@ -115,6 +115,11 @@ class Database:
                          (invoice_id, name, date, payment, format, street, zip, city, nip))
         self.conn.commit()
 
+    def get_invoice(self, id):
+        self.cur.execute("SELECT * FROM invoices where id=?", (id, ))
+        row = self.cur.fetchone()
+        return row
+
     def get_last_invoice(self):
         self.cur.execute("SELECT * FROM invoices ORDER BY id DESC LIMIT 1")
         result = self.cur.fetchone()

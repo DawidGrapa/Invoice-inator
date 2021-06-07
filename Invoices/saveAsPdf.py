@@ -10,10 +10,12 @@ from Database.db import Database
 db = Database('Database/Database.db')
 
 
-def PDF():
-    last_invoice = db.get_last_invoice()
+def PDF(id=None):
     company = db.get_company()
-
+    if not id:
+        last_invoice = db.get_last_invoice()
+    else:
+        last_invoice = db.get_invoice(id)
     # Invoice format
     invoice_id = str(last_invoice[1])
     issue_date = last_invoice[3]
