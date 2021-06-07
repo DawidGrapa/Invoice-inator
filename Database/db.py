@@ -28,7 +28,7 @@ class Database:
             self.add_settings("InvoiceNo/Month/Year")
         self.conn.commit()
 
-    # About contractors
+    # Contractors' info
     def fetch_contractors(self):
         self.cur.execute("SELECT * from contractors")
         rows = self.cur.fetchall()
@@ -53,7 +53,7 @@ class Database:
         result = self.cur.fetchone()
         return result
 
-    # About products
+    # Products' info
     def fetch_products(self):
         self.cur.execute("SELECT * from products")
         rows = self.cur.fetchall()
@@ -77,7 +77,7 @@ class Database:
                          (name, unit, vat, price, id))
         self.conn.commit()
 
-    # about own company
+    # Company info
     def get_company(self):
         self.cur.execute("SELECT * from company")
         row = self.cur.fetchone()
@@ -93,7 +93,7 @@ class Database:
             (company, street, zip, city, nip, bank, id))
         self.conn.commit()
 
-    # settings
+    # Settings
     def add_settings(self, format):
         self.cur.execute("INSERT INTO settings VALUES (NULL, ?)", (format,))
         self.conn.commit()
@@ -109,7 +109,7 @@ class Database:
         row = self.cur.fetchone()
         return row
 
-    # invoices
+    # Invoices
     def add_invoice(self, invoice_id, name, date, payment, format, street, zip, city, nip):
         self.cur.execute("INSERT INTO invoices VALUES (NULL,?, ?, ?, ?, ?, ?, ?, ?, ?)",
                          (invoice_id, name, date, payment, format, street, zip, city, nip))

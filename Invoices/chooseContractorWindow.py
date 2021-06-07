@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter.ttk import *
-from Invoices.create_invoice import CreateInvoice
+from Invoices.createInvoiceWindow import CreateInvoiceWindow
 
 from Database.db import Database
 db = Database('Database/Database.db')
@@ -76,7 +76,7 @@ class ChooseContractorWindow:
             self.show_contractors()
 
     def create_invoice(self):
-        CreateInvoice(self.selected, self.main_window, self.app, self.main_app)
+        CreateInvoiceWindow(self.selected, self.main_window, self.app, self.main_app)
         self.main_app.createInvoice_button['state'] = DISABLED
 
     def choose_contractor_window(self):

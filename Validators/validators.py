@@ -30,10 +30,14 @@ def validate_contractor(contractor):
     nip = contractor['nip'].get()
 
     x = None
-    if len(name) == 0: x = "name"
-    if len(street) == 0: x = "street"
-    if len(city) == 0: x = "city"
-    if len(zip) == 0: x = "zip-code"
+    if len(name) == 0:
+        x = "name"
+    if len(street) == 0:
+        x = "street"
+    if len(city) == 0:
+        x = "city"
+    if len(zip) == 0:
+        x = "zip-code"
     if len(nip) != 10 or not nip.isdecimal():
         x = "NIP"
 
@@ -74,10 +78,14 @@ def validate_company(company):
     bank = company['bank'].get()
     bank = delete_spaces(bank)
     x = None
-    if len(name) == 0: x = "name"
-    if len(street) == 0: x = "street"
-    if len(city) == 0: x = "city"
-    if len(zip) == 0: x = "zip-code"
+    if len(name) == 0:
+        x = "name"
+    if len(street) == 0:
+        x = "street"
+    if len(city) == 0:
+        x = "city"
+    if len(zip) == 0:
+        x = "zip-code"
     if len(nip) != 10 or not nip.isdecimal():
         x = "NIP"
     if len(bank) == 0 or not bank.isdecimal():
@@ -105,6 +113,8 @@ def validate_quantity(q):
 
 
 def validate_invoice_no(number):
-    if number.isdecimal() is False: return False
-    if int(number) < 0: return False
+    if number.isdecimal() is False:
+        return False
+    if int(number) < 0:
+        return False
     return True

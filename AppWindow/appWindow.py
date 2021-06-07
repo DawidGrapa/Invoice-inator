@@ -7,11 +7,11 @@ from PIL import ImageTk, Image
 
 from Company.companyWindow import CompanyWindow
 from Contractors.showContactorsWindow import ContractorsWindow
-from Invoices.choose_contractor import ChooseContractorWindow
+from Invoices.chooseContractorWindow import ChooseContractorWindow
 from Invoices.showInvoicesWindow import ShowInvoicesWindow
 from Products.showProductsWindow import ProductsWindow
 from PopUpWindows.aboutUsWindow import open_about_us_window
-from PopUpWindows.dateformatsettings import DateFormatSettings
+from PopUpWindows.dateFormatSettings import DateFormatSettings
 
 from Database.db import Database
 db = Database('Database/Database.db')

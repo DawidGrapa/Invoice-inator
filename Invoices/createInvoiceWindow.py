@@ -6,7 +6,7 @@ from tkinter.ttk import *
 import datetime
 from tkcalendar import DateEntry
 
-from Invoices.selectProduct import SelectProductWindow
+from Invoices.selectProductWindow import SelectProductWindow
 from Invoices.saveAsPdf import PDF
 from Validators.validators import validate_invoice_no
 
@@ -14,7 +14,7 @@ from Database.db import Database
 db = Database('Database/Database.db')
 
 
-class CreateInvoice:
+class CreateInvoiceWindow:
     def __init__(self, selected, app, main_app, top_app):
         self.window = main_app
         self.selected = selected
